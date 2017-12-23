@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+      <TextView
+          android:id="@+id/header_date"
+          android:paddingLeft="15dp"
+          android:textColor="@color/text_black3"
+          android:textSize="13sp"
+          android:layout_centerVertical="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView
+          android:id="@+id/header_money"
+          android:text="支出0.00 收入:0.00"
+          android:layout_alignParentRight="true"
+          android:paddingRight="15sp"
+          android:textColor="@color/text_black3"
+          android:textSize="13sp"
+          android:layout_centerVertical="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+
+      <View
+          android:layout_alignParentBottom="true"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#DCDCDC"></View>
+   </RelativeLayout>
+
+
+

@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">CocoBill</string>
+
+
+    <!-- main activity -->
+    <string name="first_title">明细</string>
+    <string name="second_title">记一笔</string>
+    <string name="third_title">报表</string>
+    <string name="four_title">账户</string>
+
+    <string name="login_user_name">Tell me your register name or email.</string>
+    <string name="login_password">Tell me your password (be quiet!).</string>
+    <string name="register_user_name">Show me a cool user name!</string>
+    <string name="register_user_email">You can regain your password by email.</string>
+    <string name="register_password">I can keep secret!</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--about activity-->
+    <string name="about">关于</string>
+    <string name="about_introduce">简洁、便捷、语音记账\n
+        ------账单助手是啥------\n
+        嗯~没错我就是个记账APP，功能不花哨主打实用，算账本来就是头疼事还整那些花里胡哨的功能干啥呢？所以我们这款记账APP就是简洁！实用！！！\n
+        ------账单助手主要功能------\n
+        - 支持多账户记账\n
+        - 语音记账，不用手动更方便\n
+        - 时间轴记账单，账单一目了然\n
+        - 支持账单数据导出，方便各个场景使用\n
+        - 数据同步，换手机，刷系统，账单轻松恢复\n
+        - 账单统计功能，支持月度、年度消费分析，消费情况清清楚楚\n
+    </string>
+    <string name="about_introduce2">ps:请勿在软件中填写个人隐私信息</string>
+    <string name="app_name_with_introduce">CocoBill - 理财的好帮手</string>
+    <string name="developers">开发人员:zhouass666</string>
+
+</resources>

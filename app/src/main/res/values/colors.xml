@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+    <color name="colorPrimary">#FF5050</color>
+    <color name="colorPrimaryDark">#FA3232</color>
+    <color name="colorAccent">#FF5050</color>
+
+    <color name="background">#f7f7f7</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="text_black3">#333333</color>
+    <color name="text_black6">#666666</color>
+    <color name="text_black9">#999999</color>
+
+    <color name="text_red">#FF5050</color>
+    <color name="red">#ff0000</color>
+
+    <color name="green">#008000</color> <!-- 绿色 -->
+    <color name="darkgreen">#006400</color> <!-- 暗绿色 -->
+
+    <!--aboutActivity字体颜色-->
+    <color name="material_grey_100">#fff5f5f5</color>
+    <color name="material_grey_300">#ffe0e0e0</color>
+    <color name="material_grey_50">#fffafafa</color>
+    <color name="material_grey_600">#ff757575</color>
+    <color name="material_grey_800">#ff424242</color>
+    <color name="material_grey_850">#ff303030</color>
+    <color name="material_grey_900">#ff212121</color>
+
+</resources>

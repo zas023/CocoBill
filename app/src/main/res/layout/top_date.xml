@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/layout_data"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/data_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017\n年"
+            android:textColor="@color/text_black6"
+            android:textSize="15sp"
+            android:singleLine="true"/>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/data_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09"
+                android:textColor="@color/text_black6"
+                android:textSize="20sp"
+                android:singleLine="true"/>
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="月"
+                android:drawableRight="@mipmap/tallybook_down"
+                android:textColor="@color/text_black6"
+                android:textSize="15sp"
+                android:singleLine="true"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="1dp"
+        android:layout_height="41dp"
+        android:background="#DCDCDC"
+        ></View>
+    <LinearLayout
+            android:id="@+id/top_ll_out"
+        android:layout_weight="1.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总支出(元)"
+            android:textColor="@color/text_black6"
+            android:textSize="15sp"
+            android:singleLine="true"/>
+        <TextView
+            android:id="@+id/t_outcome"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="@color/text_black6"
+            android:textSize="20sp"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总收入(元)"
+            android:textColor="@color/text_black6"
+            android:textSize="15sp"
+            android:singleLine="true"/>
+        <TextView
+            android:id="@+id/t_income"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="@color/text_black6"
+            android:textSize="20sp"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

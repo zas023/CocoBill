@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+
+  <include
+      android:id="@+id/layout_top"
+      layout="@layout/top_date"></include>
+
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:layout_below="@+id/layout_top"
+      android:id="@+id/swipe"
+      android:layout_marginTop="15dp"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        />
+
+  </android.support.v4.widget.SwipeRefreshLayout>
+
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/float_btn"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"
+      android:layout_margin="30dp"
+      android:elevation="3dp"
+      android:src="@mipmap/tallybook_note"
+      app:pressedTranslationZ="5dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
+
+</RelativeLayout>
