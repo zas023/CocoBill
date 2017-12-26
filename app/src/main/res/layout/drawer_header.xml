@@ -14,7 +14,14 @@
         android:orientation="vertical"
         android:gravity="bottom">
 
-    <com.copasso.cocobill.view.CircleImageView
+    <!--<com.copasso.cocobill.view.CircleImageView-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--app:srcCompat="@mipmap/ic_def_icon"-->
+            <!--android:id="@+id/drawer_iv"/>-->
+
+    <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"

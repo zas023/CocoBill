@@ -159,6 +159,33 @@ public class HttpUtils {
         }).start();
     }
 
+
+    /**
+     * 更新用户信息
+     * @param handler
+     * @param id
+     * @param username
+     * @param gender
+     * @param phone
+     * @param mail
+     */
+    public static void updateUser(final Handler handler, final int id,final String username,final String gender,
+                                  final String phone,final String mail) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 得到网络返回数据
+                String result = request("/user/update?id="+id+"&username="+username+"&gender="+gender+"&phone="+phone
+                        +"&mail="+mail);
+                if (result != null) {
+                    Message message = new Message();
+                    message.obj = result;
+                    handler.sendMessage(message);
+                }
+            }
+        }).start();
+    }
+
     /**
      * http://139.199.176.173:8080/ssmBillBook/note/user/1
      * @param handler

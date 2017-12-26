@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.utils.HttpUtils;
+import com.copasso.cocobill.utils.SharedPUtils;
 import com.copasso.cocobill.utils.StringUtils;
 import com.copasso.cocobill.view.OwlView;
 import com.google.gson.Gson;
@@ -100,13 +101,7 @@ public class LoginActivity extends BaseActivity {
                             Gson gson = new Gson();
                             UserBean userBean = gson.fromJson(msg.obj.toString(), UserBean.class);
                             if (userBean.getStatus() == 100) {
-                                SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.putString("username", userBean.getUsername());
-                                editor.putString("email", userBean.getMail());
-                                editor.putInt("id", userBean.getId());
-                                editor.putString("json", msg.obj.toString());
-                                editor.commit();
+                                SharedPUtils.setCurrentUser(LoginActivity.this,msg.obj.toString());
                                 setResult(RESULT_OK, new Intent());
                                 finish();
                             } else {

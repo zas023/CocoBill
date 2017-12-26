@@ -7,6 +7,8 @@ public class UserBean extends BaseBean{
 
     private String password;
 
+    private String image;
+
     private String gender;
 
     private String phone;
@@ -56,6 +58,14 @@ public class UserBean extends BaseBean{
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getGender() {

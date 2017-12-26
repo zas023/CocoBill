@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.MainFragmentPagerAdapter;
+import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.fragment.MenuAccountFragment;
 import com.copasso.cocobill.fragment.MenuChartFragment;
 import com.copasso.cocobill.fragment.MenuDetailFragment;
@@ -27,6 +31,8 @@ import com.copasso.cocobill.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import java.io.File;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,10 +48,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     NavigationView navigationView;
 
     private View drawerHeader;
+    private ImageView drawerIv;
     private TextView drawerTvAccount, drawerTvMail;
 
+    private static final String TAG = "MainActivity";
+    protected static final int USERINFOACTIVITY_CODE = 0;
+    protected static final int LOGINACTIVITY_CODE = 1;
+
+    //当前用户
+    private UserBean currentUser;
+
     // Tab
-    private int index = 0;
     private FragmentManager mFragmentManager;
     private MainFragmentPagerAdapter mainFragmentPagerAdapter;
 
@@ -58,10 +71,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initEventAndData() {
         //初始化ViewPager
         mFragmentManager = getSupportFragmentManager();
-        mainFragmentPagerAdapter=new MainFragmentPagerAdapter(mFragmentManager);
-        mainFragmentPagerAdapter.addFragment(new MenuDetailFragment(),"明细");
-        mainFragmentPagerAdapter.addFragment(new MenuChartFragment(),"报表");
-        mainFragmentPagerAdapter.addFragment(new MenuAccountFragment(),"卡片");
+        mainFragmentPagerAdapter = new MainFragmentPagerAdapter(mFragmentManager);
+        mainFragmentPagerAdapter.addFragment(new MenuDetailFragment(), "明细");
+        mainFragmentPagerAdapter.addFragment(new MenuChartFragment(), "报表");
+        mainFragmentPagerAdapter.addFragment(new MenuAccountFragment(), "卡片");
 
         viewPager.setAdapter(mainFragmentPagerAdapter);
 
@@ -80,6 +93,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
 
         drawerHeader = navigationView.inflateHeaderView(R.layout.drawer_header);
+        drawerIv = (ImageView) drawerHeader.findViewById(R.id.drawer_iv);
         drawerTvAccount = (TextView) drawerHeader.findViewById(R.id.drawer_tv_name);
         drawerTvMail = (TextView) drawerHeader.findViewById(R.id.drawer_tv_mail);
         //监听点击登陆事件
@@ -88,11 +102,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onClick(View view) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                if (Constants.currentUserId==0){
+                if (Constants.currentUserId == 0) {
                     //用户id为0表示未有用户登陆
-                    startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), 1);
-                }else {
-                    startActivity(new Intent(MainActivity.this,UserInfoActivity.class));
+                    startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), LOGINACTIVITY_CODE);
+                } else {
+                    //进入账户中心
+                    startActivityForResult(new Intent(MainActivity.this, UserInfoActivity.class), USERINFOACTIVITY_CODE);
                 }
             }
         });
@@ -101,24 +116,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //监听侧滑菜单
         navigationView.setNavigationItemSelectedListener(this);
 
-    }
-
-
-    /**
-     * 获取一个带动画的FragmentTransaction
-     *
-     * @param index
-     * @return
-     */
-    private FragmentTransaction obtainFragmentTransaction(int index) {
-        FragmentTransaction ft = mFragmentManager.beginTransaction();
-        // 设置切换动画
-        if (index > this.index) {
-            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left);
-        } else {
-            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right);
-        }
-        return ft;
     }
 
     /**
@@ -158,8 +155,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            setDrawerHeaderAccount();
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case USERINFOACTIVITY_CODE:
+                    setDrawerHeaderAccount();
+                    break;
+                case LOGINACTIVITY_CODE:
+                    setDrawerHeaderAccount();
+                    break;
+            }
         }
     }
 
@@ -171,12 +175,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (sp != null) {
             drawerTvAccount.setText(sp.getString("username", "账户"));
             drawerTvMail.setText(sp.getString("email", "点我登陆"));
-            Constants.currentUserId=sp.getInt("id",0);
+            String imgPath=sp.getString("imgPath", null);
+            if (imgPath!=null){
+                File file = new File(imgPath);
+                if (file.exists()){
+                    //加载图片
+                    Glide.with(this).load(file).into(drawerIv);
+                }
+            }
+            Constants.currentUserId = sp.getInt("id", 0);
         }
     }
 
     /**
      * 监听侧滑菜单事件
+     *
      * @param item
      * @return
      */
@@ -192,9 +205,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             viewPager.setCurrentItem(2);
         } else if (id == R.id.nav_setting) {
 
-        } else if (id == R.id.nav_about){
-            startActivity(new Intent(MainActivity.this,AboutActivity.class));
-        }else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_about) {
+            startActivity(new Intent(MainActivity.this, AboutActivity.class));
+        } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_exit) {
             //退出登陆
