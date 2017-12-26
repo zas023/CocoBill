@@ -30,7 +30,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 
 /**
- * 记账本--我的账户
+ * 我的账户
  */
 public class MenuAccountFragment extends BaseFragment {
 

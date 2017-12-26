@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#3F51B5</color>-->
-    <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <!--<color name="colorAccent">#FF4081</color>-->
 
     <color name="colorPrimary">#FF5050</color>
     <color name="colorPrimaryDark">#FA3232</color>
@@ -30,5 +27,57 @@
     <color name="material_grey_800">#ff424242</color>
     <color name="material_grey_850">#ff303030</color>
     <color name="material_grey_900">#ff212121</color>
+
+    <!--酷炫黑-->
+    <color name="colorPrimaryDarkBlack">#010001</color>
+    <color name="colorPrimaryBlack">#010001</color>
+    <color name="colorAccentBlack">#010001</color>
+
+    <!--原谅绿-->
+    <color name="colorPrimaryDarkGreen">#00BA91</color>
+    <color name="colorPrimaryGreen">#00BA91</color>
+    <color name="colorAccentGreen">#00BA91</color>
+
+    <!--胖次蓝-->
+    <color name="colorPrimaryDarkBlue">#4E77FF</color>
+    <color name="colorPrimaryBlue">#4E77FF</color>
+    <color name="colorAccentBlue">#4E77FF</color>
+
+    <!--基佬紫-->
+    <color name="colorPrimaryDarkPurple">#A33DF9</color>
+    <color name="colorPrimaryPurple">#A33DF9</color>
+    <color name="colorAccentPurple">#A33DF9</color>
+
+    <!--活力橙-->
+    <color name="colorPrimaryDarkOrange">#FF9150</color>
+    <color name="colorPrimaryOrange">#FF9150</color>
+    <color name="colorAccentOrange">#FF9150</color>
+
+    <!--大地棕-->
+    <color name="colorPrimaryDarkBrown">#88564D</color>
+    <color name="colorPrimaryBrown">#88564D</color>
+    <color name="colorAccentBrown">#88564D</color>
+
+    <color name="colorDivide">#F9F9F9</color>
+    <color name="colorTabSelect">#FFE0AA</color>
+    <color name="colorMainDateBg">#F7F7F7</color>
+    <color name="colorControlNormal">#CCCCCC</color>
+    <!--页面默认背景色-->
+    <color name="colorBackground">#F9F9F9</color>
+    <!--文字颜色-->
+    <color name="textWhite">#FFFFFF</color>
+    <color name="textBlack">#333333</color>
+    <color name="textBrown">#6A4A57</color>
+    <color name="textPink">#FE88A8</color>
+    <color name="textMaple">#977F8A</color>
+    <color name="textLightBlue">#96D6EF</color>
+    <color name="textRed">#ED5543</color>
+    <color name="textGrayish">#999999</color>
+    <color name="textGray">#666666</color>
+
+    <!--tab layout 文字颜色-->
+    <color name="tabNormalTextColor">#8CFFFFFF</color>
+    <color name="tabSelectedTextColor">#FFFFFF</color>
+    <color name="tabIndicatorColor">#FFFFFF</color>
 
 </resources>

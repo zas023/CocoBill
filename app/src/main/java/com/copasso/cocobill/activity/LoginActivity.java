@@ -41,6 +41,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_btn_login)
     Button loginBtn;
 
+    //是否是登陆操作
     private boolean isLogin = true;
 
     @Override
@@ -51,6 +52,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initEventAndData() {
 
+        //监听密码输入框的聚焦事件
         passwordET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -74,11 +76,15 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    /**
+     * 监听点击事件
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @OnClick({R.id.login_tv_sign, R.id.login_btn_login})
     protected void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_btn_login:
+            case R.id.login_btn_login:  //button
                 if (isLogin){
                     //登陆
                     String username = usernameET.getText().toString();
@@ -141,16 +147,18 @@ public class LoginActivity extends BaseActivity {
                     }, username, password,email);
                 }
                 break;
-            case R.id.login_tv_sign:
+            case R.id.login_tv_sign:  //sign
                 if(isLogin){
                     //置换注册界面
                     signTV.setText("Login");
+                    loginBtn.setText("Login");
                     isLogin=!isLogin;
                     rpasswordET.setVisibility(View.VISIBLE);
                     emailET.setVisibility(View.VISIBLE);
                 }else {
                     //置换登陆界面
                     signTV.setText("Sign Up");
+                    loginBtn.setText("Sign Up");
                     isLogin=!isLogin;
                     rpasswordET.setVisibility(View.GONE);
                     emailET.setVisibility(View.GONE);

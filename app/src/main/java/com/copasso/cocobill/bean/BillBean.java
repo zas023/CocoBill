@@ -1,5 +1,8 @@
 package com.copasso.cocobill.bean;
 
+/**
+ * 账单bean
+ */
 public class BillBean extends BaseBean{
 
     /**

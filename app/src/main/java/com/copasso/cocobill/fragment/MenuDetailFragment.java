@@ -1,6 +1,5 @@
 package com.copasso.cocobill.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +18,6 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.activity.AddBillActivity;
 import com.copasso.cocobill.adapter.MonthDetailAdapter;
 import com.copasso.cocobill.bean.MonthDetailBean;
-import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridLayoutManager;
 import com.copasso.cocobill.utils.Constants;
 import com.copasso.cocobill.utils.HttpUtils;
@@ -37,7 +35,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 
 /**
- * 记账本--明细
+ * -明细
  */
 public class MenuDetailFragment extends BaseFragment {
 

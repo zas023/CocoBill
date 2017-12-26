@@ -1,5 +1,8 @@
 package com.copasso.cocobill.bean;
 
+/**
+ * 支付方式bean
+ */
 public class BPay {
     private Integer id;
 

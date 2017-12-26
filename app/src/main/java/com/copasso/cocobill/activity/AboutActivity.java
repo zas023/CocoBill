@@ -7,6 +7,9 @@ import android.view.View;
 import butterknife.BindView;
 import com.copasso.cocobill.R;
 
+/**
+ * 关于App
+ */
 public class AboutActivity extends BaseActivity {
 
     @BindView(R.id.about_toolbar)

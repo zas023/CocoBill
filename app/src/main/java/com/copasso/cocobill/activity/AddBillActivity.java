@@ -39,22 +39,22 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 
 /**
- * 记账本 --- 记一笔
+ * 添加账单
  */
 public class AddBillActivity extends BaseActivity {
 
     @BindView(R.id.tb_note_income)
-    TextView incomeTv;
+    TextView incomeTv;    //收入按钮
     @BindView(R.id.tb_note_outcome)
-    TextView outcomeTv;
+    TextView outcomeTv;   //支出按钮
     @BindView(R.id.tb_note_remark)
-    ImageView remarkTv;
+    ImageView remarkTv;   //
     @BindView(R.id.tb_note_money)
-    TextView moneyTv;
+    TextView moneyTv;     //金额
     @BindView(R.id.tb_note_date)
-    TextView dateTv;
+    TextView dateTv;      //时间选择
     @BindView(R.id.tb_note_cash)
-    TextView cashTv;
+    TextView cashTv;      //支出方式选择
     @BindView(R.id.viewpager_item)
     ViewPager viewpagerItem;
     @BindView(R.id.layout_icon)
@@ -63,15 +63,15 @@ public class AddBillActivity extends BaseActivity {
     public boolean isOutcome = true;
     //计算器
     private boolean isDot;
-    private String num = "0";
-    private String dotNum = ".00";
-    private final int MAX_NUM = 9999999;
-    private final int DOT_NUM = 2;
+    private String num = "0";               //整数部分
+    private String dotNum = ".00";          //小数部分
+    private final int MAX_NUM = 9999999;    //最大整数
+    private final int DOT_NUM = 2;          //小数部分最大位数
     private int count = 0;
     //选择器
     private OptionsPickerView pvCustomOptions;
     private List<String> cardItem;
-    private int selectedPayinfoIndex=0;
+    private int selectedPayinfoIndex=0;      //选择的支付方式序号
     //viewpager数据
     private int page ;
     private boolean isTotalPage;
@@ -91,17 +91,19 @@ public class AddBillActivity extends BaseActivity {
     private int mDay;
     private String days;
 
+    //备注
     private String remarkInput="";
     private NoteBean noteBean = null;
 
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_tallybook_note;
+        return R.layout.activity_add;
     }
 
     @Override
     protected void initEventAndData() {
+        //获取分类、支付方式信息
         HttpUtils.getNote(new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -110,6 +112,7 @@ public class AddBillActivity extends BaseActivity {
                 noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
                 //status==100:处理成功！
                 if (noteBean.getStatus() == 100) {
+                    //成功后加载布局
                     setTitleStatus();
                 }
             }
@@ -130,18 +133,22 @@ public class AddBillActivity extends BaseActivity {
     private void setTitleStatus() {
 
         if (isOutcome){
+            //设置支付状态
             outcomeTv.setSelected(true);
             incomeTv.setSelected(false);
             mDatas = noteBean.getOutSortlis();
         }else{
+            //设置收入状态
             incomeTv.setSelected(true);
             outcomeTv.setSelected(false);
             mDatas = noteBean.getInSortlis();
         }
 
+        //默认选择第一个分类
         lastBean = mDatas.get(0);
         lastImg = new ImageView(this);
 
+        //加载支付方式信息
         cardItem = new ArrayList<>();
         for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
             String itemStr=noteBean.getPayinfo().get(i).getPayName();
@@ -154,24 +161,24 @@ public class AddBillActivity extends BaseActivity {
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
-        if (mDatas.size() % 10 == 0)
+        if (mDatas.size() % 15 == 0)
             isTotalPage = true;
-        page = (int) Math.ceil(mDatas.size() * 1.0 / 10);
+        page = (int) Math.ceil(mDatas.size() * 1.0 / 15);
         for (int i = 0; i < page; i++) {
             tempList = new ArrayList<>();
             View view = inflater.inflate(R.layout.pager_item_tb_type, null);
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
             if (i != page - 1 || (i == page -1 && isTotalPage)){
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 15; j++) {
                     if (i != 0 ){
-                        tempList.add(mDatas.get(i * 10 + j));
+                        tempList.add(mDatas.get(i * 15 + j));
                     }else {
                         tempList.add(mDatas.get(i + j));
                     }
                 }
             }else {
-                for (int j = 0; j < mDatas.size() % 10; j++) {
-                    tempList.add(mDatas.get(i * 10 + j));
+                for (int j = 0; j < mDatas.size() % 15; j++) {
+                    tempList.add(mDatas.get(i * 15 + j));
                 }
             }
 
@@ -231,6 +238,10 @@ public class AddBillActivity extends BaseActivity {
             viewpagerItem.setCurrentItem(sortPage);
     }
 
+    /**
+     * 监听点击事件
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @OnClick({R.id.tb_note_income, R.id.tb_note_outcome, R.id.tb_note_cash, R.id.tb_note_date,
             R.id.tb_note_remark, R.id.tb_calc_num_done, R.id.tb_calc_num_del, R.id.tb_calc_num_1,
@@ -270,6 +281,7 @@ public class AddBillActivity extends BaseActivity {
                         mYear = i;
                         mMonth = i1;
                         mDay = i2;
+                        //构造时间字符串
                         if (mMonth + 1 < 10) {
                             if (mDay < 10) {
                                 days = new StringBuffer().append(mYear).append("-").append("0").
@@ -420,7 +432,10 @@ public class AddBillActivity extends BaseActivity {
         }
     }
 
-    //计算金额
+    /**
+     * 计算金额
+     * @param money
+     */
     private void calcMoney(int money) {
         if (num.equals("0") && money == 0)
             return;

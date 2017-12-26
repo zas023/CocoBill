@@ -24,10 +24,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.BookNoteAdapter;
 import com.copasso.cocobill.adapter.MonthAccountAdapter;
-import com.copasso.cocobill.bean.BPay;
-import com.copasso.cocobill.bean.BillBean;
 import com.copasso.cocobill.bean.NoteBean;
-import com.copasso.cocobill.bean.SortBean;
 import com.copasso.cocobill.utils.Constants;
 import com.copasso.cocobill.utils.DateUtils;
 import com.copasso.cocobill.utils.HttpUtils;
@@ -102,14 +99,16 @@ public class EditBillActivity extends BaseActivity {
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_tallybook_note;
+        return R.layout.activity_add;
     }
 
     @Override
     protected void initEventAndData() {
 
+        //获取旧数据
         setOldBill();
 
+        //获取账单分类、支付方式信息
         HttpUtils.getNote(new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -153,7 +152,11 @@ public class EditBillActivity extends BaseActivity {
         moneyTv.setText(num + dotNum);
     }
 
-
+    /**
+     * 通过id查询分类信息
+     * @param id
+     * @return
+     */
     private NoteBean.SortlisBean findSortById(int id){
         if (isOutcome){
             for (NoteBean.SortlisBean e:noteBean.getOutSortlis()) {
@@ -168,6 +171,12 @@ public class EditBillActivity extends BaseActivity {
         }
         return null;
     }
+
+    /**
+     * 通过id查找支付方式，返回其数组中的序号
+     * @param id
+     * @return
+     */
     private int findPayById(int id){
         List<NoteBean.PayinfoBean> list=noteBean.getPayinfo();
         for (int i=0;i<list.size();i++){
@@ -207,27 +216,30 @@ public class EditBillActivity extends BaseActivity {
         initViewPager();
     }
 
+    /**
+     * 初始化账单分类视图
+     */
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
-        if (mDatas.size() % 10 == 0)
+        if (mDatas.size() % 15 == 0)
             isTotalPage = true;
-        page = (int) Math.ceil(mDatas.size() * 1.0 / 10);
+        page = (int) Math.ceil(mDatas.size() * 1.0 / 15);
         for (int i = 0; i < page; i++) {
             tempList = new ArrayList<>();
             View view = inflater.inflate(R.layout.pager_item_tb_type, null);
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
             if (i != page - 1 || (i == page - 1 && isTotalPage)) {
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 15; j++) {
                     if (i != 0) {
-                        tempList.add(mDatas.get(i * 10 + j));
+                        tempList.add(mDatas.get(i * 15 + j));
                     } else {
                         tempList.add(mDatas.get(i + j));
                     }
                 }
             } else {
-                for (int j = 0; j < mDatas.size() % 10; j++) {
-                    tempList.add(mDatas.get(i * 10 + j));
+                for (int j = 0; j < mDatas.size() % 15; j++) {
+                    tempList.add(mDatas.get(i * 15 + j));
                 }
             }
 
@@ -270,6 +282,9 @@ public class EditBillActivity extends BaseActivity {
     private List<View> viewList;
     private ImageView[] icons;
 
+    /**
+     * 初始化账单分类视图的指示小红点
+     */
     private void initIcon() {
         icons = new ImageView[viewList.size()];
         layoutIcon.removeAllViews();
@@ -289,6 +304,10 @@ public class EditBillActivity extends BaseActivity {
             viewpagerItem.setCurrentItem(sortPage);
     }
 
+    /**
+     * 监听点击事件
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @OnClick({R.id.tb_note_income, R.id.tb_note_outcome, R.id.tb_note_cash, R.id.tb_note_date,
             R.id.tb_note_remark, R.id.tb_calc_num_done, R.id.tb_calc_num_del, R.id.tb_calc_num_1,
@@ -477,7 +496,10 @@ public class EditBillActivity extends BaseActivity {
         }
     }
 
-    //计算金额
+    /**
+     * 计算金额
+     * @param money
+     */
     private void calcMoney(int money) {
         if (num.equals("0") && money == 0)
             return;

@@ -36,7 +36,7 @@ public class SplashActivity extends AwesomeSplash {
 
         //Customize Logo
         configSplash.setLogoSplash(R.mipmap.icon1); //or any other drawable
-        configSplash.setAnimLogoSplashDuration(1000); //int ms
+        configSplash.setAnimLogoSplashDuration(500); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.Bounce); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
         //Customize Title
@@ -49,6 +49,9 @@ public class SplashActivity extends AwesomeSplash {
 
     }
 
+    /**
+     * 监听动画完成事件
+     */
     @Override
     public void animationsFinished() {
 

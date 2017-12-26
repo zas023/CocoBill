@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017/10/16 0016.
+ * 通用javabean
  */
 
 public class BaseBean implements Serializable {

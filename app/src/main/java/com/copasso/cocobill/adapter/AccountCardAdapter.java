@@ -2,7 +2,6 @@ package com.copasso.cocobill.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.MonthAccountBean;
-import com.copasso.cocobill.bean.TallyAccountBean;
 
 import java.util.List;
 
-
+/**
+ * 卡片布局Adapter
+ */
 public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.ViewHolder>{
 
     private Context mContext;

@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     //用户id为0表示未有用户登陆
                     startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), 1);
                 }else {
-                    Toast.makeText(MainActivity.this, "You have login", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,UserInfoActivity.class));
                 }
             }
         });
@@ -185,11 +185,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
         if (id == R.id.nav_account) {
             // Handle the camera action
-            mainFragmentPagerAdapter.getItem(1);
+            viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_month) {
-
+            viewPager.setCurrentItem(1);
         } else if (id == R.id.nav_total) {
-
+            viewPager.setCurrentItem(2);
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_about){

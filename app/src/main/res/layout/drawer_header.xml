@@ -15,10 +15,10 @@
         android:gravity="bottom">
 
     <com.copasso.cocobill.view.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            app:srcCompat="@mipmap/toddthink"
+            app:srcCompat="@mipmap/ic_def_icon"
             android:id="@+id/drawer_iv"/>
 
     <TextView

@@ -1,6 +1,5 @@
 package com.copasso.cocobill.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +11,13 @@ import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.activity.AddBillActivity;
 import com.copasso.cocobill.activity.EditBillActivity;
-import com.copasso.cocobill.activity.MainActivity;
 import com.copasso.cocobill.bean.NoteBean;
 
 import java.util.List;
 
-
+/**
+ * 账单分类Adapter（AddBillAdapter)
+ */
 public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHolder>{
 
     private AddBillActivity mContext;

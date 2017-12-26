@@ -1,6 +1,8 @@
 package com.copasso.cocobill.bean;
 
-import java.io.Serializable;
+/**
+ * 账单分类bean
+ */
 
 public class BSort{
     private Integer id;

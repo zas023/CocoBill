@@ -15,5 +15,16 @@
     </declare-styleable>
 
 
+    <!--通用 Item-->
+    <declare-styleable name="CommonItemLayout">
+        <attr name="cil_leftText" format="string"/>
+        <attr name="cil_leftImage" format="reference"/>
+        <attr name="cil_leftTextColor" format="color"/>
+        <attr name="cil_rightText" format="string"/>
+        <attr name="cil_rightTextColor" format="color"/>
+        <attr name="cil_rightImage" format="reference"/>
+    </declare-styleable>
+
+
 
 </resources>

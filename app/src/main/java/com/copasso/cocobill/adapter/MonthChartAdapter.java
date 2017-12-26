@@ -11,8 +11,9 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.BillBean;
 
 import java.util.List;
-
-
+/**
+ * ChartFragment
+ */
 public class MonthChartAdapter extends RecyclerView.Adapter<MonthChartAdapter.ViewHolder>{
 
     private Context mContext;
@@ -53,8 +54,10 @@ public class MonthChartAdapter extends RecyclerView.Adapter<MonthChartAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.rank.setText(position+1+"");
         holder.title.setText(sortName);
-        holder.money.setText(""+mDatas.get(position).getCost());
-
+        if(mDatas.get(position).isIncome())
+            holder.money.setText("+" + mDatas.get(position).getCost());
+        else
+            holder.money.setText("-" + mDatas.get(position).getCost());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

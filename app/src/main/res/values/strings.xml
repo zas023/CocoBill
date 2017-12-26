@@ -18,7 +18,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--about activity-->
-    <string name="about">关于</string>
+    <string name="about">关于CocoBill记账本</string>
     <string name="about_introduce">简洁、便捷、语音记账\n
         ------账单助手是啥------\n
         嗯~没错我就是个记账APP，功能不花哨主打实用，算账本来就是头疼事还整那些花里胡哨的功能干啥呢？所以我们这款记账APP就是简洁！实用！！！\n
@@ -33,5 +33,34 @@
     <string name="about_introduce2">ps:请勿在软件中填写个人隐私信息</string>
     <string name="app_name_with_introduce">CocoBill - 理财的好帮手</string>
     <string name="developers">开发人员:zhouass666</string>
+
+    <!--other-->
+    <string name="rmb">¥</string>
+    <string name="login">登录</string>
+    <string name="forget_password">忘记密码？</string>
+    <string name="register">注册</string>
+    <string name="get_code">获取验证码</string>
+    <string name="reset_get">重新获取</string>
+    <string name="verify_phone">验证手机号</string>
+    <string name="verify">验证</string>
+    <string name="finish">完成</string>
+    <string name="income">收入</string>
+    <string name="cost">支出</string>
+    <string name="save">保存</string>
+    <string name="money_normal">0.00</string>
+    <string name="say_something">说点什么吧&#8230;</string>
+    <string name="cur_month_cost">当月支出</string>
+    <string name="cur_month_income">当月收入</string>
+    <string name="icon">头像</string>
+    <string name="username">用户名</string>
+    <string name="sex">性别</string>
+    <string name="age">年龄</string>
+    <string name="phone">电话</string>
+    <string name="email">邮箱</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="not_set">未设置</string>
+    <string name="year">岁</string>
+    <string name="setting">设置</string>
 
 </resources>

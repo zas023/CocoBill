@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by zhouas666 on 2017/12/13.
+ * 主布局中FragmentPagerAdapter
  */
 public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 

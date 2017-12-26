@@ -36,7 +36,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 
 /**
- * 记账本--类别报表
+ * 类别报表
  */
 public class MenuChartFragment extends BaseFragment
         implements OnChartValueSelectedListener {
@@ -114,7 +114,10 @@ public class MenuChartFragment extends BaseFragment
 
         PieChartUtils.initPieChart(mChart);
         mChart.setOnChartValueSelectedListener(this);
-
+        //设置中间透明圈的半径,值为所占饼图的百分比
+        mChart.setTransparentCircleRadius(40);
+        //设置圆盘是否转动，默认转动
+        mChart.setRotationEnabled(true);
         //改变加载显示的颜色
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
         //设置向下拉多少出现刷新
