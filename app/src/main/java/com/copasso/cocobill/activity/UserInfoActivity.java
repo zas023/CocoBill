@@ -107,7 +107,8 @@ public class UserInfoActivity extends BaseActivity {
         }
 
         //加载当前头像
-        String imgPath = SharedPUtils.getCurrentUserImagePath(UserInfoActivity.this);
+        String imgPath = Environment
+                .getExternalStorageDirectory().getAbsolutePath()+"/"+currentUser.getImage();
         if (imgPath != null) {
             File file = new File(imgPath);
             if (file.exists()) {
@@ -391,8 +392,8 @@ public class UserInfoActivity extends BaseActivity {
         // bitmap是没有做个圆形处理的，但已经被裁剪了
         String imagename = Constants.currentUserId + "_" + String.valueOf(System.currentTimeMillis());
         String imagePath = ImageUtils.savePhoto(bitmap, Environment
-                .getExternalStorageDirectory().getAbsolutePath(), imagename);
-        SharedPUtils.setCurrentUserImagePath(this, imagePath);
+                .getExternalStorageDirectory().getAbsolutePath(), imagename+".png");
+        currentUser.setImage(imagePath);
         if (imagePath != null) {
             OkHttpClient mOkHttpClient = new OkHttpClient();
             File file = new File(imagePath);

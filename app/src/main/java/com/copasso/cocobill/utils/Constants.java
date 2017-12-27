@@ -5,6 +5,7 @@ public class Constants {
 
     public static final String IMAGEDETAIL ="/UF/Uploads/Noteimg/listout/";
     public static final String IMAGENOTE ="/UF/Uploads/Noteimg/blacksort/";
+    public static final String IMAGEUSER ="/upload/";
 
     public static final String CACHE = "cache";
     public static final int LATEST_COLUMN = Integer.MAX_VALUE;
