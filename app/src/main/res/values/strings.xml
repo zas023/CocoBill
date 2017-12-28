@@ -7,15 +7,15 @@
     <string name="second_title">记一笔</string>
     <string name="third_title">报表</string>
     <string name="four_title">账户</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--login activity-->
     <string name="login_user_name">Tell me your register name or email.</string>
     <string name="login_password">Tell me your password (be quiet!).</string>
     <string name="register_user_name">Show me a cool user name!</string>
     <string name="register_user_email">You can regain your password by email.</string>
     <string name="register_password">I can keep secret!</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--about activity-->
     <string name="about">关于CocoBill记账本</string>
@@ -64,5 +64,14 @@
     <string name="not_set">未设置</string>
     <string name="year">岁</string>
     <string name="setting">设置</string>
+    <!--Loading-->
+    <string name="load_msg">正在加载中&#8230;</string>
+    <string name="load_update">正在修改中&#8230;</string>
+    <string name="load_delete">正在删除中&#8230;</string>
+    <string name="load_send_code">正在发送验证码&#8230;</string>
+    <string name="load_verify">正在验证中&#8230;</string>
+    <string name="load_switch">正在切换中&#8230;</string>
+    <string name="load_login">正在登录中&#8230;</string>
+    <string name="load_sign">正在注册中&#8230;</string>
 
 </resources>

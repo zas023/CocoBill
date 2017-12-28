@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         Bitmap bitmap = null;
                         try {
                             bitmap = Glide.with(MainActivity.this)
-                                    .load(Constants.BASEURL + Constants.IMAGEUSER + currentUser.getImage())
+                                    .load(Constants.BASE_URL + Constants.IMAGE_USER + currentUser.getImage())
                                     .asBitmap()
                                     .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                                     .get();

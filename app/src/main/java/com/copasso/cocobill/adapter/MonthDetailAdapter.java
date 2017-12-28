@@ -19,11 +19,14 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.activity.EditBillActivity;
 import com.copasso.cocobill.bean.*;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridAdapter;
-import com.copasso.cocobill.utils.HttpUtils;
-import com.copasso.cocobill.utils.DateUtils;
+import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.view.SwipeMenuView;
 import com.google.gson.Gson;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_HMS_CN;
@@ -39,6 +42,8 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
 
     private Context mContext;
 
+    private OnStickyHeaderClickListener onStickyHeaderClickListener;
+
     private String baseUrl = "http://test.huishangsuo.cn/UF/Uploads/Noteimg/blacksort/";
 
     private List<MonthDetailBean.DaylistBean> mDatas;
@@ -47,9 +52,19 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
         this.mDatas = mDatas;
     }
 
+    public void setOnStickyHeaderClickListener(OnStickyHeaderClickListener listener) {
+        if (onStickyHeaderClickListener == null)
+            this.onStickyHeaderClickListener = listener;
+    }
+
     public MonthDetailAdapter(Context context, List<MonthDetailBean.DaylistBean> datas) {
         this.mContext = context;
         this.mDatas = datas;
+    }
+
+    public void remove(int section, int offset) {
+        mDatas.get(section).getList().remove(offset);
+        notifySectionItemRemoved(section, offset);
     }
 
     public void clear() {
@@ -94,7 +109,8 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
         holder.item_title.setText(mDatas.get(section).getList().get(position).getSort().getSortName());
         Glide.with(mContext).load(baseUrl + mDatas.get(section).getList().get(position).getSort().getSortImg())
                 .into(holder.item_img);
-
+//        holder.item_img.setImageDrawable(
+//                PieChartUtils.getDrawable(mDatas.get(section).getList().get(position).getSort().getSortImg()));
         if (mDatas.get(section).getList().get(position).isIncome()) {
             holder.item_money.setText("+" + mDatas.get(section).getList().get(position).getCost());
         } else {
@@ -114,21 +130,8 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                HttpUtils.deleteBillById(new Handler() {
-                                    @Override
-                                    public void handleMessage(Message msg) {
-                                        super.handleMessage(msg);
-                                        Gson gson = new Gson();
-                                        BaseBean baseBean = gson.fromJson(msg.obj.toString(), BaseBean.class);
-                                        if (baseBean.getStatus() == 100) {
-                                            mDatas.get(section).getList().remove(offset);
-                                            notifySectionItemRemoved(section, offset);
-                                        } else {
-                                            Toast.makeText(holder.item_delete.getContext(), "删除--" + sortId + "失败", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }, mDatas.get(section).getList().get(offset).getId());
-
+                                onStickyHeaderClickListener.OnDeleteClick(
+                                        mDatas.get(section).getList().get(offset).getId(), section, offset);
                             }
                         })
                         .show();
@@ -140,18 +143,8 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
             public void onClick(View v) {
                 final int section = getAdapterPositionSection(holder.getAdapterPosition());
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
-                Intent intent=new Intent(mContext, EditBillActivity.class);
-                Bundle bundle=new Bundle();
-                BillBean billBean=mDatas.get(section).getList().get(offset);
-                bundle.putInt("id",billBean.getId());
-                bundle.putInt("sortId",billBean.getSortid());
-                bundle.putInt("payId",billBean.getPayid());
-                bundle.putString("content",billBean.getContent());
-                bundle.putDouble("cost",billBean.getCost());
-                bundle.putLong("date",billBean.getCrdate());
-                bundle.putBoolean("income",billBean.isIncome());
-                intent.putExtra("bundle",bundle);
-                ((Activity) mContext).startActivityForResult(intent, 0);
+                onStickyHeaderClickListener.OnEditClick(
+                        mDatas.get(section).getList().get(offset), section, offset);
             }
         });
         //监听单击显示详情事件
@@ -160,7 +153,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
             public void onClick(View view) {
                 final int section = getAdapterPositionSection(holder.getAdapterPosition());
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
-                final AlertDialog alertDialog=new AlertDialog.Builder(mContext).setTitle("备注")
+                final AlertDialog alertDialog = new AlertDialog.Builder(mContext).setTitle("备注")
                         .setPositiveButton("朕知道了", null)
                         .show();
                 final Window window = alertDialog.getWindow();
@@ -168,21 +161,23 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                 TextView tv_title = (TextView) window.findViewById(R.id.dialog_bill_tv_title);
                 TextView tv_content = (TextView) window.findViewById(R.id.dialog_bill_tv_content);
                 TextView tv_date = (TextView) window.findViewById(R.id.dialog_bill_tv_date);
-                ImageView iv_bill=(ImageView)window.findViewById(R.id.dialog_bill_iv);
-                TextView tv_btn=(TextView) window.findViewById(R.id.dialog_bill_btn);
+                ImageView iv_bill = (ImageView) window.findViewById(R.id.dialog_bill_iv);
+                TextView tv_btn = (TextView) window.findViewById(R.id.dialog_bill_btn);
                 Glide.with(mContext).load(baseUrl + mDatas.get(section).getList().get(offset).getSort().getSortImg())
                         .into(iv_bill);
-                String content=mDatas.get(section).getList().get(offset).getContent();
-                if(!content.equals("null")){
-                    tv_content.setText("备注信息："+mDatas.get(section).getList().get(offset).getContent());
+//                iv_bill.setImageDrawable(
+//                        PieChartUtils.getDrawable(mDatas.get(section).getList().get(offset).getSort().getSortImg()));
+                String content = mDatas.get(section).getList().get(offset).getContent();
+                if (content!=null) {
+                    tv_content.setText("备注信息：" + mDatas.get(section).getList().get(offset).getContent());
                 }
-                tv_title.setText("因"+mDatas.get(section).getList().get(offset).getSort().getSortName()
-                        +"消费"+Math.abs(mDatas.get(section).getList().get(offset).getCost())+"元");
-                if(mDatas.get(section).getList().get(offset).isIncome())
-                    tv_title.setText("因"+mDatas.get(section).getList().get(offset).getSort().getSortName()
-                            +"收入"+mDatas.get(section).getList().get(offset).getCost()+"元");
-                tv_date.setText(DateUtils.long2Str(mDatas.get(section).getList().get(offset).getCrdate(),FORMAT_YMD_CN)
-                +"\n\n"+DateUtils.long2Str(mDatas.get(section).getList().get(offset).getCrdate(),FORMAT_HMS_CN));
+                tv_title.setText("因" + mDatas.get(section).getList().get(offset).getSort().getSortName()
+                        + "消费" + Math.abs(mDatas.get(section).getList().get(offset).getCost()) + "元");
+                if (mDatas.get(section).getList().get(offset).isIncome())
+                    tv_title.setText("因" + mDatas.get(section).getList().get(offset).getSort().getSortName()
+                            + "收入" + mDatas.get(section).getList().get(offset).getCost() + "元");
+                tv_date.setText(DateUtils.long2Str(mDatas.get(section).getList().get(offset).getCrdate(), FORMAT_YMD_CN)
+                        + "\n\n" + DateUtils.long2Str(mDatas.get(section).getList().get(offset).getCrdate(), FORMAT_HMS_CN));
 
                 tv_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -193,6 +188,14 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
 
             }
         });
+    }
+
+    /**
+     * 自定义编辑、删除接口
+     */
+    public interface OnStickyHeaderClickListener {
+        void OnDeleteClick(int id, int section, int offset);
+        void OnEditClick(BillBean item, int section, int offset);
     }
 
     public static class MyHeaderViewHolder extends HeaderViewHolder {

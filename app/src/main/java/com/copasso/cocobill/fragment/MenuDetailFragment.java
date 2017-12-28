@@ -1,12 +1,14 @@
 package com.copasso.cocobill.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,20 +18,29 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.activity.AddBillActivity;
+import com.copasso.cocobill.activity.EditBillActivity;
+import com.copasso.cocobill.activity.MainActivity;
 import com.copasso.cocobill.adapter.MonthDetailAdapter;
+import com.copasso.cocobill.bean.BaseBean;
+import com.copasso.cocobill.bean.BillBean;
 import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridLayoutManager;
 import com.copasso.cocobill.utils.Constants;
 import com.copasso.cocobill.utils.HttpUtils;
 import com.copasso.cocobill.utils.DateUtils;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.copasso.cocobill.utils.OkHttpUtils;
 import com.google.gson.Gson;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
@@ -64,8 +75,8 @@ public class MenuDetailFragment extends BaseFragment {
     private List<MonthDetailBean.DaylistBean> list;
     private MonthDetailBean data;
 
-    private String setYear=DateUtils.getCurYear(FORMAT_Y);
-    private String setMonth=DateUtils.getCurMonth(FORMAT_M);
+    private String setYear = DateUtils.getCurYear(FORMAT_Y);
+    private String setMonth = DateUtils.getCurMonth(FORMAT_M);
 
     @Override
     protected int getLayoutId() {
@@ -76,7 +87,7 @@ public class MenuDetailFragment extends BaseFragment {
     @Override
     protected void initEventAndData() {
 
-        dataYear.setText(setYear+" 年");
+        dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
         //改变加载显示的颜色
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
@@ -88,7 +99,7 @@ public class MenuDetailFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 swipe.setRefreshing(false);
-                setBillData(Constants.currentUserId,setYear,setMonth);
+                setBillData(Constants.currentUserId, setYear, setMonth);
             }
         });
 
@@ -109,6 +120,7 @@ public class MenuDetailFragment extends BaseFragment {
         rvList.setOnTouchListener(new View.OnTouchListener() {
             private float lastX;
             private float lastY;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -119,12 +131,11 @@ public class MenuDetailFragment extends BaseFragment {
                     case MotionEvent.ACTION_MOVE:
                         float x = event.getX();
                         float y = event.getY();
-                        boolean isUp=lastY- y>2;
+                        boolean isUp = lastY - y > 2;
                         //一次down，只变化一次，防止一次滑动时抖动下，造成某一个的向下时,y比lastY小
-                        if(isUp){
+                        if (isUp) {
                             floatBtn.setVisibility(View.GONE);
-                        }
-                        else{
+                        } else {
                             floatBtn.setVisibility(View.VISIBLE);
                         }
                         break;
@@ -136,49 +147,112 @@ public class MenuDetailFragment extends BaseFragment {
             }
 
         });
+
+        //adapter的侧滑选项事件监听
+        adapter.setOnStickyHeaderClickListener(new MonthDetailAdapter.OnStickyHeaderClickListener() {
+            @Override
+            public void OnDeleteClick(int id, final int section, final int offset) {
+                OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_DELETE
+                                + "/" +id, null,
+                        new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                Gson gson = new Gson();
+                                BaseBean baseBean = gson.fromJson(response.body().string(), BaseBean.class);
+                                if (baseBean.getStatus() == 100) {
+                                    mActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter.remove(section,offset);
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(mContext, "删除失败", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void OnEditClick(BillBean item, int section, int offset) {
+                Intent intent = new Intent(mContext, EditBillActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", item.getId());
+                bundle.putInt("sortId", item.getSortid());
+                bundle.putInt("payId", item.getPayid());
+                bundle.putString("content", item.getContent());
+                bundle.putDouble("cost", item.getCost());
+                bundle.putLong("date", item.getCrdate());
+                bundle.putBoolean("income", item.isIncome());
+                intent.putExtra("bundle", bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+
         //请求当月数据
-        setBillData(Constants.currentUserId,setYear,setMonth);
+        setBillData(Constants.currentUserId, setYear, setMonth);
     }
 
-
+    /**
+     * 获取账单数据
+     *
+     * @param userid
+     * @param year
+     * @param month
+     */
     private void setBillData(final int userid, String year, String month) {
-        if (userid==0){
+        if (userid == 0) {
             Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
             return;
         }
-        dataYear.setText(year+" 年");
+        dataYear.setText(year + " 年");
         dataMonth.setText(month);
         //请求数据前清空数据
         adapter.clear();
         tOutcome.setText("0.00");
         tIncome.setText("0.00");
         //请求某年某月数据
-        HttpUtils.getMonthBills(new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Gson gson = new Gson();
-                data = gson.fromJson(msg.obj.toString(), MonthDetailBean.class);
-                //status==100:处理成功！
-                if (data.getStatus() == 100) {
-                    tOutcome.setText(data.getT_outcome());
-                    tIncome.setText(data.getT_income());
-                    list = data.getDaylist();
-                    adapter.setmDatas(list);
-                    adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
-                }
-            }
-        }, userid, year, month);
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_MONTH_DETIAL + "/" + userid + "/" + year + "/" + month,
+                null, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        Gson gson = new Gson();
+                        data = gson.fromJson(response.body().string(), MonthDetailBean.class);
+                        //data不为空且status==100:处理成功！
+                        if (data != null && data.getStatus() == 100) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tOutcome.setText(data.getT_outcome());
+                                    tIncome.setText(data.getT_income());
+                                    list = data.getDaylist();
+                                    adapter.setmDatas(list);
+                                    adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
 
-    @OnClick({R.id.float_btn, R.id.layout_data,R.id.top_ll_out})
+    @OnClick({R.id.float_btn, R.id.layout_data, R.id.top_ll_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.float_btn:
-                if(Constants.currentUserId==0) {
+                if (Constants.currentUserId == 0) {
                     Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Intent intent = new Intent(getContext(), AddBillActivity.class);
                     startActivityForResult(intent, 0);
                 }
@@ -188,9 +262,9 @@ public class MenuDetailFragment extends BaseFragment {
                 new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {//选中事件回调
-                        setYear=DateUtils.date2Str(date, "yyyy");
-                        setMonth=DateUtils.date2Str(date, "MM");
-                        setBillData(Constants.currentUserId,setYear,setMonth);
+                        setYear = DateUtils.date2Str(date, "yyyy");
+                        setMonth = DateUtils.date2Str(date, "MM");
+                        setBillData(Constants.currentUserId, setYear, setMonth);
                     }
                 }).setRangDate(null, Calendar.getInstance())
                         .setType(new boolean[]{true, true, false, false, false, false})
@@ -203,12 +277,17 @@ public class MenuDetailFragment extends BaseFragment {
         }
     }
 
-    //AdBillActivity返回值
+    /**
+     * Activity返回
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 0){
-            setBillData(Constants.currentUserId,setYear,setMonth);
+        if (requestCode == 0) {
+            setBillData(Constants.currentUserId, setYear, setMonth);
         }
     }
 }

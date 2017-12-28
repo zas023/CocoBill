@@ -15,6 +15,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.MonthChartAdapter;
 import com.copasso.cocobill.bean.MonthChartBean;
+import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.view.CircleImageView;
 import com.github.mikephil.charting.charts.PieChart;
@@ -23,6 +24,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +33,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.google.gson.Gson;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
@@ -142,6 +147,12 @@ public class MenuChartFragment extends BaseFragment
     }
 
 
+    /**
+     * 获取账单数据
+     * @param userid
+     * @param year
+     * @param month
+     */
     private void setChartData(final int userid, String year, String month) {
         if (userid==0){
             Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
@@ -149,18 +160,34 @@ public class MenuChartFragment extends BaseFragment
         }
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
-        HttpUtils.getMonthChart(new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Gson gson = new Gson();
-                monthChartBean = gson.fromJson(msg.obj.toString(), MonthChartBean.class);
-                //status==100:处理成功！
-                setReportData();
-            }
-        }, userid, year, month);
+        //请求某年某月数据
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_MONTH_CHART
+                        + "/" + userid + "/" + year + "/" + month,
+                null, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        Gson gson = new Gson();
+                        monthChartBean = gson.fromJson(response.body().string(), MonthChartBean.class);
+                        //data不为空且status==100:处理成功！
+                        if (monthChartBean!=null && monthChartBean.getStatus() == 100) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setReportData();
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
+    /**
+     * 报表数据
+     */
     private void setReportData() {
 
         if (monthChartBean == null) {

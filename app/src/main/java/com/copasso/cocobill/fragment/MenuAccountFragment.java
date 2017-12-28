@@ -15,16 +15,22 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.AccountCardAdapter;
 import com.copasso.cocobill.bean.MonthAccountBean;
+import com.copasso.cocobill.bean.MonthChartBean;
 import com.copasso.cocobill.utils.Constants;
 import com.copasso.cocobill.utils.DateUtils;
 import com.copasso.cocobill.utils.HttpUtils;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import com.copasso.cocobill.utils.OkHttpUtils;
 import com.google.gson.Gson;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
@@ -98,6 +104,12 @@ public class MenuAccountFragment extends BaseFragment {
     }
 
 
+    /**
+     * 获取账单数据
+     * @param userid
+     * @param year
+     * @param month
+     */
     private void setAcountData(final int userid, String year, String month) {
         if (userid==0){
             Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
@@ -105,22 +117,32 @@ public class MenuAccountFragment extends BaseFragment {
         }
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
-        HttpUtils.getMonthAccount(new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Gson gson = new Gson();
-                monthAccountBean = gson.fromJson(msg.obj.toString(), MonthAccountBean.class);
-                //status==100:处理成功！
-                if (monthAccountBean.getStatus() == 100) {
-                    tOutcome.setText(monthAccountBean.getTotalOut());
-                    tIncome.setText(monthAccountBean.getTotalIn());
-                    list = monthAccountBean.getList();
-                    adapter.setmDatas(list);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        }, userid, year, month);
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_MONTH_CARD
+                        + "/" + userid + "/" + year + "/" + month,
+                null, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        Gson gson = new Gson();
+                        monthAccountBean = gson.fromJson(response.body().string(), MonthAccountBean.class);
+                        //data不为空且status==100:处理成功！
+                        if (monthAccountBean!=null && monthAccountBean.getStatus() == 100) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tOutcome.setText(monthAccountBean.getTotalOut());
+                                    tIncome.setText(monthAccountBean.getTotalIn());
+                                    list = monthAccountBean.getList();
+                                    adapter.setmDatas(list);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
     @OnClick({R.id.layout_data,R.id.top_ll_out})

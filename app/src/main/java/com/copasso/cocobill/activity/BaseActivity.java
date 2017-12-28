@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.utils.ActivityManagerUtil;
+import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.utils.ThemeManager;
 
 
@@ -78,7 +79,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         new AlertDialog.Builder(this)
                 .setTitle("存储权限不可用")
-                .setMessage("由于需要获取存储空间，为你存储个人信息\n否则，您将无法正常使用本程序")
+                .setMessage("由于需要获取存储空间，为你存储个人信息\n否则，您可能将无法正常使用本程序")
                 .setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -138,7 +139,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+//                        finish();
                     }
                 }).setCancelable(false).show();
     }
@@ -181,6 +182,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        OkHttpUtils.getInstance().cancel(this);
         mUnBinder.unbind();
         ActivityManagerUtil.mActivities.remove(this);
     }

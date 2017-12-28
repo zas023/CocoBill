@@ -28,7 +28,7 @@ public class HttpUtils {
         String result = null;
         StringBuffer sbf = new StringBuffer();
 
-        String getURL = Constants.BASEURL + urlInfo;
+        String getURL = Constants.BASE_URL + urlInfo;
 
         try {
             URL url = new URL(getURL);
