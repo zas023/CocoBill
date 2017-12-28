@@ -33,6 +33,8 @@ import okhttp3.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhouas666 on 2017/12/24.
@@ -87,7 +89,8 @@ public class UserInfoActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doBack();
+                //返回消息更新上个Activity数据
+                setResult(RESULT_OK, new Intent());
                 finish();
             }
         });
@@ -100,7 +103,7 @@ public class UserInfoActivity extends BaseActivity {
             //加载当前头像
             String imgPath = Environment.getExternalStorageDirectory().getAbsolutePath()
                     + "/" + currentUser.getImage();
-            Log.i(TAG,imgPath);
+            Log.i(TAG, imgPath);
             File file = new File(imgPath);
             if (file.exists()) {
                 //加载图片
@@ -129,128 +132,21 @@ public class UserInfoActivity extends BaseActivity {
             R.id.cil_sex, R.id.cil_phone, R.id.cil_email})
     public void onViewClicked(final View view) {
         switch (view.getId()) {
-
             case R.id.rlt_update_icon:  //头像
-                if (iconDialog == null) {
-                    iconDialog = new AlertDialog.Builder(this).setItems(new String[]{"相册", "相机"},
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    switch (which) {
-                                        case CHOOSE_PICTURE: // 选择本地照片
-                                            Intent openAlbumIntent = new Intent(
-                                                    Intent.ACTION_GET_CONTENT);
-                                            openAlbumIntent.setType("image/*");
-                                            startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
-                                            break;
-                                        case TAKE_PICTURE: // 拍照
-                                            takePicture();
-                                            break;
-                                    }
-                                }
-                            }).create();
-                }
-                if (!iconDialog.isShowing()) {
-                    iconDialog.show();
-                }
+                showIconDialog();
                 break;
-            case R.id.cil_username:
+            case R.id.cil_username:  //用户名
                 Toast.makeText(getApplicationContext(), "江湖人行不更名，坐不改姓！",
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cil_sex:  //性别
-                if (genderDialog == null) {
-                    genderDialog = new AlertDialog.Builder(this).setItems(new String[]{"男", "女"},
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    switch (which) {
-                                        case GENDER_MAN: // 男性
-                                            if (currentUser.getGender().equals("F")) {
-                                                currentUser.setGender("M");
-                                                sexCL.setRightText(currentUser.getGender());
-                                            }
-                                            break;
-                                        case GENDER_FEMALE: // 女性
-                                            if (currentUser.getGender().equals("M")) {
-                                                currentUser.setGender("F");
-                                                sexCL.setRightText(currentUser.getGender());
-                                            }
-                                            break;
-                                    }
-                                }
-                            }).create();
-                }
-                if (!genderDialog.isShowing()) {
-                    genderDialog.show();
-                }
+                showGenderDialog();
                 break;
             case R.id.cil_phone:  //电话修改
-                final EditText editText = new EditText(UserInfoActivity.this);
-                String phone = currentUser.getPhone();
-                if (phone != null) {
-                    editText.setText(currentUser.getPhone());
-                    //将光标移至文字末尾
-                    editText.setSelection(currentUser.getPhone().length());
-                }
-                if (phoneDialog == null) {
-                    phoneDialog = new AlertDialog.Builder(this)
-                            .setTitle("电话")
-                            .setView(editText)
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String input = editText.getText().toString();
-                                    if (input.equals("")) {
-                                        Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
-                                                Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        if (StringUtils.checkPhoneNumber(input)) {
-                                            currentUser.setPhone(input);
-                                            phoneCL.setRightText(input);
-                                        } else {
-                                            Snackbar.make(view, "请输入正确的电话号码", Snackbar.LENGTH_LONG).show();
-                                        }
-                                    }
-                                }
-                            })
-                            .setNegativeButton("取消", null)
-                            .create();
-                }
-                if (!phoneDialog.isShowing()) {
-                    phoneDialog.show();
-                }
+                showPhoneDialog();
                 break;
             case R.id.cil_email:  //邮箱修改
-                final EditText emailEditText = new EditText(UserInfoActivity.this);
-                emailEditText.setText(currentUser.getMail());
-                //将光标移至文字末尾
-                emailEditText.setSelection(currentUser.getMail().length());
-                if (emailDialog == null) {
-                    emailDialog = new AlertDialog.Builder(this)
-                            .setTitle("邮箱")
-                            .setView(emailEditText)
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String input = emailEditText.getText().toString();
-                                    if (input.equals("")) {
-                                        Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
-                                                Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        if (StringUtils.checkEmail(input)) {
-                                            currentUser.setMail(input);
-                                            emailCL.setRightText(input);
-                                        } else {
-                                            Snackbar.make(view, "请输入正确的邮箱格式", Snackbar.LENGTH_LONG).show();
-                                        }
-                                    }
-                                }
-                            })
-                            .setNegativeButton("取消", null)
-                            .create();
-                }
-                if (!emailDialog.isShowing()) {
-                    emailDialog.show();
-                }
+                showMailDialog();
                 break;
             default:
                 break;
@@ -258,23 +154,174 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     /**
-     * 返回操作
+     * 显示选择头像来源对话框
      */
-    public void doBack() {
-        if (currentUser != null) {
-            HttpUtils.updateUser(new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    if (msg.obj.toString().length() > 0) {
-                        SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
-                    } else {
-                        Toast.makeText(UserInfoActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }, currentUser.getId(), currentUser.getUsername(), currentUser.getGender(), currentUser.getPhone(), currentUser.getMail());
+    public void showIconDialog() {
+        if (iconDialog == null) {
+            iconDialog = new AlertDialog.Builder(this).setItems(new String[]{"相册", "相机"},
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case CHOOSE_PICTURE: // 选择本地照片
+                                    Intent openAlbumIntent = new Intent(
+                                            Intent.ACTION_GET_CONTENT);
+                                    openAlbumIntent.setType("image/*");
+                                    startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
+                                    break;
+                                case TAKE_PICTURE: // 拍照
+                                    takePicture();
+                                    break;
+                            }
+                        }
+                    }).create();
         }
-        setResult(RESULT_OK, new Intent());
+        if (!iconDialog.isShowing()) {
+            iconDialog.show();
+        }
+    }
+
+    /**
+     * 显示选择性别对话框
+     */
+    public void showGenderDialog() {
+        if (genderDialog == null) {
+            genderDialog = new AlertDialog.Builder(this).setItems(new String[]{"男", "女"},
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case GENDER_MAN: // 男性
+                                    if (currentUser.getGender().equals("F")) {
+                                        currentUser.setGender("M");
+                                        sexCL.setRightText(currentUser.getGender());
+                                        doUpdate();
+                                    }
+                                    break;
+                                case GENDER_FEMALE: // 女性
+                                    if (currentUser.getGender().equals("M")) {
+                                        currentUser.setGender("F");
+                                        sexCL.setRightText(currentUser.getGender());
+                                        doUpdate();
+                                    }
+                                    break;
+                            }
+                        }
+                    }).create();
+        }
+        if (!genderDialog.isShowing()) {
+            genderDialog.show();
+        }
+    }
+
+    /**
+     * 显示更换电话对话框
+     */
+    public void showPhoneDialog() {
+        final EditText editText = new EditText(UserInfoActivity.this);
+        String phone = currentUser.getPhone();
+        if (phone != null) {
+            editText.setText(currentUser.getPhone());
+            //将光标移至文字末尾
+            editText.setSelection(currentUser.getPhone().length());
+        }
+        if (phoneDialog == null) {
+            phoneDialog = new AlertDialog.Builder(this)
+                    .setTitle("电话")
+                    .setView(editText)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String input = editText.getText().toString();
+                            if (input.equals("")) {
+                                Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (StringUtils.checkPhoneNumber(input)) {
+                                    currentUser.setPhone(input);
+                                    phoneCL.setRightText(input);
+                                    doUpdate();
+                                } else {
+                                    Toast.makeText(UserInfoActivity.this,
+                                            "请输入正确的电话号码", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .create();
+        }
+        if (!phoneDialog.isShowing()) {
+            phoneDialog.show();
+        }
+    }
+
+    /**
+     * 显示更换邮箱对话框
+     */
+    public void showMailDialog() {
+        final EditText emailEditText = new EditText(UserInfoActivity.this);
+        emailEditText.setText(currentUser.getMail());
+        //将光标移至文字末尾
+        emailEditText.setSelection(currentUser.getMail().length());
+        if (emailDialog == null) {
+            emailDialog = new AlertDialog.Builder(this)
+                    .setTitle("邮箱")
+                    .setView(emailEditText)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String input = emailEditText.getText().toString();
+                            if (input.equals("")) {
+                                Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (StringUtils.checkEmail(input)) {
+                                    currentUser.setMail(input);
+                                    emailCL.setRightText(input);
+                                    doUpdate();
+                                } else {
+                                    Toast.makeText(UserInfoActivity.this,
+                                            "请输入正确的邮箱格式", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .create();
+        }
+        if (!emailDialog.isShowing()) {
+            emailDialog.show();
+        }
+    }
+
+    /**
+     * 更新用户数据
+     */
+    public void doUpdate() {
+        if (currentUser == null)
+            return;
+
+        ProgressUtils.show(UserInfoActivity.this, "正在修改...");
+        Map<String, String> params = new HashMap<>();
+        params.put("id", String.valueOf(currentUser.getId()));
+        params.put("username", currentUser.getUsername());
+        params.put("password", currentUser.getPassword());
+        params.put("gender", currentUser.getGender());
+        params.put("phone", currentUser.getPhone());
+        params.put("mail", currentUser.getMail());
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_UPDATE, params,
+                new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        ProgressUtils.dismiss();
+                        Toast.makeText(UserInfoActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        ProgressUtils.dismiss();
+                        SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
+                    }
+                });
     }
 
     /**
@@ -313,7 +360,7 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
-            doBack();
+            setResult(RESULT_OK, new Intent());
         return super.onKeyDown(keyCode, event);
     }
 
@@ -412,7 +459,7 @@ public class UserInfoActivity extends BaseActivity {
 
             Request request = new Request.Builder()
                     .header("Authorization", "Client-ID " + "...")
-                    .url("http://139.199.176.173:8080/ssmBillBook/file/upload")
+                    .url(Constants.BASE_URL + Constants.IMAGE_USER)
                     .post(requestBody)
                     .build();
 

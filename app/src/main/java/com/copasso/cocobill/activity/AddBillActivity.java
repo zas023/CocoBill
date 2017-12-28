@@ -23,17 +23,18 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.BookNoteAdapter;
 import com.copasso.cocobill.adapter.MonthAccountAdapter;
 import com.copasso.cocobill.bean.*;
-import com.copasso.cocobill.utils.HttpUtils;
-import com.copasso.cocobill.utils.DateUtils;
+import com.copasso.cocobill.utils.*;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.google.gson.Gson;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
@@ -59,6 +60,7 @@ public class AddBillActivity extends BaseActivity {
     ViewPager viewpagerItem;
     @BindView(R.id.layout_icon)
     LinearLayout layoutIcon;
+
 
     public boolean isOutcome = true;
     //计算器
@@ -242,7 +244,6 @@ public class AddBillActivity extends BaseActivity {
      * 监听点击事件
      * @param view
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @OnClick({R.id.tb_note_income, R.id.tb_note_outcome, R.id.tb_note_cash, R.id.tb_note_date,
             R.id.tb_note_remark, R.id.tb_calc_num_done, R.id.tb_calc_num_del, R.id.tb_calc_num_1,
             R.id.tb_calc_num_2, R.id.tb_calc_num_3, R.id.tb_calc_num_4, R.id.tb_calc_num_5,
@@ -262,109 +263,16 @@ public class AddBillActivity extends BaseActivity {
                 setTitleStatus();
                 break;
             case R.id.tb_note_cash://现金
-                pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-                    @Override
-                    public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                        selectedPayinfoIndex=options1;
-                        cashTv.setText(cardItem.get(options1));
-                    }
-                })
-                        .build();
-                pvCustomOptions.setPicker(cardItem);
-                pvCustomOptions.show();
+               showPayinfoSelector();
                 break;
             case R.id.tb_note_date://日期
-
-                new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        mYear = i;
-                        mMonth = i1;
-                        mDay = i2;
-                        //构造时间字符串
-                        if (mMonth + 1 < 10) {
-                            if (mDay < 10) {
-                                days = new StringBuffer().append(mYear).append("-").append("0").
-                                        append(mMonth + 1).append("-").append("0").append(mDay).append("-").toString();
-                            } else {
-                                days = new StringBuffer().append(mYear).append("年").append("0").
-                                        append(mMonth + 1).append("-").append(mDay).append("-").toString();
-                            }
-
-                        } else {
-                            if (mDay < 10) {
-                                days = new StringBuffer().append(mYear).append("-").
-                                        append(mMonth + 1).append("-").append("0").append(mDay).append("-").toString();
-                            } else {
-                                days = new StringBuffer().append(mYear).append("-").
-                                        append(mMonth + 1).append("-").append(mDay).toString();
-                            }
-
-                        }
-                        dateTv.setText(days);
-                    }
-                },mYear, mMonth, mDay ).show();
+                showTimeSelector();
                 break;
             case R.id.tb_note_remark://备注
-
-                final EditText editText = new EditText(AddBillActivity.this);
-
-                editText.setText(remarkInput);
-                //将光标移至文字末尾
-                editText.setSelection(remarkInput.length());
-
-                //弹出输入框
-                alertDialog=new AlertDialog.Builder(this)
-                        .setTitle("备注")
-                        .setView(editText)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                String input = editText.getText().toString();
-                                if (input.equals("")) {
-                                    Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    remarkInput=input;
-                                }
-                            }
-                        })
-                        .setNegativeButton("取消", null)
-                        .show();
-
-                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    public void onShow(DialogInterface dialog) {
-                        //调用系统输入法
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                    }
-                });
+                showContentDialog();
                 break;
             case R.id.tb_calc_num_done://确定
-                final SimpleDateFormat sdf = new SimpleDateFormat(" HH:mm:ss");
-                final String crDate=days+sdf.format(new Date());
-                if ((num+dotNum).equals("0.00")) {
-                    Toast.makeText(this, "唔姆，你还没输入金额", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                HttpUtils.addBill(new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                        super.handleMessage(msg);
-                        Gson gson = new Gson();
-                        if(msg.obj.toString()!="null"){
-                            Intent intent = new Intent();
-                            intent.putExtra("billJsonStr",msg.obj.toString());
-                            setResult(RESULT_OK, intent);
-                            finish();
-                        }else{
-                            Toast.makeText(AddBillActivity.this, "添加失败", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },Float.valueOf(num+dotNum),remarkInput,1,lastBean.getId(),
-                        noteBean.getPayinfo().get(selectedPayinfoIndex).getId(),
-                        crDate,
-                        !isOutcome);
+               doCommit();
                 break;
             case R.id.tb_calc_num_1:
                 calcMoney(1);
@@ -404,31 +312,179 @@ public class AddBillActivity extends BaseActivity {
                 moneyTv.setText(num + dotNum);
                 break;
             case R.id.tb_note_clear://清空
-                num = "0";
-                count = 0;
-                dotNum = ".00";
-                isDot = false;
-                moneyTv.setText("0.00");
+                doClear();
                 break;
             case R.id.tb_calc_num_del://删除
-                if (isDot){
-                    if (count > 0){
-                        dotNum = dotNum.substring(0, dotNum.length() - 1);
-                        count--;
-                    }
-                    if (count == 0){
-                        isDot = false;
-                        dotNum = ".00";
-                    }
-                    moneyTv.setText(num  + dotNum);
-                }else {
-                    if (num.length() > 0)
-                        num = num.substring(0, num.length() - 1);
-                    if (num.length() == 0)
-                        num = "0";
-                    moneyTv.setText(num + dotNum);
-                }
+               doDelete();
                 break;
+        }
+    }
+
+    /**
+     * 显示支付方式选择器
+     */
+    public void showPayinfoSelector() {
+        pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                selectedPayinfoIndex = options1;
+                cashTv.setText(cardItem.get(options1));
+            }
+        })
+                .build();
+        pvCustomOptions.setPicker(cardItem);
+        pvCustomOptions.show();
+    }
+
+    /**
+     * 显示日期选择器
+     */
+    public void showTimeSelector() {
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                mYear = i;
+                mMonth = i1;
+                mDay = i2;
+                if (mMonth + 1 < 10) {
+                    if (mDay < 10) {
+                        days = new StringBuffer().append(mYear).append("-").append("0").
+                                append(mMonth + 1).append("-").append("0").append(mDay).append("-").toString();
+                    } else {
+                        days = new StringBuffer().append(mYear).append("年").append("0").
+                                append(mMonth + 1).append("-").append(mDay).append("-").toString();
+                    }
+
+                } else {
+                    if (mDay < 10) {
+                        days = new StringBuffer().append(mYear).append("-").
+                                append(mMonth + 1).append("-").append("0").append(mDay).append("-").toString();
+                    } else {
+                        days = new StringBuffer().append(mYear).append("-").
+                                append(mMonth + 1).append("-").append(mDay).toString();
+                    }
+
+                }
+                dateTv.setText(days);
+            }
+        }, mYear, mMonth, mDay).show();
+    }
+
+    /**
+     * 显示备注内容输入框
+     */
+    public void showContentDialog() {
+        final EditText editText = new EditText(AddBillActivity.this);
+
+        editText.setText(remarkInput);
+        //将光标移至文字末尾
+        editText.setSelection(remarkInput.length());
+
+        //弹出输入框
+        alertDialog = new AlertDialog.Builder(this)
+                .setTitle("备注")
+                .setView(editText)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String input = editText.getText().toString();
+                        if (input.equals("")) {
+                            Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            remarkInput = input;
+                        }
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .show();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            public void onShow(DialogInterface dialog) {
+                //调用系统输入法
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
+    }
+
+    /**
+     * 提交账单
+     */
+    public void doCommit() {
+        final SimpleDateFormat sdf = new SimpleDateFormat(" HH:mm:ss");
+        final String crDate=days+sdf.format(new Date());
+        if ((num+dotNum).equals("0.00")) {
+            Toast.makeText(this, "唔姆，你还没输入金额", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ProgressUtils.show(AddBillActivity.this, "正在提交...");
+        Map<String, String> params = new HashMap<>();
+        params.put("userid", String.valueOf(Constants.currentUserId));
+        params.put("sortid", String.valueOf(lastBean.getId()));
+        params.put("payid", String.valueOf(noteBean.getPayinfo().get(selectedPayinfoIndex).getId()));
+        params.put("cost", num + dotNum);
+        params.put("crdate", crDate);
+        params.put("content", remarkInput);
+        params.put("income", isOutcome ? "false" : "true");
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_UPDATE, params,
+                new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        ProgressUtils.dismiss();
+                        mContext.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(AddBillActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        ProgressUtils.dismiss();
+                        Gson gson = new Gson();
+                        String result = response.body().string();
+
+                        Intent intent = new Intent();
+                        intent.putExtra("billJsonStr", result);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                });
+    }
+
+    /**
+     * 清空金额
+     */
+    public void doClear() {
+        num = "0";
+        count = 0;
+        dotNum = ".00";
+        isDot = false;
+        moneyTv.setText("0.00");
+    }
+
+    /**
+     * 删除上次输入
+     */
+    public void doDelete() {
+        if (isDot) {
+            if (count > 0) {
+                dotNum = dotNum.substring(0, dotNum.length() - 1);
+                count--;
+            }
+            if (count == 0) {
+                isDot = false;
+                dotNum = ".00";
+            }
+            moneyTv.setText(num + dotNum);
+        } else {
+            if (num.length() > 0)
+                num = num.substring(0, num.length() - 1);
+            if (num.length() == 0)
+                num = "0";
+            moneyTv.setText(num + dotNum);
         }
     }
 
