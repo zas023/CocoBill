@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center_vertical"
-        android:background="@color/text_red">
+        android:background="?attr/colorPrimary">
         <RelativeLayout
             android:id="@+id/back_layout"
             android:layout_centerVertical="true"
@@ -399,7 +399,7 @@
                 android:layout_weight="1"
                 android:textSize="20sp"
                 android:gravity="center"
-                android:background="@color/red"
+                android:background="?attr/colorPrimary"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>

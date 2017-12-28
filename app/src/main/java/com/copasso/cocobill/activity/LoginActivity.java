@@ -43,8 +43,6 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_btn_login)
     Button loginBtn;
 
-    private static final String TAG = "LoginActivity";
-
     //是否是登陆操作
     private boolean isLogin = true;
 

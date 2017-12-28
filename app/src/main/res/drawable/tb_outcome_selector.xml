@@ -14,7 +14,7 @@
             <stroke android:color="@color/white" android:width="1dp"/>
             <padding android:left="17dp" android:top="7dp" android:bottom="7dp" android:right="16dp"/>
             <corners android:topLeftRadius="15dp" android:bottomLeftRadius="15dp"/>
-            <solid android:color="@color/text_red" />
+            <solid android:color="?attr/colorPrimary" />
         </shape>
     </item>
 </selector>

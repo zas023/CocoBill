@@ -23,8 +23,6 @@ public class AboutActivity extends BaseActivity {
     @BindView(R.id.about_tv_developer)
     TextView developerTv;
 
-    private static final String TAG = "AboutActivity";
-
     @Override
     protected int getLayout() {
         return R.layout.activity_about;

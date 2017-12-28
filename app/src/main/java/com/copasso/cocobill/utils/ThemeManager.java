@@ -10,8 +10,6 @@ import com.copasso.cocobill.R;
  */
 public class ThemeManager {
 
-    private static final String KEY_THEME = "key_theme";
-
     private String[] mThemes = {"少女红", "酷炫黑", "原谅绿", "胖次蓝", "基佬紫", "活力橙", "大地棕"};
 
     private static ThemeManager instance;
@@ -33,12 +31,12 @@ public class ThemeManager {
      * @param theme     主题名称
      */
     public void setTheme(Activity context, String theme){
-        String curTheme = (String) SPUtils.getSP(context, KEY_THEME, mThemes[0]);
+        String curTheme = SharedPUtils.getCurrentTheme(context);
         if(curTheme != null && curTheme.equals(theme)){
             return;
         }
 
-        SPUtils.setSP(context, KEY_THEME, theme);
+        SharedPUtils.setCurrentTheme(context,theme);
 
         context.finish();
         Intent intent = context.getIntent();
@@ -53,11 +51,13 @@ public class ThemeManager {
      * @return 如: 少女粉
      */
     public String getCurThemeName(Context context){
-        return (String) SPUtils.getSP(context, KEY_THEME, mThemes[0]);
+        return SharedPUtils.getCurrentTheme(context);
     }
 
+
+
     public void init(Context context) {
-        String theme = (String) SPUtils.getSP(context, KEY_THEME, mThemes[0]);
+        String theme = SharedPUtils.getCurrentTheme(context);
         if(theme.equals(mThemes[0])){
             context.setTheme(R.style.AppTheme);
         }else if(theme.equals(mThemes[1])){

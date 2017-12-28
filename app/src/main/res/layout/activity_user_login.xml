@@ -16,7 +16,7 @@
         <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/colorPrimary"
+                android:background="?attr/colorPrimary"
                 android:layout_weight="1"/>
     </LinearLayout>
 
@@ -132,7 +132,7 @@
                     android:text="Login"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
-                    android:background="@color/colorPrimary"/>
+                    android:background="?attr/colorPrimary"/>
 
             <TextView
                     android:id="@+id/login_tv_sign"

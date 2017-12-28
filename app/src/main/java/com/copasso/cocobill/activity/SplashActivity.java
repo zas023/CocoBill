@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.utils.Constants;
+import com.copasso.cocobill.utils.ThemeManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -27,7 +28,25 @@ public class SplashActivity extends AwesomeSplash {
         /* you don't have to override every property */
 
         //Customize Circular Reveal
-        configSplash.setBackgroundColor(R.color.colorPrimary); //any color you want form colors.xml
+        //设置主题颜色
+        String theme=ThemeManager.getInstance().getCurThemeName(this);
+        String[] themes = ThemeManager.getInstance().getThemes();
+        if(theme.equals(themes[0])){
+            configSplash.setBackgroundColor(R.color.colorPrimary);
+        }else if(theme.equals(themes[1])){
+            configSplash.setBackgroundColor(R.color.colorPrimaryBlack);
+        }else if(theme.equals(themes[2])){
+            configSplash.setBackgroundColor(R.color.colorPrimaryGreen);
+        }else if(theme.equals(themes[3])){
+            configSplash.setBackgroundColor(R.color.colorPrimaryBlue);
+        }else if(theme.equals(themes[4])){
+            configSplash.setBackgroundColor(R.color.colorPrimaryPurple);
+        }else if(theme.equals(themes[5])){
+            configSplash.setBackgroundColor(R.color.colorPrimaryOrange);
+        }else if(theme.equals(themes[6])){
+            configSplash.setBackgroundColor(R.color.colorPrimaryBrown);
+        }
+        //configSplash.setBackgroundColor(R.color.colorPrimary); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(3000); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP

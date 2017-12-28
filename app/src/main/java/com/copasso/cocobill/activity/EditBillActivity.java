@@ -60,8 +60,6 @@ public class EditBillActivity extends BaseActivity {
     @BindView(R.id.layout_icon)
     LinearLayout layoutIcon;
 
-    private static final String TAG = "EditBillActivity";
-
     public boolean isOutcome = true;
     //计算器
     private boolean isDot;

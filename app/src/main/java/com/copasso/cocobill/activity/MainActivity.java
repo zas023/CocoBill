@@ -54,7 +54,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ImageView drawerIv;
     private TextView drawerTvAccount, drawerTvMail;
 
-    private static final String TAG = "MainActivity";
     protected static final int USERINFOACTIVITY_CODE = 0;
     protected static final int LOGINACTIVITY_CODE = 1;
 

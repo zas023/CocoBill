@@ -55,8 +55,6 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.cil_email)
     CommonItemLayout emailCL;
 
-    private static final String TAG = "UserInfoActivity";
-
     //当前用户
     private UserBean currentUser;
 

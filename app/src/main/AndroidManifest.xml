@@ -2,10 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.copasso.cocobill">
 
+    <!-- 基础模块（必须加入以下声明）START -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 基础模块 END -->
+
+    <!--读取外部存储-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--相机拍照-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!--读取日志-->
+    <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <application
             android:name=".MyApplication"
@@ -17,6 +27,7 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".activity.SplashActivity"
+                android:theme="@style/SplashTheme"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,6 +37,7 @@
         </activity>
         <activity
                 android:name=".activity.MainActivity"
+                android:launchMode="singleTop"
                 android:screenOrientation="portrait">
         </activity>
         <activity

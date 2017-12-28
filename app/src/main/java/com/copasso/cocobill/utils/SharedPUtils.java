@@ -55,21 +55,21 @@ public class SharedPUtils {
     /**
      * 获取当前用户头像
      */
-    public static String getCurrentUserImagePath(Context context) {
-        SharedPreferences sp = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+    public static String getCurrentTheme(Context context) {
+        SharedPreferences sp = context.getSharedPreferences("userSetting", Context.MODE_PRIVATE);
         if (sp != null)
-            return sp.getString("imgPath", "null");
+            return sp.getString("theme", "少女红");
         return null;
     }
 
     /**
      * 设置当前用户头像
      */
-    public static void setCurrentUserImagePath(Context context,String imgPath) {
-        SharedPreferences sp = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+    public static void setCurrentTheme(Context context,String theme) {
+        SharedPreferences sp = context.getSharedPreferences("userSetting", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         if (editor != null) {
-            editor.putString("imgPath", imgPath);
+            editor.putString("theme", theme);
             editor.commit();
         }
     }
