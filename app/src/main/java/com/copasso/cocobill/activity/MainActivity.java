@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.utils.ImageUtils;
 import com.copasso.cocobill.utils.SharedPUtils;
+import com.copasso.cocobill.utils.ThemeManager;
 
 import java.io.File;
 
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected static final int LOGINACTIVITY_CODE = 1;
 
     //当前用户
-    private UserBean currentUser;
+    private UserBean currentUser=null;
 
     // Tab
     private FragmentManager mFragmentManager;
@@ -105,7 +106,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onClick(View view) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                if (Constants.currentUserId == 0) {
+                if (currentUser==null) {
                     //用户id为0表示未有用户登陆
                     startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), LOGINACTIVITY_CODE);
                 } else {
@@ -140,7 +141,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * @param view
      */
     @OnClick({})
-    public void onViewClicked(View view) {
+    public void onClick(View view) {
         switch (view.getId()) {
 
             default:
@@ -210,6 +211,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }).start();
             }
             Constants.currentUserId = currentUser.getId();
+        }else{
+            drawerTvAccount.setText("账号");
+            drawerTvMail.setText("点我登陆");
+            drawerIv.setImageResource(R.mipmap.ic_def_icon);
+            Constants.currentUserId=0;
         }
     }
 
@@ -230,7 +236,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_total) {
             viewPager.setCurrentItem(2);
         } else if (id == R.id.nav_setting) {
-
+            showUpdateThemeDialog();
         } else if (id == R.id.nav_about) {
             startActivity(new Intent(MainActivity.this, AboutActivity.class));
         } else if (id == R.id.nav_share) {
@@ -256,5 +262,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * 显示修改主题色 Dialog
+     */
+    private void showUpdateThemeDialog() {
+        final String[] themes = ThemeManager.getInstance().getThemes();
+        new AlertDialog.Builder(mContext)
+                .setTitle("选择主题")
+                .setItems(themes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ThemeManager.getInstance().setTheme(mContext, themes[which]);
+                    }
+                }).create().show();
     }
 }

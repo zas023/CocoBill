@@ -12,4 +12,6 @@ public class Constants {
     public static final int BASE_COLUMN = 100000000;
 
     public static int currentUserId=0;
+
+    public static String EXTRA_IS_UPDATE_THEME  = "com.copasso.cocobill.IS_UPDATE_THEME";
 }

@@ -60,6 +60,8 @@ public class EditBillActivity extends BaseActivity {
     @BindView(R.id.layout_icon)
     LinearLayout layoutIcon;
 
+    private static final String TAG = "EditBillActivity";
+
     public boolean isOutcome = true;
     //计算器
     private boolean isDot;
@@ -308,7 +310,6 @@ public class EditBillActivity extends BaseActivity {
      * 监听点击事件
      * @param view
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @OnClick({R.id.tb_note_income, R.id.tb_note_outcome, R.id.tb_note_cash, R.id.tb_note_date,
             R.id.tb_note_remark, R.id.tb_calc_num_done, R.id.tb_calc_num_del, R.id.tb_calc_num_1,
             R.id.tb_calc_num_2, R.id.tb_calc_num_3, R.id.tb_calc_num_4, R.id.tb_calc_num_5,

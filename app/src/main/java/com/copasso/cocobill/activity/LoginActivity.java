@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +42,8 @@ public class LoginActivity extends BaseActivity {
     TextView signTV;
     @BindView(R.id.login_btn_login)
     Button loginBtn;
+
+    private static final String TAG = "LoginActivity";
 
     //是否是登陆操作
     private boolean isLogin = true;
@@ -83,7 +86,7 @@ public class LoginActivity extends BaseActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @OnClick({R.id.login_tv_sign, R.id.login_btn_login})
-    protected void onClick(View view) {
+    protected void onClick(final View view) {
         switch (view.getId()) {
             case R.id.login_btn_login:  //button
                 if (isLogin){
@@ -101,30 +104,35 @@ public class LoginActivity extends BaseActivity {
                             Gson gson = new Gson();
                             UserBean userBean = gson.fromJson(msg.obj.toString(), UserBean.class);
                             if (userBean.getStatus() == 100) {
-                                SharedPUtils.setCurrentUser(LoginActivity.this,msg.obj.toString());
-                                setResult(RESULT_OK, new Intent());
-                                finish();
+                                if (userBean.getState()==1){
+                                    SharedPUtils.setCurrentUser(LoginActivity.this,msg.obj.toString());
+                                    setResult(RESULT_OK, new Intent());
+                                    finish();
+                                }else {
+                                    Snackbar.make(view, "请先登陆邮箱激活账号", Snackbar.LENGTH_LONG).show();
+                                }
+
                             } else {
-                                Toast.makeText(LoginActivity.this, userBean.getMessage(), Toast.LENGTH_SHORT);
+                                Snackbar.make(view, userBean.getMessage(), Snackbar.LENGTH_LONG).show();
                             }
                         }
                     }, username, password);
                 }else {
                     //注册
                     String email = emailET.getText().toString();
-                    String username = emailET.getText().toString();
+                    String username = usernameET.getText().toString();
                     String password = passwordET.getText().toString();
                     String rpassword = rpasswordET.getText().toString();
                     if (email.length()==0||username.length()==0||password.length()==0||rpassword.length()==0){
-                        Toast.makeText(LoginActivity.this, "请填写必要信息", Toast.LENGTH_SHORT);
+                        Snackbar.make(view, "请填写必要信息", Snackbar.LENGTH_LONG).show();
                         break;
                     }
-                    if (StringUtils.checkEmail(email)){
-                        Toast.makeText(LoginActivity.this, "请输入正确的邮箱格式", Toast.LENGTH_SHORT);
+                    if (!StringUtils.checkEmail(email)){
+                        Snackbar.make(view, "请输入正确的邮箱格式", Snackbar.LENGTH_LONG).show();
                         break;
                     }
                     if (!password.equals(rpassword)){
-                        Toast.makeText(LoginActivity.this, "两次密码不一致", Toast.LENGTH_SHORT);
+                        Snackbar.make(view, "两次密码不一致", Snackbar.LENGTH_LONG).show();
                         break;
                     }
                     HttpUtils.userSign(new Handler() {
@@ -134,9 +142,9 @@ public class LoginActivity extends BaseActivity {
                             Gson gson = new Gson();
                             UserBean userBean = gson.fromJson(msg.obj.toString(), UserBean.class);
                             if (userBean.getStatus() == 100) {
-                                Toast.makeText(LoginActivity.this, "注册成功，请先登陆邮箱验证后登陆", Toast.LENGTH_SHORT);
+                                Snackbar.make(view, "注册成功，请先登陆邮箱验证后登陆", Snackbar.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(LoginActivity.this, userBean.getMessage(), Toast.LENGTH_SHORT);
+                                Snackbar.make(view, userBean.getMessage(), Snackbar.LENGTH_LONG).show();
                             }
                         }
                     }, username, password,email);
@@ -146,18 +154,17 @@ public class LoginActivity extends BaseActivity {
                 if(isLogin){
                     //置换注册界面
                     signTV.setText("Login");
-                    loginBtn.setText("Login");
-                    isLogin=!isLogin;
+                    loginBtn.setText("Sign Up");
                     rpasswordET.setVisibility(View.VISIBLE);
                     emailET.setVisibility(View.VISIBLE);
                 }else {
                     //置换登陆界面
                     signTV.setText("Sign Up");
-                    loginBtn.setText("Sign Up");
-                    isLogin=!isLogin;
+                    loginBtn.setText("Login");
                     rpasswordET.setVisibility(View.GONE);
                     emailET.setVisibility(View.GONE);
                 }
+                isLogin=!isLogin;
                 break;
             default:
                 break;

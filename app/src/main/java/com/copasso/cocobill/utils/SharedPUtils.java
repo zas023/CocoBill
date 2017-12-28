@@ -17,7 +17,7 @@ public class SharedPUtils {
         SharedPreferences sp = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         if (sp != null) {
             Gson gson=new Gson();
-            return gson.fromJson(sp.getString("jsonStr", "null"),UserBean.class);
+            return gson.fromJson(sp.getString("jsonStr", null),UserBean.class);
         }
         return null;
     }
@@ -28,6 +28,21 @@ public class SharedPUtils {
     public static void setCurrentUser(Context context,String jsonStr) {
         Gson gson = new Gson();
         UserBean userBean = gson.fromJson(jsonStr, UserBean.class);
+        SharedPreferences sp = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("username", userBean.getUsername());
+        editor.putString("email", userBean.getMail());
+        editor.putInt("id", userBean.getId());
+        editor.putString("jsonStr", jsonStr);
+        editor.commit();
+    }
+
+    /**
+     * 设置当前用户
+     */
+    public static void setCurrentUser(Context context,UserBean userBean) {
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(userBean);
         SharedPreferences sp = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("username", userBean.getUsername());

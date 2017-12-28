@@ -8,6 +8,7 @@ import android.graphics.*;
 import android.os.*;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -24,19 +25,13 @@ import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.UserBean;
-import com.copasso.cocobill.utils.Constants;
-import com.copasso.cocobill.utils.HttpUtils;
-import com.copasso.cocobill.utils.ImageUtils;
-import com.copasso.cocobill.utils.SharedPUtils;
+import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.view.CommonItemLayout;
 
 import android.net.Uri;
-import com.google.gson.Gson;
 import okhttp3.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -104,20 +99,17 @@ public class UserInfoActivity extends BaseActivity {
         if (currentUser != null) {
             //加载到布局中
             initData();
-        }
-
-        //加载当前头像
-        String imgPath = Environment
-                .getExternalStorageDirectory().getAbsolutePath()+"/"+currentUser.getImage();
-        if (imgPath != null) {
-            File file = new File(imgPath);
-            if (file.exists()) {
-                //加载图片
-                Glide.with(this).load(file).into(iconIv);
+            //加载当前头像
+            String imgPath = Environment
+                    .getExternalStorageDirectory().getAbsolutePath()+"/"+currentUser.getImage();
+            if (imgPath != null) {
+                File file = new File(imgPath);
+                if (file.exists()) {
+                    //加载图片
+                    Glide.with(this).load(file).into(iconIv);
+                }
             }
         }
-
-
     }
 
     private void initData(){
@@ -134,7 +126,7 @@ public class UserInfoActivity extends BaseActivity {
      */
     @OnClick({R.id.rlt_update_icon, R.id.cil_username,
             R.id.cil_sex, R.id.cil_phone, R.id.cil_email})
-    public void onViewClicked(View view) {
+    public void onViewClicked(final View view) {
         switch (view.getId()) {
 
             case R.id.rlt_update_icon:  //头像
@@ -194,9 +186,12 @@ public class UserInfoActivity extends BaseActivity {
                 break;
             case R.id.cil_phone:  //电话修改
                 final EditText editText = new EditText(UserInfoActivity.this);
-                editText.setText(currentUser.getPhone());
-                //将光标移至文字末尾
-                editText.setSelection(currentUser.getPhone().length());
+                String phone=currentUser.getPhone();
+                if (phone!=null){
+                    editText.setText(currentUser.getPhone());
+                    //将光标移至文字末尾
+                    editText.setSelection(currentUser.getPhone().length());
+                }
                 if (phoneDialog == null) {
                     phoneDialog = new AlertDialog.Builder(this)
                             .setTitle("电话")
@@ -208,8 +203,12 @@ public class UserInfoActivity extends BaseActivity {
                                         Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
                                                 Toast.LENGTH_SHORT).show();
                                     } else {
-                                        currentUser.setPhone(input);
-                                        phoneCL.setRightText(input);
+                                        if (StringUtils.checkPhoneNumber(input)){
+                                            currentUser.setPhone(input);
+                                            phoneCL.setRightText(input);
+                                        }else {
+                                            Snackbar.make(view, "请输入正确的电话号码", Snackbar.LENGTH_LONG).show();
+                                        }
                                     }
                                 }
                             })
@@ -236,8 +235,12 @@ public class UserInfoActivity extends BaseActivity {
                                         Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
                                                 Toast.LENGTH_SHORT).show();
                                     } else {
-                                        currentUser.setMail(input);
-                                        emailCL.setRightText(input);
+                                        if (StringUtils.checkEmail(input)){
+                                            currentUser.setMail(input);
+                                            emailCL.setRightText(input);
+                                        }else {
+                                            Snackbar.make(view, "请输入正确的邮箱格式", Snackbar.LENGTH_LONG).show();
+                                        }
                                     }
                                 }
                             })
@@ -257,19 +260,21 @@ public class UserInfoActivity extends BaseActivity {
      * 返回操作
      */
     public void doBack(){
-        HttpUtils.updateUser(new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if(msg.obj.toString().length()>0) {
-                    SharedPUtils.setCurrentUser(UserInfoActivity.this, msg.obj.toString());
-                    setResult(RESULT_OK, new Intent());
-                }
-                else{
-                    Toast.makeText(UserInfoActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        },currentUser.getId(), currentUser.getUsername(), currentUser.getGender(), currentUser.getPhone(), currentUser.getMail());
+       if (currentUser!=null){
+           HttpUtils.updateUser(new Handler(){
+               @Override
+               public void handleMessage(Message msg) {
+                   super.handleMessage(msg);
+                   if(msg.obj.toString().length()>0) {
+                       SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
+                   }
+                   else{
+                       Toast.makeText(UserInfoActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
+                   }
+               }
+           },currentUser.getId(), currentUser.getUsername(), currentUser.getGender(), currentUser.getPhone(), currentUser.getMail());
+       }
+       setResult(RESULT_OK, new Intent());
     }
     /**
      * 监听Activity返回结果
@@ -393,7 +398,8 @@ public class UserInfoActivity extends BaseActivity {
         String imagename = Constants.currentUserId + "_" + String.valueOf(System.currentTimeMillis());
         String imagePath = ImageUtils.savePhoto(bitmap, Environment
                 .getExternalStorageDirectory().getAbsolutePath(), imagename+".png");
-        currentUser.setImage(imagePath);
+        currentUser.setImage(imagename+".png");
+        SharedPUtils.setCurrentUser(UserInfoActivity.this,currentUser);
         if (imagePath != null) {
             OkHttpClient mOkHttpClient = new OkHttpClient();
             File file = new File(imagePath);
