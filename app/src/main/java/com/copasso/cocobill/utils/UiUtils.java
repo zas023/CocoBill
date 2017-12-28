@@ -1,16 +1,12 @@
 package com.copasso.cocobill.utils;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import com.copasso.cocobill.MyApplication;
-import com.copasso.cocobill.activity.MainActivity;
 
 /**
  * Created by zhouas666 on 2017/12/24.

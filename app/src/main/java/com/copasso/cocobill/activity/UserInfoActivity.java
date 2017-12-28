@@ -98,19 +98,22 @@ public class UserInfoActivity extends BaseActivity {
             //加载到布局中
             initData();
             //加载当前头像
-            String imgPath = Environment
-                    .getExternalStorageDirectory().getAbsolutePath()+"/"+currentUser.getImage();
-            if (imgPath != null) {
-                File file = new File(imgPath);
-                if (file.exists()) {
-                    //加载图片
-                    Glide.with(this).load(file).into(iconIv);
-                }
+            String imgPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                    + "/" + currentUser.getImage();
+            Log.i(TAG,imgPath);
+            File file = new File(imgPath);
+            if (file.exists()) {
+                //加载图片
+                Glide.with(this).load(file).into(iconIv);
+
             }
         }
     }
 
-    private void initData(){
+    /**
+     * 将用户信息更新到布局中
+     */
+    private void initData() {
         usernameCL.setRightText(currentUser.getUsername());
         sexCL.setRightText(currentUser.getGender());
         phoneCL.setRightText(currentUser.getPhone());
@@ -152,7 +155,7 @@ public class UserInfoActivity extends BaseActivity {
                 }
                 break;
             case R.id.cil_username:
-                Toast.makeText(getApplicationContext(), "江湖人行不更名，坐不改姓！" ,
+                Toast.makeText(getApplicationContext(), "江湖人行不更名，坐不改姓！",
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cil_sex:  //性别
@@ -163,13 +166,13 @@ public class UserInfoActivity extends BaseActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which) {
                                         case GENDER_MAN: // 男性
-                                            if (currentUser.getGender().equals("F")){
+                                            if (currentUser.getGender().equals("F")) {
                                                 currentUser.setGender("M");
                                                 sexCL.setRightText(currentUser.getGender());
                                             }
                                             break;
                                         case GENDER_FEMALE: // 女性
-                                            if (currentUser.getGender().equals("M")){
+                                            if (currentUser.getGender().equals("M")) {
                                                 currentUser.setGender("F");
                                                 sexCL.setRightText(currentUser.getGender());
                                             }
@@ -184,8 +187,8 @@ public class UserInfoActivity extends BaseActivity {
                 break;
             case R.id.cil_phone:  //电话修改
                 final EditText editText = new EditText(UserInfoActivity.this);
-                String phone=currentUser.getPhone();
-                if (phone!=null){
+                String phone = currentUser.getPhone();
+                if (phone != null) {
                     editText.setText(currentUser.getPhone());
                     //将光标移至文字末尾
                     editText.setSelection(currentUser.getPhone().length());
@@ -201,10 +204,10 @@ public class UserInfoActivity extends BaseActivity {
                                         Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
                                                 Toast.LENGTH_SHORT).show();
                                     } else {
-                                        if (StringUtils.checkPhoneNumber(input)){
+                                        if (StringUtils.checkPhoneNumber(input)) {
                                             currentUser.setPhone(input);
                                             phoneCL.setRightText(input);
-                                        }else {
+                                        } else {
                                             Snackbar.make(view, "请输入正确的电话号码", Snackbar.LENGTH_LONG).show();
                                         }
                                     }
@@ -233,10 +236,10 @@ public class UserInfoActivity extends BaseActivity {
                                         Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
                                                 Toast.LENGTH_SHORT).show();
                                     } else {
-                                        if (StringUtils.checkEmail(input)){
+                                        if (StringUtils.checkEmail(input)) {
                                             currentUser.setMail(input);
                                             emailCL.setRightText(input);
-                                        }else {
+                                        } else {
                                             Snackbar.make(view, "请输入正确的邮箱格式", Snackbar.LENGTH_LONG).show();
                                         }
                                     }
@@ -257,23 +260,23 @@ public class UserInfoActivity extends BaseActivity {
     /**
      * 返回操作
      */
-    public void doBack(){
-       if (currentUser!=null){
-           HttpUtils.updateUser(new Handler(){
-               @Override
-               public void handleMessage(Message msg) {
-                   super.handleMessage(msg);
-                   if(msg.obj.toString().length()>0) {
-                       SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
-                   }
-                   else{
-                       Toast.makeText(UserInfoActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
-                   }
-               }
-           },currentUser.getId(), currentUser.getUsername(), currentUser.getGender(), currentUser.getPhone(), currentUser.getMail());
-       }
-       setResult(RESULT_OK, new Intent());
+    public void doBack() {
+        if (currentUser != null) {
+            HttpUtils.updateUser(new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    if (msg.obj.toString().length() > 0) {
+                        SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
+                    } else {
+                        Toast.makeText(UserInfoActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, currentUser.getId(), currentUser.getUsername(), currentUser.getGender(), currentUser.getPhone(), currentUser.getMail());
+        }
+        setResult(RESULT_OK, new Intent());
     }
+
     /**
      * 监听Activity返回结果
      *
@@ -395,9 +398,9 @@ public class UserInfoActivity extends BaseActivity {
         // bitmap是没有做个圆形处理的，但已经被裁剪了
         String imagename = Constants.currentUserId + "_" + String.valueOf(System.currentTimeMillis());
         String imagePath = ImageUtils.savePhoto(bitmap, Environment
-                .getExternalStorageDirectory().getAbsolutePath(), imagename+".png");
-        currentUser.setImage(imagename+".png");
-        SharedPUtils.setCurrentUser(UserInfoActivity.this,currentUser);
+                .getExternalStorageDirectory().getAbsolutePath(), imagename + ".png");
+        currentUser.setImage(imagename + ".png");
+        SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
         if (imagePath != null) {
             OkHttpClient mOkHttpClient = new OkHttpClient();
             File file = new File(imagePath);

@@ -1,5 +1,6 @@
 package com.copasso.cocobill.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -57,6 +59,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected static final int USERINFOACTIVITY_CODE = 0;
     protected static final int LOGINACTIVITY_CODE = 1;
 
+    // 要申请的权限
+    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
     //当前用户
     private UserBean currentUser=null;
 
@@ -71,6 +76,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initEventAndData() {
+
 
         //初始化ViewPager
         mFragmentManager = getSupportFragmentManager();
@@ -122,6 +128,58 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
+     * 设置DrawerHeader的用户信息
+     */
+    public void setDrawerHeaderAccount() {
+        //获取当前用户
+        currentUser = SharedPUtils.getCurrentUser(this);
+        if (currentUser != null) {
+            drawerTvAccount.setText(currentUser.getUsername());
+            drawerTvMail.setText(currentUser.getMail());
+            String imgPath = Environment
+                    .getExternalStorageDirectory().getAbsolutePath()+"/"+currentUser.getImage();
+            File file = new File(imgPath);
+            //判断头像文件是否存在
+            if (file.exists()) {
+                //加载本地图片
+                Glide.with(this).load(file).into(drawerIv);
+            } else {
+                //加载网络图片到本地
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap bitmap = null;
+                        try {
+                            bitmap = Glide.with(MainActivity.this)
+                                    .load(Constants.BASEURL + Constants.IMAGEUSER + currentUser.getImage())
+                                    .asBitmap()
+                                    .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                    .get();
+                            if (bitmap != null) {
+                                drawerIv.setImageBitmap(bitmap);
+                                Log.i(TAG,"SD可写："+Environment.getExternalStorageDirectory().canWrite()+
+                                        "SD可读："+Environment.getExternalStorageDirectory().canRead());
+                                String imgPath=ImageUtils.savePhoto(bitmap, Environment
+                                        .getExternalStorageDirectory().getAbsolutePath(), currentUser.getImage());
+
+                                Log.i(TAG,imgPath);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+            Constants.currentUserId = currentUser.getId();
+        }else{
+            drawerTvAccount.setText("账号");
+            drawerTvMail.setText("点我登陆");
+            drawerIv.setImageResource(R.mipmap.ic_def_icon);
+            Constants.currentUserId=0;
+        }
+    }
+
+    /**
      * 监听Drawer
      */
     @Override
@@ -167,54 +225,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     setDrawerHeaderAccount();
                     break;
             }
-        }
-    }
-
-    /**
-     * 设置DrawerHeader的用户信息
-     */
-    public void setDrawerHeaderAccount() {
-        //获取当前用户
-        currentUser = SharedPUtils.getCurrentUser(this);
-        if (currentUser != null) {
-            drawerTvAccount.setText(currentUser.getUsername());
-            drawerTvMail.setText(currentUser.getMail());
-            String imgPath = Environment
-                    .getExternalStorageDirectory().getAbsolutePath()+"/"+currentUser.getImage();
-            File file = new File(imgPath);
-            //判断头像文件是否存在
-            if (file.exists()) {
-                //加载本地图片
-                Glide.with(this).load(file).into(drawerIv);
-            } else {
-                //加载网络图片到本地
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Bitmap bitmap = null;
-                        try {
-                            bitmap = Glide.with(MainActivity.this)
-                                    .load(Constants.BASEURL + Constants.IMAGEUSER + currentUser.getImage())
-                                    .asBitmap()
-                                    .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                                    .get();
-                            if (bitmap != null) {
-                                drawerIv.setImageBitmap(bitmap);
-                                ImageUtils.savePhoto(bitmap, Environment
-                                        .getExternalStorageDirectory().getAbsolutePath(), currentUser.getImage());
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
-            Constants.currentUserId = currentUser.getId();
-        }else{
-            drawerTvAccount.setText("账号");
-            drawerTvMail.setText("点我登陆");
-            drawerIv.setImageResource(R.mipmap.ic_def_icon);
-            Constants.currentUserId=0;
         }
     }
 
