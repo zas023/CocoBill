@@ -13,6 +13,8 @@ public class Constants {
     public static final String BILL_ADD = "/bill/add";
     public static final String NOTE_USER = "/note/user";
     public static final String IMAGE_USER ="/upload/";
+    public static final String IMAGE_SORT ="/upload/noteImg/sort/";
+    public static final String IMAGE_PAY ="/upload/noteImg/pay/";
 
     public static final String IMAGEDETAIL ="/UF/Uploads/Noteimg/listout/";
     public static final String IMAGENOTE ="/UF/Uploads/Noteimg/blacksort/";

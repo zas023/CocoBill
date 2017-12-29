@@ -19,6 +19,7 @@ import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.view.CircleImageView;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -117,12 +118,9 @@ public class MenuChartFragment extends BaseFragment
     @Override
     protected void initEventAndData() {
 
+        //初始化饼状图
         PieChartUtils.initPieChart(mChart);
         mChart.setOnChartValueSelectedListener(this);
-        //设置中间透明圈的半径,值为所占饼图的百分比
-        mChart.setTransparentCircleRadius(40);
-        //设置圆盘是否转动，默认转动
-        mChart.setRotationEnabled(true);
         //改变加载显示的颜色
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
         //设置向下拉多少出现刷新

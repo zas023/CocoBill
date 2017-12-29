@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.BookNoteAdapter;
 import com.copasso.cocobill.adapter.MonthAccountAdapter;
@@ -48,14 +50,16 @@ public class AddBillActivity extends BaseActivity {
     TextView incomeTv;    //收入按钮
     @BindView(R.id.tb_note_outcome)
     TextView outcomeTv;   //支出按钮
-    @BindView(R.id.tb_note_remark)
-    ImageView remarkTv;   //
+    @BindView(R.id.item_tb_type_tv)
+    TextView sortTv;     //显示选择的分类
     @BindView(R.id.tb_note_money)
     TextView moneyTv;     //金额
     @BindView(R.id.tb_note_date)
     TextView dateTv;      //时间选择
     @BindView(R.id.tb_note_cash)
     TextView cashTv;      //支出方式选择
+    @BindView(R.id.tb_note_remark)
+    ImageView remarkIv;   //
     @BindView(R.id.viewpager_item)
     ViewPager viewpagerItem;
     @BindView(R.id.layout_icon)
@@ -78,10 +82,10 @@ public class AddBillActivity extends BaseActivity {
     private int page ;
     private boolean isTotalPage;
     private int sortPage = -1;
-    private List<NoteBean.SortlisBean> mDatas;
-    private List<NoteBean.SortlisBean> tempList;
+    private List<BSort> mDatas;
+    private List<BSort> tempList;
     //记录上一次点击后的imageview
-    public NoteBean.SortlisBean lastBean;
+    public BSort lastBean;
     public ImageView lastImg;
 
     //备注对话框
@@ -105,20 +109,31 @@ public class AddBillActivity extends BaseActivity {
 
     @Override
     protected void initEventAndData() {
-        //获取分类、支付方式信息
-        HttpUtils.getNote(new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Gson gson = new Gson();
-                noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
-                //status==100:处理成功！
-                if (noteBean.getStatus() == 100) {
-                    //成功后加载布局
-                    setTitleStatus();
+
+        //获取本地分类、支付方式信息
+        noteBean=SharedPUtils.getUserNoteBean(AddBillActivity.this);
+        //本地获取失败后
+        if (noteBean==null){
+            //同步获取分类、支付方式信息
+            HttpUtils.getNote(new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Gson gson = new Gson();
+                    noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
+                    //status==100:处理成功！
+                    if (noteBean.getStatus() == 100) {
+                        //成功后加载布局
+                        setTitleStatus();
+                        //保存数据
+                        SharedPUtils.setUserNoteBean(AddBillActivity.this,msg.obj.toString());
+                    }
                 }
-            }
-        },1);
+            },Constants.currentUserId);
+        }else {
+            //成功后加载布局
+            setTitleStatus();
+        }
 
         //设置日期选择器初始日期
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
@@ -149,6 +164,8 @@ public class AddBillActivity extends BaseActivity {
         //默认选择第一个分类
         lastBean = mDatas.get(0);
         lastImg = new ImageView(this);
+        //设置选择的分类
+        sortTv.setText(lastBean.getSortName());
 
         //加载支付方式信息
         cardItem = new ArrayList<>();
@@ -163,6 +180,8 @@ public class AddBillActivity extends BaseActivity {
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
+        //末尾加上添加选项
+        mDatas.add(new BSort("添加","sort_tianjia.png"));
         if (mDatas.size() % 15 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(mDatas.size() * 1.0 / 15);
@@ -185,6 +204,18 @@ public class AddBillActivity extends BaseActivity {
             }
 
             BookNoteAdapter mAdapter = new BookNoteAdapter(this, tempList);
+            mAdapter.setOnBookNoteClickListener(new BookNoteAdapter.OnBookNoteClickListener() {
+                @Override
+                public void OnClick(int index) {
+                    lastBean=mDatas.get(index+viewpagerItem.getCurrentItem()*15);
+                    sortTv.setText(lastBean.getSortName());
+                }
+
+                @Override
+                public void OnLongClick(int index) {
+                    Toast.makeText(AddBillActivity.this,"长按",Toast.LENGTH_SHORT).show();
+                }
+            });
             GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
             recycle.setLayoutManager(layoutManager);
             recycle.setAdapter(mAdapter);
@@ -427,7 +458,7 @@ public class AddBillActivity extends BaseActivity {
         params.put("crdate", crDate);
         params.put("content", remarkInput);
         params.put("income", isOutcome ? "false" : "true");
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_UPDATE, params,
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_ADD, params,
                 new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

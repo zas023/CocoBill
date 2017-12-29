@@ -1,6 +1,7 @@
 package com.copasso.cocobill.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -471,7 +472,7 @@ public class UserInfoActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.i(TAG, response.body().string());
+
                 }
             });
         }

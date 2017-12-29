@@ -25,6 +25,8 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.BookNoteAdapter;
 import com.copasso.cocobill.adapter.MonthAccountAdapter;
+import com.copasso.cocobill.bean.BPay;
+import com.copasso.cocobill.bean.BSort;
 import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.utils.*;
 import com.google.gson.Gson;
@@ -48,8 +50,10 @@ public class EditBillActivity extends BaseActivity {
     TextView incomeTv;
     @BindView(R.id.tb_note_outcome)
     TextView outcomeTv;
+    @BindView(R.id.item_tb_type_tv)
+    TextView sortTv;     //显示选择的分类
     @BindView(R.id.tb_note_remark)
-    ImageView remarkTv;
+    ImageView remarkv;
     @BindView(R.id.tb_note_money)
     TextView moneyTv;
     @BindView(R.id.tb_note_date)
@@ -77,10 +81,10 @@ public class EditBillActivity extends BaseActivity {
     private int page;
     private boolean isTotalPage;
     private int sortPage = -1;
-    private List<NoteBean.SortlisBean> mDatas;
-    private List<NoteBean.SortlisBean> tempList;
+    private List<BSort> mDatas;
+    private List<BSort> tempList;
     //记录上一次点击后的imageview
-    public NoteBean.SortlisBean lastBean;
+    public BSort lastBean;
     public ImageView lastImg;
 
     //备注对话框
@@ -109,19 +113,30 @@ public class EditBillActivity extends BaseActivity {
         //获取旧数据
         setOldBill();
 
-        //获取账单分类、支付方式信息
-        HttpUtils.getNote(new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Gson gson = new Gson();
-                noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
-                //status==100:处理成功！
-                if (noteBean.getStatus() == 100) {
-                    setTitleStatus();
+        //获取本地分类、支付方式信息
+        noteBean=SharedPUtils.getUserNoteBean(EditBillActivity.this);
+        //本地获取失败后
+        if (noteBean==null){
+            //同步获取分类、支付方式信息
+            HttpUtils.getNote(new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Gson gson = new Gson();
+                    noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
+                    //status==100:处理成功！
+                    if (noteBean.getStatus() == 100) {
+                        //成功后加载布局
+                        setTitleStatus();
+                        //保存数据
+                        SharedPUtils.setUserNoteBean(EditBillActivity.this,msg.obj.toString());
+                    }
                 }
-            }
-        }, 1);
+            },Constants.currentUserId);
+        }else {
+            //成功后加载布局
+            setTitleStatus();
+        }
 
         //设置日期选择器初始日期
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
@@ -159,14 +174,14 @@ public class EditBillActivity extends BaseActivity {
      * @param id
      * @return
      */
-    private NoteBean.SortlisBean findSortById(int id) {
+    private BSort findSortById(int id) {
         if (isOutcome) {
-            for (NoteBean.SortlisBean e : noteBean.getOutSortlis()) {
+            for (BSort e : noteBean.getOutSortlis()) {
                 if (e.getId() == id)
                     return e;
             }
         } else {
-            for (NoteBean.SortlisBean e : noteBean.getInSortlis()) {
+            for (BSort e : noteBean.getInSortlis()) {
                 if (e.getId() == id)
                     return e;
             }
@@ -181,7 +196,7 @@ public class EditBillActivity extends BaseActivity {
      * @return
      */
     private int findPayById(int id) {
-        List<NoteBean.PayinfoBean> list = noteBean.getPayinfo();
+        List<BPay> list = noteBean.getPayinfo();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId() == id)
                 return i;
@@ -207,6 +222,7 @@ public class EditBillActivity extends BaseActivity {
 
         lastBean = findSortById(bundle.getInt("sortId"));
         lastImg = new ImageView(this);
+        sortTv.setText(lastBean.getSortName());
 
         cardItem = new ArrayList<>();
         for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
@@ -226,6 +242,8 @@ public class EditBillActivity extends BaseActivity {
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
+        //末尾加上添加选项
+        mDatas.add(new BSort("添加","sort_tianjia.png"));
         if (mDatas.size() % 15 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(mDatas.size() * 1.0 / 15);
@@ -248,6 +266,18 @@ public class EditBillActivity extends BaseActivity {
             }
 
             BookNoteAdapter mAdapter = new BookNoteAdapter(this, tempList);
+            mAdapter.setOnBookNoteClickListener(new BookNoteAdapter.OnBookNoteClickListener() {
+                @Override
+                public void OnClick(int index) {
+                    lastBean=mDatas.get(index+viewpagerItem.getCurrentItem()*15);
+                    sortTv.setText(lastBean.getSortName());
+                }
+
+                @Override
+                public void OnLongClick(int index) {
+                    Toast.makeText(EditBillActivity.this,"长按",Toast.LENGTH_SHORT).show();
+                }
+            });
             GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
             recycle.setLayoutManager(layoutManager);
             recycle.setAdapter(mAdapter);

@@ -21,6 +21,11 @@ public class BSort{
         super();
     }
 
+    public BSort(String sortName, String sortImg) {
+        this.sortName = sortName;
+        this.sortImg = sortImg;
+    }
+
     public BSort(Integer id, Integer uid, String sortName, String sortImg, Integer priority, Boolean income) {
         this.id = id;
         this.uid = uid;

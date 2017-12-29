@@ -1,13 +1,7 @@
 package com.copasso.cocobill.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,21 +10,13 @@ import android.view.Window;
 import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.activity.EditBillActivity;
 import com.copasso.cocobill.bean.*;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridAdapter;
 import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.view.SwipeMenuView;
-import com.google.gson.Gson;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
-import java.io.IOException;
 import java.util.List;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_HMS_CN;
-import static com.copasso.cocobill.utils.DateUtils.FORMAT_YMDHMS_CN;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_YMD_CN;
 
 /**
@@ -43,8 +29,6 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
     private Context mContext;
 
     private OnStickyHeaderClickListener onStickyHeaderClickListener;
-
-    private String baseUrl = "http://test.huishangsuo.cn/UF/Uploads/Noteimg/blacksort/";
 
     private List<MonthDetailBean.DaylistBean> mDatas;
 
@@ -107,10 +91,9 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
         final int sortId = mDatas.get(section).getList().get(position).getSortid();
 
         holder.item_title.setText(mDatas.get(section).getList().get(position).getSort().getSortName());
-        Glide.with(mContext).load(baseUrl + mDatas.get(section).getList().get(position).getSort().getSortImg())
+        Glide.with(mContext).load(Constants.BASE_URL+Constants.IMAGE_SORT
+                + mDatas.get(section).getList().get(position).getSort().getSortImg())
                 .into(holder.item_img);
-//        holder.item_img.setImageDrawable(
-//                PieChartUtils.getDrawable(mDatas.get(section).getList().get(position).getSort().getSortImg()));
         if (mDatas.get(section).getList().get(position).isIncome()) {
             holder.item_money.setText("+" + mDatas.get(section).getList().get(position).getCost());
         } else {
@@ -163,10 +146,9 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                 TextView tv_date = (TextView) window.findViewById(R.id.dialog_bill_tv_date);
                 ImageView iv_bill = (ImageView) window.findViewById(R.id.dialog_bill_iv);
                 TextView tv_btn = (TextView) window.findViewById(R.id.dialog_bill_btn);
-                Glide.with(mContext).load(baseUrl + mDatas.get(section).getList().get(offset).getSort().getSortImg())
+                Glide.with(mContext).load(Constants.BASE_URL+Constants.IMAGE_SORT
+                        + mDatas.get(section).getList().get(offset).getSort().getSortImg())
                         .into(iv_bill);
-//                iv_bill.setImageDrawable(
-//                        PieChartUtils.getDrawable(mDatas.get(section).getList().get(offset).getSort().getSortImg()));
                 String content = mDatas.get(section).getList().get(offset).getContent();
                 if (content!=null) {
                     tv_content.setText("备注信息：" + mDatas.get(section).getList().get(offset).getContent());

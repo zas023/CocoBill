@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.MonthAccountBean;
+import com.copasso.cocobill.utils.Constants;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
         holder.money_in.setText("+"+mDatas.get(position).getIncome());
         holder.title.setText(mDatas.get(position).getbPay().getPayName());
         Glide.with(mContext)
-                .load("http://test.huishangsuo.cn/UF/Uploads/Noteimg/" + mDatas.get(position).getbPay().getPayImg())
+                .load(Constants.BASE_URL+Constants.IMAGE_PAY + mDatas.get(position).getbPay().getPayImg())
                 .into(holder.img);
 
         if(mDatas.get(position).getbPay().getUid()>0){

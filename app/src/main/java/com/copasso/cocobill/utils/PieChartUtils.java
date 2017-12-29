@@ -8,6 +8,7 @@ import com.copasso.cocobill.MyApplication;
 import com.copasso.cocobill.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -30,6 +31,12 @@ public class PieChartUtils {
     public static void initPieChart(PieChart mChart){
         mChart.setUsePercentValues(true);
         mChart.getDescription().setEnabled(false);
+        //设置饼图右下角的文字描述
+        Description description=new Description();
+        description.setText("饼状图");
+        mChart.setDescription(description);
+        //设置圆盘是否转动，默认转动
+        mChart.setRotationEnabled(true);
         mChart.setExtraOffsets(5, 10, 5, 5);
         mChart.setDragDecelerationFrictionCoef(0.95f);
         mChart.setDrawHoleEnabled(true);
@@ -194,75 +201,75 @@ public class PieChartUtils {
      */
     public static Drawable getDrawable(String imgUrl){
         Drawable drawable = null;
-        if(imgUrl.equals("shouxufei@2x.png"))
+        if(imgUrl.equals("sort_shouxufei.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_shouxufei);
-        else if(imgUrl.equals("changhuanfeiyong@2x.png"))
+        else if(imgUrl.equals("sort_changhuanfeiyong.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_changhuanfeiyong);
-        else if(imgUrl.equals("yongjinjiangli@2x.png"))
+        else if(imgUrl.equals("sort_yongjinjiangli.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_yongjinjiangli);
-        else if(imgUrl.equals("ewaishouyi@2x.png"))
+        else if(imgUrl.equals("sort_ewaishouyi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_ewaishouyi);
-        else if(imgUrl.equals("zijinbuchang@2x.png"))
+        else if(imgUrl.equals("sort_zijinbuchang.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_zijinbuchang);
-        else if(imgUrl.equals("lixi@2x.png"))
+        else if(imgUrl.equals("sort_lixi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lixi);
-        else if(imgUrl.equals("shangchengxiaofei@2x.png"))
+        else if(imgUrl.equals("sort_shangchengxiaofei.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_shangchengxiaofei);
-        else if(imgUrl.equals("weiyuejin@2x.png"))
+        else if(imgUrl.equals("sort_weiyuejin.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_weiyuejin);
-        else if(imgUrl.equals("zhufang@2x.png"))
+        else if(imgUrl.equals("sort_zhufang.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_zhufang);
-        else if(imgUrl.equals("bangong@2x.png"))
+        else if(imgUrl.equals("sort_bangong.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_bangong);
-        else if(imgUrl.equals("canyin@2x.png"))
+        else if(imgUrl.equals("sort_canyin.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_canyin);
-        else if(imgUrl.equals("yiliao@2x.png"))
+        else if(imgUrl.equals("sort_yiliao.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_yiliao);
-        else if(imgUrl.equals("tongxun@2x.png"))
+        else if(imgUrl.equals("sort_tongxun.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_tongxun);
-        else if(imgUrl.equals("yundong@2x.png"))
+        else if(imgUrl.equals("sort_yundong.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_yundong);
-        else if(imgUrl.equals("yule@2x.png"))
+        else if(imgUrl.equals("sort_yule.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_yule);
-        else if(imgUrl.equals("jujia@2x.png"))
+        else if(imgUrl.equals("sort_jujia.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jujia);
-        else if(imgUrl.equals("chongwu@2x.png"))
+        else if(imgUrl.equals("sort_chongwu.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_chongwu);
-        else if(imgUrl.equals("shuma@2x.png"))
+        else if(imgUrl.equals("sort_shuma.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_shuma);
-        else if(imgUrl.equals("juanzeng@2x.png"))
+        else if(imgUrl.equals("sort_type_juanzeng.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_juanzeng);
-        else if(imgUrl.equals("lingshi@2x.png"))
+        else if(imgUrl.equals("sort_lingshi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lingshi);
-        else if(imgUrl.equals("haizi@2x.png"))
+        else if(imgUrl.equals("sort_haizi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_haizi);
-        else if(imgUrl.equals("zhangbei@2x.png"))
+        else if(imgUrl.equals("sort_zhangbei.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_zhangbei);
-        else if(imgUrl.equals("liwu@2x.png"))
+        else if(imgUrl.equals("sort_liwu.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_liwu);
-        else if(imgUrl.equals("xuexi@2x.png"))
+        else if(imgUrl.equals("sort_xuexi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_xuexi);
-        else if(imgUrl.equals("shuiguo@2x.png"))
+        else if(imgUrl.equals("sort_shuiguo.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_shuiguo);
-        else if(imgUrl.equals("meirong@2x.png"))
+        else if(imgUrl.equals("sort_meirong.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_meirong);
-        else if(imgUrl.equals("weixiu@2x.png"))
+        else if(imgUrl.equals("sort_weixiu.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_weixiu);
-        else if(imgUrl.equals("lvxing@2x.png"))
+        else if(imgUrl.equals("sort_type_lvxing.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lvxing);
-        else if(imgUrl.equals("jiaotong@2x.png"))
+        else if(imgUrl.equals("sort_jiaotong.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jiaotong);
-        else if(imgUrl.equals("jiushuiyinliao@2x.png"))
+        else if(imgUrl.equals("sort_jiushuiyinliao.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jiushuiyinliao);
-        else if(imgUrl.equals("lijin@2x.png"))
+        else if(imgUrl.equals("sort_lijin.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lijin);
-        else if(imgUrl.equals("jiaxi@2x.png"))
+        else if(imgUrl.equals("sort_jiaxi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jiaxi);
-        else if(imgUrl.equals("fanxian@2x.png"))
+        else if(imgUrl.equals("sort_fanxian.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_fanxian);
-        else if(imgUrl.equals("jianzhi@2x.png"))
+        else if(imgUrl.equals("sort_jianzhi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jianzhi);
-        else if(imgUrl.equals("qita@2x.png"))
+        else if(imgUrl.equals("sort_qita.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_qita);
         else
             drawable=null;

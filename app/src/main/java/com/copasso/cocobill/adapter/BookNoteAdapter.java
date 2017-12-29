@@ -11,45 +11,52 @@ import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.activity.AddBillActivity;
 import com.copasso.cocobill.activity.EditBillActivity;
+import com.copasso.cocobill.bean.BSort;
 import com.copasso.cocobill.bean.NoteBean;
+import com.copasso.cocobill.utils.Constants;
 
 import java.util.List;
 
 /**
  * 账单分类Adapter（AddBillAdapter)
  */
-public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHolder>{
+public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHolder> {
 
     private AddBillActivity mContext;
     private EditBillActivity eContext;
     private LayoutInflater mInflater;
-    private List<NoteBean.SortlisBean> mDatas;
+    private List<BSort> mDatas;
 
-    private String baseUrl = "http://test.huishangsuo.cn/UF/Uploads/Noteimg/blacksort/";
+    private OnBookNoteClickListener onBookNoteClickListener;
 
-    public void setmDatas(List<NoteBean.SortlisBean> mDatas) {
+    public void setmDatas(List<BSort> mDatas) {
         this.mDatas = mDatas;
     }
 
-    public BookNoteAdapter(AddBillActivity context, List<NoteBean.SortlisBean> datas){
+    public BookNoteAdapter(AddBillActivity context, List<BSort> datas) {
         this.mContext = context;
         this.eContext = null;
         this.mInflater = LayoutInflater.from(context);
-        this. mDatas = datas;
+        this.mDatas = datas;
 
     }
 
-    public BookNoteAdapter(EditBillActivity context, List<NoteBean.SortlisBean> datas){
+    public BookNoteAdapter(EditBillActivity context, List<BSort> datas) {
         this.mContext = null;
         this.eContext = context;
         this.mInflater = LayoutInflater.from(context);
-        this. mDatas = datas;
+        this.mDatas = datas;
 
+    }
+
+    public void setOnBookNoteClickListener(OnBookNoteClickListener listener) {
+        if (onBookNoteClickListener == null)
+            this.onBookNoteClickListener = listener;
     }
 
     @Override
     public int getItemCount() {
-        return (mDatas== null) ? 0 : mDatas.size();
+        return (mDatas == null) ? 0 : mDatas.size();
     }
 
     @Override
@@ -61,35 +68,21 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.title.setText(mDatas.get(position).getSortName());
-       if (eContext==null){
-           if (mContext.lastBean.equals(mDatas.get(position))) {
-               mDatas.get(position).setSelected(true);
-               mContext.lastImg = holder.img;
-           }
-
-           String selectUrl = baseUrl.replace("blacksort","checksort");
-           Glide.with(mContext).load(mDatas.get(position).isSelected() ?
-                   selectUrl+ mDatas.get(position).getSortImg(): baseUrl+mDatas.get(position).getSortImg())
-                   .into(holder.img);
-       }else {
-           if (eContext.lastBean.equals(mDatas.get(position))) {
-               mDatas.get(position).setSelected(true);
-               eContext.lastImg = holder.img;
-           }
-
-           String selectUrl = baseUrl.replace("blacksort","checksort");
-           Glide.with(eContext).load(mDatas.get(position).isSelected() ?
-                   selectUrl+ mDatas.get(position).getSortImg(): baseUrl+mDatas.get(position).getSortImg())
-                   .into(holder.img);
-       }
+        if (eContext == null) {
+            Glide.with(mContext).load(Constants.BASE_URL + Constants.IMAGE_SORT + mDatas.get(position).getSortImg())
+                    .into(holder.img);
+        } else {
+            Glide.with(eContext).load(Constants.BASE_URL + Constants.IMAGE_SORT + mDatas.get(position).getSortImg())
+                    .into(holder.img);
+        }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView title;
         private ImageView img;
 
-        public ViewHolder(View view){
+        public ViewHolder(View view) {
             super(view);
 
             title = (TextView) view.findViewById(R.id.item_tb_type_tv);
@@ -98,45 +91,25 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
             itemView.setOnLongClickListener(this);
         }
 
-
         @Override
         public void onClick(View view) {
-            if (eContext==null){
-                if (mDatas.get(getAdapterPosition()).getSortName().equals("添加")){//添加按钮
-                    Toast.makeText(mContext, "点击添加", Toast.LENGTH_SHORT).show();
-
-                }else if (!mContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
-                    mDatas.get(getAdapterPosition()).setSelected(true);
-                    String selectUrl = baseUrl.replace("blacksort","checksort");
-                    Glide.with(mContext).load(selectUrl + mDatas.get(getAdapterPosition()).getSortImg()).into(img);
-                    mContext.lastBean.setSelected(false);
-                    Glide.with(mContext).load(baseUrl + mContext.lastBean.getSortImg()).into(mContext.lastImg);
-                    mContext.lastImg = img;
-                    mContext.lastBean = mDatas.get(getAdapterPosition());
-                }
-            }else {
-                if (mDatas.get(getAdapterPosition()).getSortName().equals("添加")){//添加按钮
-                    Toast.makeText(eContext, "点击添加", Toast.LENGTH_SHORT).show();
-                }else if (!eContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
-                    mDatas.get(getAdapterPosition()).setSelected(true);
-                    String selectUrl = baseUrl.replace("blacksort","checksort");
-                    Glide.with(eContext).load(selectUrl + mDatas.get(getAdapterPosition()).getSortImg()).into(img);
-                    eContext.lastBean.setSelected(false);
-                    Glide.with(eContext).load(baseUrl + eContext.lastBean.getSortImg()).into(eContext.lastImg);
-                    eContext.lastImg = img;
-                    eContext.lastBean = mDatas.get(getAdapterPosition());
-                }
-            }
+            onBookNoteClickListener.OnClick(getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View view) {
-            //根据自己需求进行判断
-            if (mDatas.get(getAdapterPosition()).getUid() > 0 ){
-                Toast.makeText(mContext, "长按编辑", Toast.LENGTH_SHORT).show();
-            }
+            onBookNoteClickListener.OnLongClick(getAdapterPosition());
             return false;
         }
+    }
+
+    /**
+     * 自定义分类选择接口
+     */
+    public interface OnBookNoteClickListener {
+        void OnClick(int index);
+
+        void OnLongClick(int index);
     }
 
 }

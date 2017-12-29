@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.copasso.cocobill">
 
-    <!-- 基础模块（必须加入以下声明）START -->
+    <!-- 基础模块START -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -26,6 +26,7 @@
             android:roundIcon="@mipmap/icon1"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <!--闪屏页-->
         <activity
                 android:name=".activity.SplashActivity"
                 android:theme="@style/SplashTheme"
@@ -36,27 +37,33 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!--主页-->
         <activity
                 android:name=".activity.MainActivity"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait">
         </activity>
+        <!--添加账单-->
         <activity
                 android:name=".activity.AddBillActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <!--编辑账单-->
         <activity
                 android:name=".activity.EditBillActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <!--登陆注册-->
         <activity
                 android:name=".activity.LoginActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <!--个人信息-->
         <activity
                 android:name=".activity.UserInfoActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <!--关于-->
         <activity
                 android:name=".activity.AboutActivity"
                 android:screenOrientation="portrait">
