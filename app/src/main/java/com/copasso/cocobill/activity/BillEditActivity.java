@@ -4,82 +4,78 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.BookNoteAdapter;
 import com.copasso.cocobill.adapter.MonthAccountAdapter;
-import com.copasso.cocobill.bean.*;
+import com.copasso.cocobill.bean.BPay;
+import com.copasso.cocobill.bean.BSort;
+import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.utils.*;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
-import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import static com.copasso.cocobill.utils.DateUtils.*;
 
 /**
- * 添加账单
+ * 修改账单
  */
-public class AddBillActivity extends BaseActivity {
+public class BillEditActivity extends BaseActivity {
 
     @BindView(R.id.tb_note_income)
-    TextView incomeTv;    //收入按钮
+    TextView incomeTv;
     @BindView(R.id.tb_note_outcome)
-    TextView outcomeTv;   //支出按钮
+    TextView outcomeTv;
     @BindView(R.id.item_tb_type_tv)
     TextView sortTv;     //显示选择的分类
-    @BindView(R.id.tb_note_money)
-    TextView moneyTv;     //金额
-    @BindView(R.id.tb_note_date)
-    TextView dateTv;      //时间选择
-    @BindView(R.id.tb_note_cash)
-    TextView cashTv;      //支出方式选择
     @BindView(R.id.tb_note_remark)
-    ImageView remarkIv;   //
+    ImageView remarkv;
+    @BindView(R.id.tb_note_money)
+    TextView moneyTv;
+    @BindView(R.id.tb_note_date)
+    TextView dateTv;
+    @BindView(R.id.tb_note_cash)
+    TextView cashTv;
     @BindView(R.id.viewpager_item)
     ViewPager viewpagerItem;
     @BindView(R.id.layout_icon)
     LinearLayout layoutIcon;
 
-
     public boolean isOutcome = true;
     //计算器
     private boolean isDot;
-    private String num = "0";               //整数部分
-    private String dotNum = ".00";          //小数部分
-    private final int MAX_NUM = 9999999;    //最大整数
-    private final int DOT_NUM = 2;          //小数部分最大位数
+    private String num = "0";
+    private String dotNum = ".00";
+    private final int MAX_NUM = 9999999;
+    private final int DOT_NUM = 2;
     private int count = 0;
     //选择器
     private OptionsPickerView pvCustomOptions;
     private List<String> cardItem;
-    private int selectedPayinfoIndex=0;      //选择的支付方式序号
+    private int selectedPayinfoIndex = 0;
     //viewpager数据
-    private int page ;
+    private int page;
     private boolean isTotalPage;
     private int sortPage = -1;
     private List<BSort> mDatas;
@@ -97,10 +93,11 @@ public class AddBillActivity extends BaseActivity {
     private int mDay;
     private String days;
 
-    //备注
-    private String remarkInput="";
+    private String remarkInput = "";
     private NoteBean noteBean = null;
 
+    //old Bill
+    private Bundle bundle;
 
     @Override
     protected int getLayout() {
@@ -110,8 +107,48 @@ public class AddBillActivity extends BaseActivity {
     @Override
     protected void initEventAndData() {
 
+        //获取旧数据
+        setOldBill();
+
+        //初始化分类数据
+        initSortView();
+
+        //设置日期选择器初始日期
+        mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
+        mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M));
+
+    }
+
+    /**
+     * 获取旧数据
+     */
+    private void setOldBill() {
+
+        bundle = getIntent().getBundleExtra("bundle");
+        if (bundle == null)
+            return;
+        //设置账单日期
+        days = DateUtils.long2Str(bundle.getLong("date"), FORMAT_YMD);
+        dateTv.setText(days);
+        isOutcome = !bundle.getBoolean("income");
+        remarkInput = bundle.getString("content");
+        DecimalFormat df = new DecimalFormat("######0.00");
+        String money = df.format(bundle.getDouble("cost"));
+        //小数取整
+        num = money.split("\\.")[0];
+        //截取小数部分
+        dotNum = "." + money.split("\\.")[1];
+
+        //设置金额
+        moneyTv.setText(num + dotNum);
+    }
+
+    /**
+     * 初始化分类数据
+     */
+    private void initSortView(){
         //获取本地分类、支付方式信息
-        noteBean=SharedPUtils.getUserNoteBean(AddBillActivity.this);
+        noteBean=SharedPUtils.getUserNoteBean(BillEditActivity.this);
         //本地获取失败后
         if (noteBean==null){
             //同步获取分类、支付方式信息
@@ -126,7 +163,7 @@ public class AddBillActivity extends BaseActivity {
                         //成功后加载布局
                         setTitleStatus();
                         //保存数据
-                        SharedPUtils.setUserNoteBean(AddBillActivity.this,msg.obj.toString());
+                        SharedPUtils.setUserNoteBean(BillEditActivity.this,msg.obj.toString());
                     }
                 }
             },Constants.currentUserId);
@@ -134,14 +171,42 @@ public class AddBillActivity extends BaseActivity {
             //成功后加载布局
             setTitleStatus();
         }
+    }
 
-        //设置日期选择器初始日期
-        mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
-        mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M));
-        //设置当前 日期
-        days=DateUtils.getCurDateStr("yyyy-MM-dd");
-        dateTv.setText(days);
+    /**
+     * 通过id查询分类信息
+     *
+     * @param id
+     * @return
+     */
+    private BSort findSortById(int id) {
+        if (isOutcome) {
+            for (BSort e : noteBean.getOutSortlis()) {
+                if (e.getId() == id)
+                    return e;
+            }
+        } else {
+            for (BSort e : noteBean.getInSortlis()) {
+                if (e.getId() == id)
+                    return e;
+            }
+        }
+        return null;
+    }
 
+    /**
+     * 通过id查找支付方式，返回其数组中的序号
+     *
+     * @param id
+     * @return
+     */
+    private int findPayById(int id) {
+        List<BPay> list = noteBean.getPayinfo();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == id)
+                return i;
+        }
+        return 0;
     }
 
     /**
@@ -149,34 +214,36 @@ public class AddBillActivity extends BaseActivity {
      */
     private void setTitleStatus() {
 
-        if (isOutcome){
-            //设置支付状态
+        //设置类型
+        if (isOutcome) {
             outcomeTv.setSelected(true);
             incomeTv.setSelected(false);
             mDatas = noteBean.getOutSortlis();
-        }else{
-            //设置收入状态
+        } else {
             incomeTv.setSelected(true);
             outcomeTv.setSelected(false);
             mDatas = noteBean.getInSortlis();
         }
 
-        //默认选择第一个分类
-        lastBean = mDatas.get(0);
+        lastBean = findSortById(bundle.getInt("sortId"));
         lastImg = new ImageView(this);
-        //设置选择的分类
         sortTv.setText(lastBean.getSortName());
 
-        //加载支付方式信息
         cardItem = new ArrayList<>();
         for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
-            String itemStr=noteBean.getPayinfo().get(i).getPayName();
+            String itemStr = noteBean.getPayinfo().get(i).getPayName();
             cardItem.add(itemStr);
         }
+        //设置支付方式
+        selectedPayinfoIndex = findPayById(bundle.getInt("payId"));
+        cashTv.setText(cardItem.get(selectedPayinfoIndex));
 
         initViewPager();
     }
 
+    /**
+     * 初始化账单分类视图
+     */
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
@@ -189,15 +256,15 @@ public class AddBillActivity extends BaseActivity {
             tempList = new ArrayList<>();
             View view = inflater.inflate(R.layout.pager_item_tb_type, null);
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
-            if (i != page - 1 || (i == page -1 && isTotalPage)){
+            if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 15; j++) {
-                    if (i != 0 ){
+                    if (i != 0) {
                         tempList.add(mDatas.get(i * 15 + j));
-                    }else {
+                    } else {
                         tempList.add(mDatas.get(i + j));
                     }
                 }
-            }else {
+            } else {
                 for (int j = 0; j < mDatas.size() % 15; j++) {
                     tempList.add(mDatas.get(i * 15 + j));
                 }
@@ -208,12 +275,19 @@ public class AddBillActivity extends BaseActivity {
                 @Override
                 public void OnClick(int index) {
                     lastBean=mDatas.get(index+viewpagerItem.getCurrentItem()*15);
-                    sortTv.setText(lastBean.getSortName());
+                    if (lastBean.getSortName().equals("添加")){
+                        //修改分类
+                        Intent intent=new Intent(BillEditActivity.this,SortEditActivity.class);
+                        intent.putExtra("type",isOutcome);
+                        startActivityForResult(intent,0);
+                    }else
+                        //选择分类
+                        sortTv.setText(lastBean.getSortName());
                 }
 
                 @Override
                 public void OnLongClick(int index) {
-                    Toast.makeText(AddBillActivity.this,"长按",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillEditActivity.this,"长按",Toast.LENGTH_SHORT).show();
                 }
             });
             GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
@@ -238,7 +312,7 @@ public class AddBillActivity extends BaseActivity {
                         icons[i].setImageResource(R.drawable.icon_banner_point2);
                     }
                     icons[position].setImageResource(R.drawable.icon_banner_point1);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -250,8 +324,13 @@ public class AddBillActivity extends BaseActivity {
         });
         initIcon();
     }
+
     private List<View> viewList;
     private ImageView[] icons;
+
+    /**
+     * 初始化账单分类视图的指示小红点
+     */
     private void initIcon() {
         icons = new ImageView[viewList.size()];
         layoutIcon.removeAllViews();
@@ -260,7 +339,7 @@ public class AddBillActivity extends BaseActivity {
             icons[i].setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             icons[i].setImageResource(R.drawable.icon_banner_point2);
-            if(viewpagerItem.getCurrentItem() == i){
+            if (viewpagerItem.getCurrentItem() == i) {
                 icons[i].setImageResource(R.drawable.icon_banner_point1);
             }
             icons[i].setPadding(5, 0, 5, 0);
@@ -273,6 +352,7 @@ public class AddBillActivity extends BaseActivity {
 
     /**
      * 监听点击事件
+     *
      * @param view
      */
     @OnClick({R.id.tb_note_income, R.id.tb_note_outcome, R.id.tb_note_cash, R.id.tb_note_date,
@@ -280,21 +360,21 @@ public class AddBillActivity extends BaseActivity {
             R.id.tb_calc_num_2, R.id.tb_calc_num_3, R.id.tb_calc_num_4, R.id.tb_calc_num_5,
             R.id.tb_calc_num_6, R.id.tb_calc_num_7, R.id.tb_calc_num_8, R.id.tb_calc_num_9,
             R.id.tb_calc_num_0, R.id.tb_calc_num_dot, R.id.tb_note_clear, R.id.back_btn})
-    protected void onClick(View view){
-        switch (view.getId()){
+    protected void onClick(View view) {
+        switch (view.getId()) {
             case R.id.back_btn:
                 finish();
                 break;
             case R.id.tb_note_income://收入
-                isOutcome=false;
+                isOutcome = false;
                 setTitleStatus();
                 break;
             case R.id.tb_note_outcome://支出
-                isOutcome=true;
+                isOutcome = true;
                 setTitleStatus();
                 break;
             case R.id.tb_note_cash://现金
-               showPayinfoSelector();
+                showPayinfoSelector();
                 break;
             case R.id.tb_note_date://日期
                 showTimeSelector();
@@ -303,7 +383,7 @@ public class AddBillActivity extends BaseActivity {
                 showContentDialog();
                 break;
             case R.id.tb_calc_num_done://确定
-               doCommit();
+                doCommit();
                 break;
             case R.id.tb_calc_num_1:
                 calcMoney(1);
@@ -336,7 +416,7 @@ public class AddBillActivity extends BaseActivity {
                 calcMoney(0);
                 break;
             case R.id.tb_calc_num_dot:
-                if (dotNum.equals(".00")){
+                if (dotNum.equals(".00")) {
                     isDot = true;
                     dotNum = ".";
                 }
@@ -346,7 +426,7 @@ public class AddBillActivity extends BaseActivity {
                 doClear();
                 break;
             case R.id.tb_calc_num_del://删除
-               doDelete();
+                doDelete();
                 break;
         }
     }
@@ -405,7 +485,7 @@ public class AddBillActivity extends BaseActivity {
      * 显示备注内容输入框
      */
     public void showContentDialog() {
-        final EditText editText = new EditText(AddBillActivity.this);
+        final EditText editText = new EditText(BillEditActivity.this);
 
         editText.setText(remarkInput);
         //将光标移至文字末尾
@@ -443,14 +523,15 @@ public class AddBillActivity extends BaseActivity {
      */
     public void doCommit() {
         final SimpleDateFormat sdf = new SimpleDateFormat(" HH:mm:ss");
-        final String crDate=days+sdf.format(new Date());
-        if ((num+dotNum).equals("0.00")) {
+        final String crDate = days + sdf.format(new Date());
+        if ((num + dotNum).equals("0.00")) {
             Toast.makeText(this, "唔姆，你还没输入金额", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        ProgressUtils.show(AddBillActivity.this, "正在提交...");
+        ProgressUtils.show(BillEditActivity.this, "正在修改...");
         Map<String, String> params = new HashMap<>();
+        params.put("id", String.valueOf(bundle.getInt("id")));
         params.put("userid", String.valueOf(Constants.currentUserId));
         params.put("sortid", String.valueOf(lastBean.getId()));
         params.put("payid", String.valueOf(noteBean.getPayinfo().get(selectedPayinfoIndex).getId()));
@@ -458,7 +539,7 @@ public class AddBillActivity extends BaseActivity {
         params.put("crdate", crDate);
         params.put("content", remarkInput);
         params.put("income", isOutcome ? "false" : "true");
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_ADD, params,
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_UPDATE, params,
                 new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -466,7 +547,7 @@ public class AddBillActivity extends BaseActivity {
                         mContext.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(AddBillActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BillEditActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -521,6 +602,7 @@ public class AddBillActivity extends BaseActivity {
 
     /**
      * 计算金额
+     *
      * @param money
      */
     private void calcMoney(int money) {
@@ -532,11 +614,29 @@ public class AddBillActivity extends BaseActivity {
                 dotNum += money;
                 moneyTv.setText(num + dotNum);
             }
-        }else if (Integer.parseInt(num) < MAX_NUM) {
+        } else if (Integer.parseInt(num) < MAX_NUM) {
             if (num.equals("0"))
                 num = "";
             num += money;
             moneyTv.setText(num + dotNum);
+        }
+    }
+
+    /**
+     * 监听Activity返回结果
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 0:
+                    initSortView();
+                    break;
+            }
         }
     }
 

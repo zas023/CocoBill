@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.activity.AddBillActivity;
-import com.copasso.cocobill.activity.EditBillActivity;
+import com.copasso.cocobill.activity.BillAddActivity;
+import com.copasso.cocobill.activity.BillEditActivity;
 import com.copasso.cocobill.bean.BSort;
-import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.utils.Constants;
 
 import java.util.List;
@@ -22,8 +20,8 @@ import java.util.List;
  */
 public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHolder> {
 
-    private AddBillActivity mContext;
-    private EditBillActivity eContext;
+    private BillAddActivity mContext;
+    private BillEditActivity eContext;
     private LayoutInflater mInflater;
     private List<BSort> mDatas;
 
@@ -33,7 +31,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
         this.mDatas = mDatas;
     }
 
-    public BookNoteAdapter(AddBillActivity context, List<BSort> datas) {
+    public BookNoteAdapter(BillAddActivity context, List<BSort> datas) {
         this.mContext = context;
         this.eContext = null;
         this.mInflater = LayoutInflater.from(context);
@@ -41,7 +39,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
 
     }
 
-    public BookNoteAdapter(EditBillActivity context, List<BSort> datas) {
+    public BookNoteAdapter(BillEditActivity context, List<BSort> datas) {
         this.mContext = null;
         this.eContext = context;
         this.mInflater = LayoutInflater.from(context);

@@ -26,6 +26,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -120,6 +121,8 @@ public class MenuChartFragment extends BaseFragment
 
         //初始化饼状图
         PieChartUtils.initPieChart(mChart);
+        //设置圆盘是否转动，默认转动
+        mChart.setRotationEnabled(true);
         mChart.setOnChartValueSelectedListener(this);
         //改变加载显示的颜色
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
@@ -220,7 +223,7 @@ public class MenuChartFragment extends BaseFragment
                 entries.add(new PieEntry(value, PieChartUtils.getDrawable(tMoneyBeanList.get(i).getSort().getSortImg())));
                 colors.add(Color.parseColor(tMoneyBeanList.get(i).getBack_color()));
             }
-            setNoteData(0);
+            setNoteData(0,entries.get(0).getValue());
         } else {//无数据时的显示
             layoutTypedata.setVisibility(View.GONE);
             entries.add(new PieEntry(1f));
@@ -235,7 +238,7 @@ public class MenuChartFragment extends BaseFragment
      *
      * @param index
      */
-    private void setNoteData(int index) {
+    private void setNoteData(int index, float value) {
         sort_image = tMoneyBeanList.get(index).getSort().getSortImg();
         sort_name = tMoneyBeanList.get(index).getSort().getSortName();
         back_color = tMoneyBeanList.get(index).getBack_color();
@@ -244,7 +247,8 @@ public class MenuChartFragment extends BaseFragment
         } else {
             money.setText("+" + tMoneyBeanList.get(index).getMoney());
         }
-        title.setText(sort_name);
+        DecimalFormat df = new DecimalFormat("0.00%");
+        title.setText(sort_name+" : "+df.format(value));
         rankTitle.setText(sort_name + "排行榜");
         circleBg.setImageDrawable(new ColorDrawable(Color.parseColor(back_color)));
         circleImg.setImageDrawable(PieChartUtils.getDrawable(tMoneyBeanList.get(index).getSort().getSortImg()));
@@ -261,7 +265,7 @@ public class MenuChartFragment extends BaseFragment
             return;
         int entryIndex = (int) h.getX();
         PieChartUtils.setRotationAngle(mChart, entryIndex);
-        setNoteData(entryIndex);
+        setNoteData(entryIndex,e.getY());
     }
 
 

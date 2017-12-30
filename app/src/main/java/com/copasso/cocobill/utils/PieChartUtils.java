@@ -203,17 +203,17 @@ public class PieChartUtils {
         Drawable drawable = null;
         if(imgUrl.equals("sort_shouxufei.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_shouxufei);
-        else if(imgUrl.equals("sort_changhuanfeiyong.png"))
+        else if(imgUrl.equals("sort_huankuan.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_changhuanfeiyong);
-        else if(imgUrl.equals("sort_yongjinjiangli.png"))
+        else if(imgUrl.equals("sort_yongjin.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_yongjinjiangli);
-        else if(imgUrl.equals("sort_ewaishouyi.png"))
+        else if(imgUrl.equals("sort_lingqian.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_ewaishouyi);
-        else if(imgUrl.equals("sort_zijinbuchang.png"))
+        else if(imgUrl.equals("sort_yiban.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_zijinbuchang);
         else if(imgUrl.equals("sort_lixi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lixi);
-        else if(imgUrl.equals("sort_shangchengxiaofei.png"))
+        else if(imgUrl.equals("sort_gouwu.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_shangchengxiaofei);
         else if(imgUrl.equals("sort_weiyuejin.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_weiyuejin);
@@ -237,7 +237,7 @@ public class PieChartUtils {
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_chongwu);
         else if(imgUrl.equals("sort_shuma.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_shuma);
-        else if(imgUrl.equals("sort_type_juanzeng.png"))
+        else if(imgUrl.equals("sort_juanzeng.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_juanzeng);
         else if(imgUrl.equals("sort_lingshi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lingshi);
@@ -259,7 +259,7 @@ public class PieChartUtils {
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lvxing);
         else if(imgUrl.equals("sort_jiaotong.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jiaotong);
-        else if(imgUrl.equals("sort_jiushuiyinliao.png"))
+        else if(imgUrl.equals("sort_jiushui.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jiushuiyinliao);
         else if(imgUrl.equals("sort_lijin.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_lijin);

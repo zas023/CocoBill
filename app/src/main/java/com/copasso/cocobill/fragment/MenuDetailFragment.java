@@ -2,13 +2,10 @@ package com.copasso.cocobill.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,16 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.activity.AddBillActivity;
-import com.copasso.cocobill.activity.EditBillActivity;
-import com.copasso.cocobill.activity.MainActivity;
+import com.copasso.cocobill.activity.BillAddActivity;
+import com.copasso.cocobill.activity.BillEditActivity;
 import com.copasso.cocobill.adapter.MonthDetailAdapter;
 import com.copasso.cocobill.bean.BaseBean;
 import com.copasso.cocobill.bean.BillBean;
 import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridLayoutManager;
 import com.copasso.cocobill.utils.Constants;
-import com.copasso.cocobill.utils.HttpUtils;
 import com.copasso.cocobill.utils.DateUtils;
 
 import java.io.IOException;
@@ -180,7 +175,7 @@ public class MenuDetailFragment extends BaseFragment {
 
             @Override
             public void OnEditClick(BillBean item, int section, int offset) {
-                Intent intent = new Intent(mContext, EditBillActivity.class);
+                Intent intent = new Intent(mContext, BillEditActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", item.getId());
                 bundle.putInt("sortId", item.getSortid());
@@ -253,7 +248,7 @@ public class MenuDetailFragment extends BaseFragment {
                 if (Constants.currentUserId == 0) {
                     Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(getContext(), AddBillActivity.class);
+                    Intent intent = new Intent(getContext(), BillAddActivity.class);
                     startActivityForResult(intent, 0);
                 }
                 break;

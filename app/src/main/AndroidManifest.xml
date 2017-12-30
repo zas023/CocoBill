@@ -45,12 +45,17 @@
         </activity>
         <!--添加账单-->
         <activity
-                android:name=".activity.AddBillActivity"
+                android:name=".activity.BillAddActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--编辑账单-->
         <activity
-                android:name=".activity.EditBillActivity"
+                android:name=".activity.BillEditActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <!--编辑账单分类-->
+        <activity
+                android:name=".activity.SortEditActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--登陆注册-->
