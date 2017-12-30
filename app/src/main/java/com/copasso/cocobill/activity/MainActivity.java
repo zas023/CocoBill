@@ -180,6 +180,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
+     * 显示修改主题色 Dialog
+     */
+    private void showUpdateThemeDialog() {
+        final String[] themes = ThemeManager.getInstance().getThemes();
+        new AlertDialog.Builder(mContext)
+                .setTitle("选择主题")
+                .setItems(themes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ThemeManager.getInstance().setTheme(mContext, themes[which]);
+                    }
+                }).create().show();
+    }
+
+    /**
      * 监听Drawer
      */
     @Override
@@ -237,20 +252,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_account) {
+        if (id == R.id.nav_account) {      //账户
             // Handle the camera action
             viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_month) {
             viewPager.setCurrentItem(1);
         } else if (id == R.id.nav_total) {
             viewPager.setCurrentItem(2);
-        } else if (id == R.id.nav_setting) {
-            showUpdateThemeDialog();
-        } else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_setting) {   //设置
+            startActivity(new Intent(this,SettingActivity.class));
+        } else if (id == R.id.nav_about) {     //关于
             startActivity(new Intent(MainActivity.this, AboutActivity.class));
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_theme) {     //主题
+            showUpdateThemeDialog();
+        } else if (id == R.id.nav_exit) {      //退出登陆
             //退出登陆
             new AlertDialog.Builder(mContext).setTitle("是否退出当前账户")
                     .setNegativeButton("取消", null)
@@ -273,18 +288,4 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-    /**
-     * 显示修改主题色 Dialog
-     */
-    private void showUpdateThemeDialog() {
-        final String[] themes = ThemeManager.getInstance().getThemes();
-        new AlertDialog.Builder(mContext)
-                .setTitle("选择主题")
-                .setItems(themes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ThemeManager.getInstance().setTheme(mContext, themes[which]);
-                    }
-                }).create().show();
-    }
 }

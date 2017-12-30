@@ -3,6 +3,8 @@ package com.copasso.cocobill.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,7 @@ import com.copasso.cocobill.adapter.SortEditAdapter;
 import com.copasso.cocobill.bean.BSort;
 import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.utils.Constants;
+import com.copasso.cocobill.utils.HttpUtils;
 import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.utils.SharedPUtils;
 import com.google.gson.Gson;
@@ -70,7 +73,28 @@ public class SortEditActivity extends BaseActivity{
                 LinearLayoutManager.VERTICAL, false));
 
         noteBean= SharedPUtils.getUserNoteBean(this);
-        setTitleStatus();
+        //本地获取失败后
+        if (noteBean==null){
+            //同步获取分类、支付方式信息
+            HttpUtils.getNote(new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Gson gson = new Gson();
+                    noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
+                    //status==100:处理成功！
+                    if (noteBean.getStatus() == 100) {
+                        //成功后加载布局
+                        setTitleStatus();
+                        //保存数据
+                        SharedPUtils.setUserNoteBean(mContext,msg.obj.toString());
+                    }
+                }
+            },Constants.currentUserId);
+        }else {
+            //成功后加载布局
+            setTitleStatus();
+        }
     }
 
     /**

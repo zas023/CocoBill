@@ -263,6 +263,7 @@ public class MenuDetailFragment extends BaseFragment {
                     }
                 }).setRangDate(null, Calendar.getInstance())
                         .setType(new boolean[]{true, true, false, false, false, false})
+//                        .isDialog(true)//是否显示为对话框样式
                         .build()
                         .show();
                 break;

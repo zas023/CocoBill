@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,16 +74,15 @@ public class BillAddActivity extends BaseActivity {
     //选择器
     private OptionsPickerView pvCustomOptions;
     private List<String> cardItem;
-    private int selectedPayinfoIndex=0;      //选择的支付方式序号
+    private int selectedPayinfoIndex = 0;      //选择的支付方式序号
     //viewpager数据
-    private int page ;
+    private int page;
     private boolean isTotalPage;
     private int sortPage = -1;
     private List<BSort> mDatas;
     private List<BSort> tempList;
-    //记录上一次点击后的imageview
+    //记录上一次点击后的分类
     public BSort lastBean;
-    public ImageView lastImg;
 
     //备注对话框
     private AlertDialog alertDialog;
@@ -94,7 +94,7 @@ public class BillAddActivity extends BaseActivity {
     private String days;
 
     //备注
-    private String remarkInput="";
+    private String remarkInput = "";
     private NoteBean noteBean = null;
 
 
@@ -113,7 +113,7 @@ public class BillAddActivity extends BaseActivity {
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
         mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M));
         //设置当前 日期
-        days=DateUtils.getCurDateStr("yyyy-MM-dd");
+        days = DateUtils.getCurDateStr("yyyy-MM-dd");
         dateTv.setText(days);
 
     }
@@ -121,13 +121,13 @@ public class BillAddActivity extends BaseActivity {
     /**
      * 初始化分类数据
      */
-    private void initSortView(){
+    private void initSortView() {
         //获取本地分类、支付方式信息
-        noteBean=SharedPUtils.getUserNoteBean(BillAddActivity.this);
+        noteBean = SharedPUtils.getUserNoteBean(BillAddActivity.this);
         //本地获取失败后
-        if (noteBean==null){
+        if (noteBean == null) {
             //同步获取分类、支付方式信息
-            HttpUtils.getNote(new Handler(){
+            HttpUtils.getNote(new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
@@ -138,11 +138,11 @@ public class BillAddActivity extends BaseActivity {
                         //成功后加载布局
                         setTitleStatus();
                         //保存数据
-                        SharedPUtils.setUserNoteBean(BillAddActivity.this,msg.obj.toString());
+                        SharedPUtils.setUserNoteBean(BillAddActivity.this, msg.obj.toString());
                     }
                 }
-            },Constants.currentUserId);
-        }else {
+            }, Constants.currentUserId);
+        } else {
             //成功后加载布局
             setTitleStatus();
         }
@@ -153,12 +153,12 @@ public class BillAddActivity extends BaseActivity {
      */
     private void setTitleStatus() {
 
-        if (isOutcome){
+        if (isOutcome) {
             //设置支付状态
             outcomeTv.setSelected(true);
             incomeTv.setSelected(false);
             mDatas = noteBean.getOutSortlis();
-        }else{
+        } else {
             //设置收入状态
             incomeTv.setSelected(true);
             outcomeTv.setSelected(false);
@@ -167,14 +167,13 @@ public class BillAddActivity extends BaseActivity {
 
         //默认选择第一个分类
         lastBean = mDatas.get(0);
-        lastImg = new ImageView(this);
         //设置选择的分类
         sortTv.setText(lastBean.getSortName());
 
         //加载支付方式信息
         cardItem = new ArrayList<>();
         for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
-            String itemStr=noteBean.getPayinfo().get(i).getPayName();
+            String itemStr = noteBean.getPayinfo().get(i).getPayName();
             cardItem.add(itemStr);
         }
 
@@ -184,26 +183,31 @@ public class BillAddActivity extends BaseActivity {
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
+        //声明一个局部变量来存储分类集合
+        //否则在收入支出类型切换时末尾一直添加选项
+        List<BSort> tempData=new ArrayList<>();
+        tempData.addAll(mDatas);
         //末尾加上添加选项
-        mDatas.add(new BSort("添加","sort_tianjia.png"));
-        if (mDatas.size() % 15 == 0)
+        tempData.add(new BSort("添加", "sort_tianjia.png"));
+        Log.i(TAG, String.valueOf(tempData.size()));
+        if (tempData.size() % 15 == 0)
             isTotalPage = true;
-        page = (int) Math.ceil(mDatas.size() * 1.0 / 15);
+        page = (int) Math.ceil(tempData.size() * 1.0 / 15);
         for (int i = 0; i < page; i++) {
             tempList = new ArrayList<>();
             View view = inflater.inflate(R.layout.pager_item_tb_type, null);
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
-            if (i != page - 1 || (i == page -1 && isTotalPage)){
+            if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 15; j++) {
-                    if (i != 0 ){
-                        tempList.add(mDatas.get(i * 15 + j));
-                    }else {
-                        tempList.add(mDatas.get(i + j));
+                    if (i != 0) {
+                        tempList.add(tempData.get(i * 15 + j));
+                    } else {
+                        tempList.add(tempData.get(i + j));
                     }
                 }
-            }else {
-                for (int j = 0; j < mDatas.size() % 15; j++) {
-                    tempList.add(mDatas.get(i * 15 + j));
+            } else {
+                for (int j = 0; j < tempData.size() % 15; j++) {
+                    tempList.add(tempData.get(i * 15 + j));
                 }
             }
 
@@ -211,20 +215,20 @@ public class BillAddActivity extends BaseActivity {
             mAdapter.setOnBookNoteClickListener(new BookNoteAdapter.OnBookNoteClickListener() {
                 @Override
                 public void OnClick(int index) {
-                    lastBean=mDatas.get(index+viewpagerItem.getCurrentItem()*15);
-                    if (lastBean.getSortName().equals("添加")){
+                    lastBean = mDatas.get(index + viewpagerItem.getCurrentItem() * 15);
+                    if (lastBean.getSortName().equals("添加")) {
                         //修改分类
-                        Intent intent=new Intent(BillAddActivity.this,SortEditActivity.class);
-                        intent.putExtra("type",isOutcome);
-                        startActivityForResult(intent,0);
-                    }else
+                        Intent intent = new Intent(BillAddActivity.this, SortEditActivity.class);
+                        intent.putExtra("type", isOutcome);
+                        startActivityForResult(intent, 0);
+                    } else
                         //选择分类
                         sortTv.setText(lastBean.getSortName());
                 }
 
                 @Override
                 public void OnLongClick(int index) {
-                    Toast.makeText(BillAddActivity.this,"长按",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillAddActivity.this, "长按", Toast.LENGTH_SHORT).show();
                 }
             });
             GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
@@ -249,7 +253,7 @@ public class BillAddActivity extends BaseActivity {
                         icons[i].setImageResource(R.drawable.icon_banner_point2);
                     }
                     icons[position].setImageResource(R.drawable.icon_banner_point1);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -261,8 +265,10 @@ public class BillAddActivity extends BaseActivity {
         });
         initIcon();
     }
+
     private List<View> viewList;
     private ImageView[] icons;
+
     private void initIcon() {
         icons = new ImageView[viewList.size()];
         layoutIcon.removeAllViews();
@@ -271,7 +277,7 @@ public class BillAddActivity extends BaseActivity {
             icons[i].setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             icons[i].setImageResource(R.drawable.icon_banner_point2);
-            if(viewpagerItem.getCurrentItem() == i){
+            if (viewpagerItem.getCurrentItem() == i) {
                 icons[i].setImageResource(R.drawable.icon_banner_point1);
             }
             icons[i].setPadding(5, 0, 5, 0);
@@ -284,6 +290,7 @@ public class BillAddActivity extends BaseActivity {
 
     /**
      * 监听点击事件
+     *
      * @param view
      */
     @OnClick({R.id.tb_note_income, R.id.tb_note_outcome, R.id.tb_note_cash, R.id.tb_note_date,
@@ -291,21 +298,21 @@ public class BillAddActivity extends BaseActivity {
             R.id.tb_calc_num_2, R.id.tb_calc_num_3, R.id.tb_calc_num_4, R.id.tb_calc_num_5,
             R.id.tb_calc_num_6, R.id.tb_calc_num_7, R.id.tb_calc_num_8, R.id.tb_calc_num_9,
             R.id.tb_calc_num_0, R.id.tb_calc_num_dot, R.id.tb_note_clear, R.id.back_btn})
-    protected void onClick(View view){
-        switch (view.getId()){
+    protected void onClick(View view) {
+        switch (view.getId()) {
             case R.id.back_btn:
                 finish();
                 break;
             case R.id.tb_note_income://收入
-                isOutcome=false;
+                isOutcome = false;
                 setTitleStatus();
                 break;
             case R.id.tb_note_outcome://支出
-                isOutcome=true;
+                isOutcome = true;
                 setTitleStatus();
                 break;
             case R.id.tb_note_cash://现金
-               showPayinfoSelector();
+                showPayinfoSelector();
                 break;
             case R.id.tb_note_date://日期
                 showTimeSelector();
@@ -314,7 +321,7 @@ public class BillAddActivity extends BaseActivity {
                 showContentDialog();
                 break;
             case R.id.tb_calc_num_done://确定
-               doCommit();
+                doCommit();
                 break;
             case R.id.tb_calc_num_1:
                 calcMoney(1);
@@ -347,7 +354,7 @@ public class BillAddActivity extends BaseActivity {
                 calcMoney(0);
                 break;
             case R.id.tb_calc_num_dot:
-                if (dotNum.equals(".00")){
+                if (dotNum.equals(".00")) {
                     isDot = true;
                     dotNum = ".";
                 }
@@ -357,7 +364,7 @@ public class BillAddActivity extends BaseActivity {
                 doClear();
                 break;
             case R.id.tb_calc_num_del://删除
-               doDelete();
+                doDelete();
                 break;
         }
     }
@@ -454,8 +461,8 @@ public class BillAddActivity extends BaseActivity {
      */
     public void doCommit() {
         final SimpleDateFormat sdf = new SimpleDateFormat(" HH:mm:ss");
-        final String crDate=days+sdf.format(new Date());
-        if ((num+dotNum).equals("0.00")) {
+        final String crDate = days + sdf.format(new Date());
+        if ((num + dotNum).equals("0.00")) {
             Toast.makeText(this, "唔姆，你还没输入金额", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -532,6 +539,7 @@ public class BillAddActivity extends BaseActivity {
 
     /**
      * 计算金额
+     *
      * @param money
      */
     private void calcMoney(int money) {
@@ -543,7 +551,7 @@ public class BillAddActivity extends BaseActivity {
                 dotNum += money;
                 moneyTv.setText(num + dotNum);
             }
-        }else if (Integer.parseInt(num) < MAX_NUM) {
+        } else if (Integer.parseInt(num) < MAX_NUM) {
             if (num.equals("0"))
                 num = "";
             num += money;

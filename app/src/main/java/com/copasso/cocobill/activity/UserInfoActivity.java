@@ -43,7 +43,7 @@ import java.util.Map;
  */
 public class UserInfoActivity extends BaseActivity {
 
-    @BindView(R.id.user_info_toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rlt_update_icon)
     RelativeLayout iconRL;
@@ -472,7 +472,7 @@ public class UserInfoActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-
+                    doUpdate();
                 }
             });
         }

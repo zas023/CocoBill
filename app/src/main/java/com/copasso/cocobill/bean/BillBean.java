@@ -25,7 +25,7 @@ public class BillBean extends BaseBean{
     private int sortid;
     private long crdate;
     private boolean income;
-    private SortBean sort;
+    private BSort sort;
 
     public int getId() {
         return id;
@@ -91,11 +91,11 @@ public class BillBean extends BaseBean{
         this.income = income;
     }
 
-    public SortBean getSort() {
+    public BSort getSort() {
         return sort;
     }
 
-    public void setSort(SortBean sort) {
+    public void setSort(BSort sort) {
         this.sort = sort;
     }
 

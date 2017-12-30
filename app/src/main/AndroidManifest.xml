@@ -68,6 +68,11 @@
                 android:name=".activity.UserInfoActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <!--设置-->
+        <activity
+                android:name=".activity.SettingActivity"
+                android:screenOrientation="portrait">
+        </activity>
         <!--关于-->
         <activity
                 android:name=".activity.AboutActivity"

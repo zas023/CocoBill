@@ -44,9 +44,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     // 选择器库
     compile 'com.contrarywind:Android-PickerView:3.2.5'
-    // MD风格对话框库
-    compile 'com.afollestad.material-dialogs:core:0.9.1.0'
-    compile 'com.afollestad.material-dialogs:commons:0.9.1.0'
     // Splash闪屏页库
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     testCompile 'junit:junit:4.12'

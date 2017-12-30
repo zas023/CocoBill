@@ -82,7 +82,6 @@ public class BillEditActivity extends BaseActivity {
     private List<BSort> tempList;
     //记录上一次点击后的imageview
     public BSort lastBean;
-    public ImageView lastImg;
 
     //备注对话框
     private AlertDialog alertDialog;
@@ -226,7 +225,10 @@ public class BillEditActivity extends BaseActivity {
         }
 
         lastBean = findSortById(bundle.getInt("sortId"));
-        lastImg = new ImageView(this);
+        //当前分类未查询到次账单的分类
+        //存在该分类被删除的情况，以及切换账单收入支出类型
+        if (lastBean==null)
+            lastBean=mDatas.get(0);
         sortTv.setText(lastBean.getSortName());
 
         cardItem = new ArrayList<>();
@@ -247,11 +249,15 @@ public class BillEditActivity extends BaseActivity {
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
+        //声明一个局部变量来存储分类集合
+        //否则在收入支出类型切换时末尾一直添加选项
+        List<BSort> tempData=new ArrayList<>();
+        tempData.addAll(mDatas);
         //末尾加上添加选项
-        mDatas.add(new BSort("添加","sort_tianjia.png"));
-        if (mDatas.size() % 15 == 0)
+        tempData.add(new BSort("添加","sort_tianjia.png"));
+        if (tempData.size() % 15 == 0)
             isTotalPage = true;
-        page = (int) Math.ceil(mDatas.size() * 1.0 / 15);
+        page = (int) Math.ceil(tempData.size() * 1.0 / 15);
         for (int i = 0; i < page; i++) {
             tempList = new ArrayList<>();
             View view = inflater.inflate(R.layout.pager_item_tb_type, null);
@@ -259,14 +265,14 @@ public class BillEditActivity extends BaseActivity {
             if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 15; j++) {
                     if (i != 0) {
-                        tempList.add(mDatas.get(i * 15 + j));
+                        tempList.add(tempData.get(i * 15 + j));
                     } else {
-                        tempList.add(mDatas.get(i + j));
+                        tempList.add(tempData.get(i + j));
                     }
                 }
             } else {
-                for (int j = 0; j < mDatas.size() % 15; j++) {
-                    tempList.add(mDatas.get(i * 15 + j));
+                for (int j = 0; j < tempData.size() % 15; j++) {
+                    tempList.add(tempData.get(i * 15 + j));
                 }
             }
 
