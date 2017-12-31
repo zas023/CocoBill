@@ -88,7 +88,6 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
     @Override
     public void onBindItemViewHolder(ItemViewHolder viewHolder, final int section, final int position) {
         final MyItemViewHolder holder = (MyItemViewHolder) viewHolder;
-        final int sortId = mDatas.get(section).getList().get(position).getSortid();
 
         holder.item_title.setText(mDatas.get(section).getList().get(position).getSort().getSortName());
         Glide.with(mContext).load(Constants.BASE_URL+Constants.IMAGE_SORT

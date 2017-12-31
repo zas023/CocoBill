@@ -280,15 +280,18 @@ public class BillEditActivity extends BaseActivity {
             mAdapter.setOnBookNoteClickListener(new BookNoteAdapter.OnBookNoteClickListener() {
                 @Override
                 public void OnClick(int index) {
-                    lastBean=mDatas.get(index+viewpagerItem.getCurrentItem()*15);
-                    if (lastBean.getSortName().equals("添加")){
+                    //获取真实index
+                    index=index + viewpagerItem.getCurrentItem() * 15;
+                    if (index==mDatas.size()) {
                         //修改分类
-                        Intent intent=new Intent(BillEditActivity.this,SortEditActivity.class);
-                        intent.putExtra("type",isOutcome);
-                        startActivityForResult(intent,0);
-                    }else
+                        Intent intent = new Intent(BillEditActivity.this, SortEditActivity.class);
+                        intent.putExtra("type", isOutcome);
+                        startActivityForResult(intent, 0);
+                    } else{
                         //选择分类
+                        lastBean = mDatas.get(index);
                         sortTv.setText(lastBean.getSortName());
+                    }
                 }
 
                 @Override

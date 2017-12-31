@@ -269,7 +269,7 @@ public class PieChartUtils {
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_fanxian);
         else if(imgUrl.equals("sort_jianzhi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jianzhi);
-        else if(imgUrl.equals("sort_qita.png"))
+        else if(imgUrl.equals("sort_tianjiade.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_qita);
         else
             drawable=null;

@@ -148,9 +148,7 @@ public class SortEditActivity extends BaseActivity{
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 //侧滑事件
                 if (mDatas.get(viewHolder.getAdapterPosition()).getUid()>0){
-                    mDatas.remove(viewHolder.getAdapterPosition());
-                    sortEditAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                    saveEdit();
+                    showDeteteDialog(viewHolder.getAdapterPosition());
                 }else {
                     Toast.makeText(SortEditActivity.this,"系统分类，不可删除",Toast.LENGTH_SHORT).show();
                     sortEditAdapter.notifyDataSetChanged();
@@ -238,10 +236,7 @@ public class SortEditActivity extends BaseActivity{
 
                                         @Override
                                         public void onResponse(Call call, Response response) throws IOException {
-                                            Gson gson=new Gson();
-                                            BSort bSort=gson.fromJson(response.body().string(),BSort.class);
-                                            mDatas.add(bSort);
-                                            saveEdit();
+                                            SharedPUtils.setUserNoteBean(SortEditActivity.this, (NoteBean) null);
                                         }
                                     });
                         }
@@ -250,6 +245,27 @@ public class SortEditActivity extends BaseActivity{
                 .setNegativeButton("取消", null)
                 .show();
     }
+
+
+    /**
+     * 显示备注内容输入框
+     */
+    public void showDeteteDialog(final int index) {
+        //弹出输入框
+        alertDialog = new AlertDialog.Builder(this)
+                .setTitle("确定删除此分类")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDatas.remove(index);
+                        sortEditAdapter.notifyItemRemoved(index);
+                        saveEdit();
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+
 
 
     @Override

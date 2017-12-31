@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -189,7 +190,6 @@ public class BillAddActivity extends BaseActivity {
         tempData.addAll(mDatas);
         //末尾加上添加选项
         tempData.add(new BSort("添加", "sort_tianjia.png"));
-        Log.i(TAG, String.valueOf(tempData.size()));
         if (tempData.size() % 15 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(tempData.size() * 1.0 / 15);
@@ -215,15 +215,18 @@ public class BillAddActivity extends BaseActivity {
             mAdapter.setOnBookNoteClickListener(new BookNoteAdapter.OnBookNoteClickListener() {
                 @Override
                 public void OnClick(int index) {
-                    lastBean = mDatas.get(index + viewpagerItem.getCurrentItem() * 15);
-                    if (lastBean.getSortName().equals("添加")) {
+                    //获取真实index
+                    index=index + viewpagerItem.getCurrentItem() * 15;
+                    if (index==mDatas.size()) {
                         //修改分类
                         Intent intent = new Intent(BillAddActivity.this, SortEditActivity.class);
                         intent.putExtra("type", isOutcome);
                         startActivityForResult(intent, 0);
-                    } else
+                    } else{
                         //选择分类
+                        lastBean = mDatas.get(index);
                         sortTv.setText(lastBean.getSortName());
+                    }
                 }
 
                 @Override
