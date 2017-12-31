@@ -34,4 +34,4 @@ v0.3.1:2017.12.28
  4. MPAndroidChart: https://github.com/PhilJay/MPAndroidChart
  5. Android-PickerView: https://github.com/Bigkoo/Android-PickerView
  6. AwesomeSplash: https://github.com/ViksaaSkool/AwesomeSplash
- 7. 设计：https://github.com/wangjjj/TallyBook
+ 7. 界面：https://github.com/wangjjj/TallyBook
