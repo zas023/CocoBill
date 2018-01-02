@@ -25,7 +25,9 @@ v0.3.1:2017.12.28
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-16-39-866_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-12-50-574_com.copasso.co.png" />
 </p>
+
 ##### 注：本程序素材来源网络，如有影响你的权益，请及时联系本人
+    其中部分界面借鉴于：https://github.com/wangjjj/TallyBook
 
 ### Thanks to
  1. butterknife: https://github.com/JakeWharton/butterknife
@@ -34,3 +36,4 @@ v0.3.1:2017.12.28
  4. MPAndroidChart: https://github.com/PhilJay/MPAndroidChart
  5. Android-PickerView: https://github.com/Bigkoo/Android-PickerView
  6. AwesomeSplash: https://github.com/ViksaaSkool/AwesomeSplash
+
