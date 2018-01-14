@@ -236,7 +236,7 @@ public class SortEditActivity extends BaseActivity{
 
                                         @Override
                                         public void onResponse(Call call, Response response) throws IOException {
-                                            SharedPUtils.setUserNoteBean(SortEditActivity.this, (NoteBean) null);
+                                            SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
                                         }
                                     });
                         }

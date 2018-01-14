@@ -120,7 +120,7 @@ public class SettingActivity extends BaseActivity {
                                         Toast.LENGTH_SHORT).show();
                             }else if(input.equals(input1)){
                                 //修改密码
-                                changePw();
+                                //changePw();
                             } else {
                                 Toast.makeText(mContext,
                                         "两次输入不一致", Toast.LENGTH_LONG).show();

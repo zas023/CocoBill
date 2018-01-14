@@ -175,6 +175,8 @@ public class BillAddActivity extends BaseActivity {
         cardItem = new ArrayList<>();
         for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
             String itemStr = noteBean.getPayinfo().get(i).getPayName();
+            if (noteBean.getPayinfo().get(i).getPayNum()!=null)
+                itemStr=itemStr+noteBean.getPayinfo().get(i).getPayNum();
             cardItem.add(itemStr);
         }
 
@@ -272,6 +274,9 @@ public class BillAddActivity extends BaseActivity {
     private List<View> viewList;
     private ImageView[] icons;
 
+    /**
+     * 添加账单分类指示器
+     */
     private void initIcon() {
         icons = new ImageView[viewList.size()];
         layoutIcon.removeAllViews();

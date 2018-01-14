@@ -190,7 +190,7 @@ public class BillEditActivity extends BaseActivity {
                     return e;
             }
         }
-        return null;
+        return isOutcome? noteBean.getOutSortlis().get(0):noteBean.getInSortlis().get(0);
     }
 
     /**
@@ -234,6 +234,8 @@ public class BillEditActivity extends BaseActivity {
         cardItem = new ArrayList<>();
         for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
             String itemStr = noteBean.getPayinfo().get(i).getPayName();
+            if (noteBean.getPayinfo().get(i).getPayNum()!=null)
+                itemStr=itemStr+noteBean.getPayinfo().get(i).getPayNum();
             cardItem.add(itemStr);
         }
         //设置支付方式
