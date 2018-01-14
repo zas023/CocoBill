@@ -11,6 +11,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -19,10 +20,7 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.PayEditAdapter;
 import com.copasso.cocobill.bean.BPay;
 import com.copasso.cocobill.bean.NoteBean;
-import com.copasso.cocobill.utils.Constants;
-import com.copasso.cocobill.utils.HttpUtils;
-import com.copasso.cocobill.utils.OkHttpUtils;
-import com.copasso.cocobill.utils.SharedPUtils;
+import com.copasso.cocobill.utils.*;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -175,15 +173,24 @@ public class PayEditActivity extends BaseActivity {
     }
 
     /**
-     * 显示备注内容输入框
+     * 添加支付方式对话框
      */
     public void showContentDialog() {
-        final EditText editText = new EditText(mContext);
 
+        ProgressUtils.show(mContext,"正在添加");
+
+        final LinearLayout layout=new LinearLayout(mContext);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        final EditText editText = new EditText(mContext);
+        editText.setHint("名称");
+        final EditText editText1 = new EditText(mContext);
+        editText1.setHint("备注");
+        layout.addView(editText);
+        layout.addView(editText1);
         //弹出输入框
         alertDialog = new AlertDialog.Builder(this)
-                .setTitle("输入名称")
-                .setView(editText)
+                .setTitle("支付方式")
+                .setView(layout)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String input = editText.getText().toString();
@@ -192,25 +199,24 @@ public class PayEditActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Map<String, String> params = new HashMap<>();
-                            params.put("uid", String.valueOf(Constants.currentUserId));
-                            params.put("sortImg", "sort_tianjiade.png");
-                            params.put("income", isOutcome ? "false" : "true");
-                            try {
-                                params.put("sortName", java.net.URLEncoder.encode(input, "utf-8"));
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
-                            OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.NOTE_SORT_ADD, params,
+                            params.put("uid", String.valueOf(currentUser.getId()));
+                            params.put("payImg", "card_bank.png");
+                            params.put("payName", input);
+                            params.put("payNum", editText1.getText().toString());
+                            OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.NOTE_PAY_ADD, params,
                                     new Callback() {
                                         @Override
                                         public void onFailure(Call call, IOException e) {
-
+                                            Toast.makeText(mContext,"添加失败",Toast.LENGTH_SHORT).show();
+                                            ProgressUtils.dismiss();
                                         }
 
                                         @Override
                                         public void onResponse(Call call, Response response) throws IOException {
                                             SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
+                                            ProgressUtils.dismiss();
                                         }
+
                                     });
                         }
                     }
