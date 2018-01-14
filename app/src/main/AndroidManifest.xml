@@ -58,6 +58,11 @@
                 android:name=".activity.SortEditActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <!--编辑账单支付方式-->
+        <activity
+                android:name=".activity.PayEditActivity"
+                android:screenOrientation="portrait">
+        </activity>
         <!--登陆注册-->
         <activity
                 android:name=".activity.LoginActivity"

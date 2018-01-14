@@ -7,6 +7,8 @@ public class Constants {
     public static final String USER_LOGIN = "/user/login";
     public static final String USER_SIGN = "/user/sign";
     public static final String USER_UPDATE = "/user/update";
+    public static final String USER_CHANGEPW = "/user/changePw";
+    public static final String USER_FORGETPW = "/user/forgetPw";
     public static final String BILL_MONTH_DETIAL = "/bill/user";
     public static final String BILL_MONTH_CHART = "/bill/chart";
     public static final String BILL_MONTH_CARD = "/bill/pay";

@@ -59,12 +59,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected static final int USERINFOACTIVITY_CODE = 0;
     protected static final int LOGINACTIVITY_CODE = 1;
 
-    // 要申请的权限
-    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-    //当前用户
-    private UserBean currentUser=null;
-
     // Tab
     private FragmentManager mFragmentManager;
     private MainFragmentPagerAdapter mainFragmentPagerAdapter;

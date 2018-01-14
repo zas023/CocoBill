@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.bean.BSort;
+import com.copasso.cocobill.bean.BPay;
 import com.copasso.cocobill.utils.Constants;
 
 import java.util.List;
@@ -17,32 +17,36 @@ import java.util.List;
 /**
  * Created by zhouas666 on 2017/12/30.
  */
-public class SortEditAdapter extends RecyclerView.Adapter<SortEditAdapter.MyItemViewHolder> {
+public class PayEditAdapter extends RecyclerView.Adapter<PayEditAdapter.MyItemViewHolder> {
 
     private Context mContext;
-    private List<BSort> mData;
+    private List<BPay> mData;
 
-    public SortEditAdapter(Context mContext, List<BSort> mData) {
+    public PayEditAdapter(Context mContext, List<BPay> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
 
     @Override
-    public SortEditAdapter.MyItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PayEditAdapter.MyItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_note_edit, parent, false);
         return new MyItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SortEditAdapter.MyItemViewHolder holder, int position) {
-        holder.item_name.setText(mData.get(position).getSortName());
-        Glide.with(mContext).load(Constants.BASE_URL+Constants.IMAGE_SORT+mData.get(position).getSortImg())
+    public void onBindViewHolder(PayEditAdapter.MyItemViewHolder holder, int position) {
+        if (mData.get(position).getPayNum() == null) {
+            holder.item_name.setText(mData.get(position).getPayName());
+        }else {
+            holder.item_name.setText(mData.get(position).getPayName() + ":" + mData.get(position).getPayNum());
+        }
+        Glide.with(mContext).load(Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg())
                 .into(holder.item_img);
     }
 
     @Override
     public int getItemCount() {
-        if (mData==null)
+        if (mData == null)
             return 0;
         return mData.size();
     }
@@ -53,8 +57,8 @@ public class SortEditAdapter extends RecyclerView.Adapter<SortEditAdapter.MyItem
 
         MyItemViewHolder(View view) {
             super(view);
-            item_img=(ImageView)view.findViewById(R.id.item_note_edit_iv);
-            item_name=(TextView)view.findViewById(R.id.item_note_edit_tv);
+            item_img = (ImageView) view.findViewById(R.id.item_note_edit_iv);
+            item_name = (TextView) view.findViewById(R.id.item_note_edit_tv);
         }
     }
 }

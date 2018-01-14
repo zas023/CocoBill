@@ -195,7 +195,7 @@ public class LoginActivity extends BaseActivity {
         Map<String,String> params=new HashMap<>() ;
         params.put("username",username);
         params.put("password",password);
-        params.put("email",email);
+        params.put("mail",email);
 
         ProgressUtils.show(this,"正在注册...");
 

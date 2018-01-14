@@ -15,14 +15,14 @@
             android:orientation="horizontal">
 
         <ImageView
-                android:id="@+id/item_sort_edit_iv"
+                android:id="@+id/item_note_edit_iv"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="@dimen/margin"
                 tools:src="@mipmap/sort_yiban"/>
 
         <TextView
-                android:id="@+id/item_sort_edit_tv"
+                android:id="@+id/item_note_edit_tv"
                 style="@style/Text.Brown"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

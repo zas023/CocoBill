@@ -17,6 +17,37 @@
             android:orientation="vertical"
             tools:targetApi="lollipop">
 
+
+        <com.copasso.cocobill.view.CommonItemLayout
+                android:id="@+id/cil_change"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="修改密码"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+
+        <com.copasso.cocobill.view.CommonItemLayout
+                android:id="@+id/cil_forget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="忘记密码"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            tools:targetApi="lollipop">
+
         <com.copasso.cocobill.view.CommonItemLayout
                 android:id="@+id/cil_store"
                 android:layout_width="match_parent"
