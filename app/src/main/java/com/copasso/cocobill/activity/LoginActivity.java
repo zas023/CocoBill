@@ -86,6 +86,7 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 监听点击事件
+     *
      * @param view
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -93,30 +94,35 @@ public class LoginActivity extends BaseActivity {
     protected void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_btn_login:  //button
-                if (isLogin){
+                if (isLogin) {
                     //登陆
                     login(view);
-                }else {
+                } else {
                     //注册
                     sign(view);
                 }
                 break;
             case R.id.login_tv_sign:  //sign
-                if(isLogin){
+                if (isLogin) {
                     //置换注册界面
                     signTV.setText("Login");
                     loginBtn.setText("Sign Up");
                     rpasswordET.setVisibility(View.VISIBLE);
                     emailET.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     //置换登陆界面
                     signTV.setText("Sign Up");
                     loginBtn.setText("Login");
                     rpasswordET.setVisibility(View.GONE);
                     emailET.setVisibility(View.GONE);
                 }
-                isLogin=!isLogin;
+                isLogin = !isLogin;
                 break;
+
+            case R.id.login_tv_forget:  //sign
+                startActivity(new Intent(this, ForgetPasswordActivity.class));
+                break;
+
             default:
                 break;
         }
@@ -125,25 +131,25 @@ public class LoginActivity extends BaseActivity {
     /**
      * 执行登陆动作
      */
-    public void login(final View view){
+    public void login(final View view) {
         String username = usernameET.getText().toString();
         String password = passwordET.getText().toString();
-        if (username.length()==0||password.length()==0){
+        if (username.length() == 0 || password.length() == 0) {
             Snackbar.make(view, "用户名或密码不能为空", Snackbar.LENGTH_SHORT).show();
             return;
         }
 
-        Map<String,String> params=new HashMap<>() ;
-        params.put("username",username);
-        params.put("password",password);
+        Map<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("password", password);
 
-        ProgressUtils.show(this,"正在登陆...");
+        ProgressUtils.show(this, "正在登陆...");
 
-        OkHttpUtils.getInstance().get(Constants.BASE_URL+Constants.USER_LOGIN, params, new Callback() {
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_LOGIN, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 ProgressUtils.dismiss();
-                Log.e(TAG,e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
 
             @Override
@@ -151,16 +157,16 @@ public class LoginActivity extends BaseActivity {
                 //注：
                 //response.body().string()只能调用一次
                 //否则报错
-                String result=response.body().string();
+                String result = response.body().string();
                 ProgressUtils.dismiss();
                 Gson gson = new Gson();
                 UserBean userBean = gson.fromJson(result, UserBean.class);
                 if (userBean.getStatus() == 100) {
-                    if (userBean.getState()==1){
-                        SharedPUtils.setCurrentUser(LoginActivity.this,result);
+                    if (userBean.getState() == 1) {
+                        SharedPUtils.setCurrentUser(LoginActivity.this, result);
                         setResult(RESULT_OK, new Intent());
                         finish();
-                    }else {
+                    } else {
                         Snackbar.make(view, "请先登陆邮箱激活账号", Snackbar.LENGTH_LONG).show();
                     }
 
@@ -174,32 +180,32 @@ public class LoginActivity extends BaseActivity {
     /**
      * 执行注册动作
      */
-    public void sign(final View view){
+    public void sign(final View view) {
         String email = emailET.getText().toString();
         String username = usernameET.getText().toString();
         String password = passwordET.getText().toString();
         String rpassword = rpasswordET.getText().toString();
-        if (email.length()==0||username.length()==0||password.length()==0||rpassword.length()==0){
+        if (email.length() == 0 || username.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
             Snackbar.make(view, "请填写必要信息", Snackbar.LENGTH_LONG).show();
             return;
         }
-        if (!StringUtils.checkEmail(email)){
+        if (!StringUtils.checkEmail(email)) {
             Snackbar.make(view, "请输入正确的邮箱格式", Snackbar.LENGTH_LONG).show();
             return;
         }
-        if (!password.equals(rpassword)){
+        if (!password.equals(rpassword)) {
             Snackbar.make(view, "两次密码不一致", Snackbar.LENGTH_LONG).show();
             return;
         }
 
-        Map<String,String> params=new HashMap<>() ;
-        params.put("username",username);
-        params.put("password",password);
-        params.put("mail",email);
+        Map<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("password", password);
+        params.put("mail", email);
 
-        ProgressUtils.show(this,"正在注册...");
+        ProgressUtils.show(this, "正在注册...");
 
-        OkHttpUtils.getInstance().get(Constants.BASE_URL+Constants.USER_SIGN, params, new Callback() {
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_SIGN, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 ProgressUtils.dismiss();
@@ -207,7 +213,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String result=response.body().string();
+                String result = response.body().string();
                 ProgressUtils.dismiss();
                 Gson gson = new Gson();
                 UserBean userBean = gson.fromJson(result, UserBean.class);

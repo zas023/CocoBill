@@ -3,6 +3,7 @@ package com.copasso.cocobill.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
@@ -42,7 +43,8 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.cil_pay)
     CommonItemLayout payCL;
 
-    private AlertDialog dialog;
+    private AlertDialog pwDialog;
+    private AlertDialog cacheDialog;
 
     @Override
     protected int getLayout() {
@@ -64,6 +66,8 @@ public class SettingActivity extends BaseActivity {
                 finish();
             }
         });
+
+        storeCL.setRightText(GlideCacheUtil.getInstance().getCacheSize(mContext));
     }
 
 
@@ -75,13 +79,13 @@ public class SettingActivity extends BaseActivity {
     public void onViewClicked(final View view) {
         switch (view.getId()) {
             case R.id.cil_change:  //修改密码
-                showMailDialog();
+                showChangeDialog();
                 break;
             case R.id.cil_forget:  //忘记密码
-
+                startActivity(new Intent(this,ForgetPasswordActivity.class));
                 break;
             case R.id.cil_store:  //缓存
-
+                showCacheDialog();
                 break;
             case R.id.cil_sort:  //账单分类管理
                 startActivity(new Intent(this,SortEditActivity.class));
@@ -97,18 +101,20 @@ public class SettingActivity extends BaseActivity {
     /**
      * 显示修改密码对话框
      */
-    public void showMailDialog() {
+    public void showChangeDialog() {
         final LinearLayout layout=new LinearLayout(mContext);
         layout.setOrientation(LinearLayout.VERTICAL);
         final EditText editText = new EditText(mContext);
         editText.setHint("请输入密码");
         final EditText editText1 = new EditText(mContext);
         editText1.setHint("请重复密码");
+        editText.setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        editText1.setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(editText);
         layout.addView(editText1);
 
-        if (dialog == null) {
-            dialog = new AlertDialog.Builder(this)
+        if (pwDialog == null) {
+            pwDialog = new AlertDialog.Builder(this)
                     .setTitle("修改密码")
                     .setView(layout)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -120,7 +126,7 @@ public class SettingActivity extends BaseActivity {
                                         Toast.LENGTH_SHORT).show();
                             }else if(input.equals(input1)){
                                 //修改密码
-                                //changePw();
+                                changePw();
                             } else {
                                 Toast.makeText(mContext,
                                         "两次输入不一致", Toast.LENGTH_LONG).show();
@@ -130,8 +136,29 @@ public class SettingActivity extends BaseActivity {
                     .setNegativeButton("取消", null)
                     .create();
         }
-        if (!dialog.isShowing()) {
-            dialog.show();
+        if (!pwDialog.isShowing()) {
+            pwDialog.show();
+        }
+    }
+
+    /**
+     * 显示清除缓存对话框
+     */
+    public void showCacheDialog() {
+
+        if (cacheDialog == null) {
+            cacheDialog = new AlertDialog.Builder(this)
+                    .setTitle("清除缓存")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            GlideCacheUtil.getInstance().clearImageDiskCache(mContext);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .create();
+        }
+        if (!cacheDialog.isShowing()) {
+            cacheDialog.show();
         }
     }
 
@@ -144,13 +171,10 @@ public class SettingActivity extends BaseActivity {
 
         ProgressUtils.show(mContext, "正在修改...");
         Map<String, String> params = new HashMap<>();
-        params.put("id", String.valueOf(currentUser.getId()));
         params.put("username", currentUser.getUsername());
         params.put("password", currentUser.getPassword());
-        params.put("gender", currentUser.getGender());
-        params.put("phone", currentUser.getPhone());
-        params.put("mail", currentUser.getMail());
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_UPDATE, params,
+        params.put("code", "000000");
+        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_CHANGEPW, params,
                 new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

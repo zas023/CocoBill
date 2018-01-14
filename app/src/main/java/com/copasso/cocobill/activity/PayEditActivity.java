@@ -27,7 +27,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -215,6 +214,7 @@ public class PayEditActivity extends BaseActivity {
                                         public void onResponse(Call call, Response response) throws IOException {
                                             SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
                                             ProgressUtils.dismiss();
+                                            initEventAndData();
                                         }
 
                                     });

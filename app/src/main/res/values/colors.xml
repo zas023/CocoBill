@@ -76,6 +76,9 @@
     <color name="textGrayish">#999999</color>
     <color name="textGray">#666666</color>
 
+    <color name="gray">#999999</color>
+    <color name="grayish">#EFEFEF</color>
+
     <!--tab layout 文字颜色-->
     <color name="tabNormalTextColor">#8CFFFFFF</color>
     <color name="tabSelectedTextColor">#FFFFFF</color>

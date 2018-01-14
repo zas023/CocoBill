@@ -107,6 +107,30 @@
         <item name="android:layout_marginRight">@dimen/view_margin</item>
     </style>
 
+    <!--按钮样式-->
+    <style name="Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text14</item>
+    </style>
+
+    <style name="Button.Default">
+        <item name="android:textColor">@color/textWhite</item>
+        <item name="android:background">@drawable/bg_button_default</item>
+        <!--<item name="com.github.airsaid.accountbook:backgroundTint">?attr/colorAccent</item>-->
+    </style>
+
+    <style name="Button.Default.Margin">
+        <item name="android:layout_margin">@dimen/margin</item>
+    </style>
+
+    <style name="Button.Default.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:textSize">@dimen/text12</item>
+        <!--<item name="com.github.airsaid.accountbook:backgroundTint">?attr/colorAccent</item>-->
+    </style>
+
     <!--文字样式-->
     <style name="Text">
         <item name="android:textSize">@dimen/text14</item>

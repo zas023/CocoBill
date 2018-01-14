@@ -2,6 +2,7 @@ package com.copasso.cocobill.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class PayEditAdapter extends RecyclerView.Adapter<PayEditAdapter.MyItemVi
         }
         Glide.with(mContext).load(Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg())
                 .into(holder.item_img);
+        Log.i("adapter",Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg());
     }
 
     @Override

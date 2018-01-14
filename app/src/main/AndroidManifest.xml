@@ -73,6 +73,11 @@
                 android:name=".activity.UserInfoActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <!--忘记密码-->
+        <activity
+                android:name=".activity.ForgetPasswordActivity"
+                android:screenOrientation="portrait">
+        </activity>
         <!--设置-->
         <activity
                 android:name=".activity.SettingActivity"
