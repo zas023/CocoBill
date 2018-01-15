@@ -156,6 +156,5 @@
             android:layout_height="107dp"
             android:layout_centerHorizontal="true"/>
 
-
 </RelativeLayout>
 
