@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="#eeeeee"
         tools:context=".activity.MainActivity">
 
@@ -131,9 +131,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="Login"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/white"
-                    android:background="?attr/colorPrimary"/>
+                    style="@style/Button.Default"/>
 
             <TextView
                     android:id="@+id/login_tv_sign"

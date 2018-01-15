@@ -112,36 +112,36 @@ public class MenuDetailFragment extends BaseFragment {
         adapter = new MonthDetailAdapter(mContext, list);
         rvList.setAdapter(adapter);
         //list的滑动监听
-        rvList.setOnTouchListener(new View.OnTouchListener() {
-            private float lastX;
-            private float lastY;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        lastX = event.getX();
-                        lastY = event.getY();
-                        return false;
-                    case MotionEvent.ACTION_MOVE:
-                        float x = event.getX();
-                        float y = event.getY();
-                        boolean isUp = lastY - y > 2;
-                        //一次down，只变化一次，防止一次滑动时抖动下，造成某一个的向下时,y比lastY小
-                        if (isUp) {
-                            floatBtn.setVisibility(View.GONE);
-                        } else {
-                            floatBtn.setVisibility(View.VISIBLE);
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-                return false;
-            }
-
-        });
+//        rvList.setOnTouchListener(new View.OnTouchListener() {
+//            private float lastX;
+//            private float lastY;
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        lastX = event.getX();
+//                        lastY = event.getY();
+//                        return false;
+//                    case MotionEvent.ACTION_MOVE:
+//                        float x = event.getX();
+//                        float y = event.getY();
+//                        boolean isUp = lastY - y > 2;
+//                        //一次down，只变化一次，防止一次滑动时抖动下，造成某一个的向下时,y比lastY小
+//                        if (isUp) {
+//                            floatBtn.setVisibility(View.GONE);
+//                        } else {
+//                            floatBtn.setVisibility(View.VISIBLE);
+//                        }
+//                        break;
+//
+//                    default:
+//                        break;
+//                }
+//                return false;
+//            }
+//
+//        });
 
         //adapter的侧滑选项事件监听
         adapter.setOnStickyHeaderClickListener(new MonthDetailAdapter.OnStickyHeaderClickListener() {

@@ -2,10 +2,13 @@ package com.copasso.cocobill.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -103,15 +106,14 @@ public class SettingActivity extends BaseActivity {
      */
     public void showChangeDialog() {
         final LinearLayout layout=new LinearLayout(mContext);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        final EditText editText = new EditText(mContext);
-        editText.setHint("请输入密码");
-        final EditText editText1 = new EditText(mContext);
-        editText1.setHint("请重复密码");
-        editText.setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-        editText1.setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        layout.addView(editText);
-        layout.addView(editText1);
+        //加载布局
+        View view= LayoutInflater.from(mContext).inflate(R.layout.dialog_change_password,layout,false);
+        TextInputLayout til=(TextInputLayout)view.findViewById(R.id.change_til_password);
+        TextInputLayout til1=(TextInputLayout)view.findViewById(R.id.change_til_repassword);
+        final EditText editText = til.getEditText();
+        final EditText editText1 = til1.getEditText();
+        //加入视图
+        layout.addView(view);
 
         if (pwDialog == null) {
             pwDialog = new AlertDialog.Builder(this)

@@ -89,8 +89,7 @@ public class LoginActivity extends BaseActivity {
      *
      * @param view
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @OnClick({R.id.login_tv_sign, R.id.login_btn_login})
+    @OnClick({R.id.login_tv_sign, R.id.login_btn_login,R.id.login_tv_forget})
     protected void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_btn_login:  //button
@@ -119,8 +118,8 @@ public class LoginActivity extends BaseActivity {
                 isLogin = !isLogin;
                 break;
 
-            case R.id.login_tv_forget:  //sign
-                startActivity(new Intent(this, ForgetPasswordActivity.class));
+            case R.id.login_tv_forget:  //忘记密码
+                startActivity(new Intent(mContext, ForgetPasswordActivity.class));
                 break;
 
             default:
