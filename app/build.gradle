@@ -38,8 +38,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     // 图片加载库
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    // 网络请求库
-    compile 'com.squareup.okhttp3:okhttp:3.9.1'
     // 图表库
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     // 选择器库
@@ -54,7 +52,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     //okhttp
-    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
