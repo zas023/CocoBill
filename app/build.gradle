@@ -43,7 +43,7 @@ dependencies {
     // 图表库
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     // 选择器库
-    compile 'com.contrarywind:Android-PickerView:3.2.5'
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
     // Splash闪屏页库
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     // RxAndroid+RxJava

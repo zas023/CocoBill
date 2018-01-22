@@ -13,7 +13,8 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.*;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridAdapter;
 import com.copasso.cocobill.utils.*;
-import com.copasso.cocobill.view.SwipeMenuView;
+import com.copasso.cocobill.widget.SwipeMenuView;
+
 import java.util.List;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_HMS_CN;

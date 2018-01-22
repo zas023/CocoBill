@@ -40,7 +40,7 @@
 
         <View style="@style/Divide.Default"/>
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
             android:id="@+id/cil_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 
         <View style="@style/Divide.Default"/>
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
             android:id="@+id/cil_sex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
         <View style="@style/Divide.Default"/>
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
             android:id="@+id/cil_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
 
         <View style="@style/Divide.Default"/>
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
                 android:id="@+id/cil_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -149,7 +149,7 @@
 
     </LinearLayout>
 
-    <com.copasso.cocobill.view.OwlView
+    <com.copasso.cocobill.widget.OwlView
             android:id="@+id/owl_view"
             android:layout_above="@id/ll_login_pane"
             android:layout_width="175dp"

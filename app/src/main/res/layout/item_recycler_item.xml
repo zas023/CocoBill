@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.copasso.cocobill.view.SwipeMenuView
+<com.copasso.cocobill.widget.SwipeMenuView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_menu"
     android:background="@color/white"
@@ -21,7 +21,7 @@
       <!--android:layout_marginLeft="15dp"-->
       <!--android:layout_centerVertical="true"-->
       <!--&gt;-->
-      <!--<com.copasso.cocobill.view.CircleImageView-->
+      <!--<com.copasso.cocobill.widget.CircleImageView-->
       <!--android:id="@+id/circle_bg"-->
       <!--android:layout_width="match_parent"-->
       <!--android:layout_height="match_parent"-->
@@ -103,4 +103,4 @@
 
    </LinearLayout>
 
-</com.copasso.cocobill.view.SwipeMenuView>
+</com.copasso.cocobill.widget.SwipeMenuView>

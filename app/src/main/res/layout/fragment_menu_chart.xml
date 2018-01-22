@@ -107,7 +107,7 @@
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
                 >
-              <com.copasso.cocobill.view.CircleImageView
+              <com.copasso.cocobill.widget.CircleImageView
                   android:id="@+id/circle_bg"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
@@ -192,7 +192,7 @@
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
                 >
-              <com.copasso.cocobill.view.CircleImageView
+              <com.copasso.cocobill.widget.CircleImageView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:src="#AAAAAA"

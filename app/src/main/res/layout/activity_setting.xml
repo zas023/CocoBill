@@ -18,7 +18,7 @@
             tools:targetApi="lollipop">
 
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
                 android:id="@+id/cil_change"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 
         <View style="@style/Divide.Default"/>
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
                 android:id="@+id/cil_forget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:orientation="vertical"
             tools:targetApi="lollipop">
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
                 android:id="@+id/cil_store"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             tools:targetApi="lollipop">
 
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
                 android:id="@+id/cil_sort"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
 
         <View style="@style/Divide.Default"/>
 
-        <com.copasso.cocobill.view.CommonItemLayout
+        <com.copasso.cocobill.widget.CommonItemLayout
                 android:id="@+id/cil_pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

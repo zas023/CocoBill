@@ -1,7 +1,6 @@
 package com.copasso.cocobill.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,7 +8,6 @@ import android.graphics.*;
 import android.os.*;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -27,9 +25,9 @@ import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.utils.*;
-import com.copasso.cocobill.view.CommonItemLayout;
 
 import android.net.Uri;
+import com.copasso.cocobill.widget.CommonItemLayout;
 import okhttp3.*;
 
 import java.io.File;
