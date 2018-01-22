@@ -42,7 +42,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 /**
  * 类别报表
  */
-public class MenuChartFragment extends BaseFragment
+public class MonthChartFragment extends BaseFragment
         implements OnChartValueSelectedListener {
 
 

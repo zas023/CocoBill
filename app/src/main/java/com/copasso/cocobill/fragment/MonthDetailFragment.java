@@ -42,7 +42,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 /**
  * -明细
  */
-public class MenuDetailFragment extends BaseFragment {
+public class MonthDetailFragment extends BaseFragment {
 
     @BindView(R.id.data_year)
     TextView dataYear;

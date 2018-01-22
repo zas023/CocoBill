@@ -24,9 +24,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.MainFragmentPagerAdapter;
-import com.copasso.cocobill.fragment.MenuAccountFragment;
-import com.copasso.cocobill.fragment.MenuChartFragment;
-import com.copasso.cocobill.fragment.MenuDetailFragment;
+import com.copasso.cocobill.fragment.MonthAccountFragment;
+import com.copasso.cocobill.fragment.MonthChartFragment;
+import com.copasso.cocobill.fragment.MonthDetailFragment;
 import com.copasso.cocobill.common.Constants;
 
 import butterknife.BindView;
@@ -73,9 +73,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //初始化ViewPager
         mFragmentManager = getSupportFragmentManager();
         mainFragmentPagerAdapter = new MainFragmentPagerAdapter(mFragmentManager);
-        mainFragmentPagerAdapter.addFragment(new MenuDetailFragment(), "明细");
-        mainFragmentPagerAdapter.addFragment(new MenuChartFragment(), "报表");
-        mainFragmentPagerAdapter.addFragment(new MenuAccountFragment(), "卡片");
+        mainFragmentPagerAdapter.addFragment(new MonthDetailFragment(), "明细");
+        mainFragmentPagerAdapter.addFragment(new MonthChartFragment(), "报表");
+        mainFragmentPagerAdapter.addFragment(new MonthAccountFragment(), "卡片");
 
         viewPager.setAdapter(mainFragmentPagerAdapter);
 

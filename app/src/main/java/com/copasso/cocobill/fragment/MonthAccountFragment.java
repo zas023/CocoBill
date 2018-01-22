@@ -34,7 +34,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 /**
  * 我的账户
  */
-public class MenuAccountFragment extends BaseFragment {
+public class MonthAccountFragment extends BaseFragment {
 
     @BindView(R.id.data_year)
     TextView dataYear;

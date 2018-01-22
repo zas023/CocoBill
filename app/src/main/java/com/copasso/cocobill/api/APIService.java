@@ -1,10 +1,13 @@
 package com.copasso.cocobill.api;
 
 
+import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.common.HttpConfig;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -25,6 +28,7 @@ public interface APIService {
 
     /**
      * 用户注册
+     *
      * @param username
      * @param password
      * @param mail
@@ -33,4 +37,15 @@ public interface APIService {
     @GET(HttpConfig.USER_SIGN)
     Observable<UserBean> signup(@Query("username") String username, @Query("password") String password
             , @Query("mail") String mail);
+
+    /**
+     * 每月账单详情
+     * @param id
+     * @param year
+     * @param month
+     * @return
+     */
+    @GET(HttpConfig.BILL_MONTH_DETIAL)
+    Observable<MonthDetailBean> getMonthDetial(@Path("id") String id, @Path("year") String year
+            , @Path("month") String month);
 }
