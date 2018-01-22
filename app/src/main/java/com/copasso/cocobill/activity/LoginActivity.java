@@ -7,11 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.UserBean;
+import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.presenter.Imp.UserLogPresenterImp;
+import com.copasso.cocobill.presenter.UserLogPresenter;
 import com.copasso.cocobill.utils.*;
+import com.copasso.cocobill.view.UserLogView;
 import com.copasso.cocobill.widget.OwlView;
 import com.google.gson.Gson;
 import okhttp3.Call;
@@ -25,7 +31,7 @@ import java.util.Map;
 /**
  * Created by zhouas666 on 2017/12/8.
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements UserLogView {
 
     @BindView(R.id.owl_view)
     OwlView mOwlView;
@@ -45,6 +51,8 @@ public class LoginActivity extends BaseActivity {
     //是否是登陆操作
     private boolean isLogin = true;
 
+    private UserLogPresenter userLogPresenter;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_user_login;
@@ -53,28 +61,18 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initEventAndData() {
 
-        //监听密码输入框的聚焦事件
-        passwordET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mOwlView.open();
-                } else {
-                    mOwlView.close();
-                }
-            }
-        });
-        rpasswordET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mOwlView.open();
-                } else {
-                    mOwlView.close();
-                }
-            }
-        });
+        userLogPresenter = new UserLogPresenterImp(this);
 
+    }
+
+    //监听密码输入框的聚焦事件
+    @OnFocusChange({R.id.login_et_password,R.id.login_et_rpassword})
+    public void onFocusChange(View view, boolean b) {
+        if (b) {
+            mOwlView.open();
+        } else {
+            mOwlView.close();
+        }
     }
 
     /**
@@ -82,16 +80,14 @@ public class LoginActivity extends BaseActivity {
      *
      * @param view
      */
-    @OnClick({R.id.login_tv_sign, R.id.login_btn_login,R.id.login_tv_forget})
+    @OnClick({R.id.login_tv_sign, R.id.login_btn_login, R.id.login_tv_forget})
     protected void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_btn_login:  //button
                 if (isLogin) {
-                    //登陆
-                    login(view);
+                    login();  //登陆
                 } else {
-                    //注册
-                    sign(view);
+                    sign();  //注册
                 }
                 break;
             case R.id.login_tv_sign:  //sign
@@ -123,98 +119,67 @@ public class LoginActivity extends BaseActivity {
     /**
      * 执行登陆动作
      */
-    public void login(final View view) {
+    public void login() {
         String username = usernameET.getText().toString();
         String password = passwordET.getText().toString();
         if (username.length() == 0 || password.length() == 0) {
-            Snackbar.make(view, "用户名或密码不能为空", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(getWindow().getDecorView(), "用户名或密码不能为空", Snackbar.LENGTH_SHORT).show();
             return;
         }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("username", username);
-        params.put("password", password);
-
         ProgressUtils.show(this, "正在登陆...");
 
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_LOGIN, params, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                ProgressUtils.dismiss();
-                Log.e(TAG, e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //注：
-                //response.body().string()只能调用一次
-                //否则报错
-                String result = response.body().string();
-                ProgressUtils.dismiss();
-                Gson gson = new Gson();
-                UserBean userBean = gson.fromJson(result, UserBean.class);
-                if (userBean.getStatus() == 100) {
-                    if (userBean.getState() == 1) {
-                        SharedPUtils.setCurrentUser(LoginActivity.this, result);
-                        setResult(RESULT_OK, new Intent());
-                        finish();
-                    } else {
-                        Snackbar.make(view, "请先登陆邮箱激活账号", Snackbar.LENGTH_LONG).show();
-                    }
-
-                } else {
-                    Snackbar.make(view, userBean.getMessage(), Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
+        userLogPresenter.login(username, password);
     }
 
     /**
      * 执行注册动作
      */
-    public void sign(final View view) {
+    public void sign() {
         String email = emailET.getText().toString();
         String username = usernameET.getText().toString();
         String password = passwordET.getText().toString();
         String rpassword = rpasswordET.getText().toString();
         if (email.length() == 0 || username.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
-            Snackbar.make(view, "请填写必要信息", Snackbar.LENGTH_LONG).show();
+            SnackbarUtils.show(getWindow().getDecorView(), "请填写必要信息");
             return;
         }
         if (!StringUtils.checkEmail(email)) {
-            Snackbar.make(view, "请输入正确的邮箱格式", Snackbar.LENGTH_LONG).show();
+            SnackbarUtils.show(getWindow().getDecorView(), "请输入正确的邮箱格式");
             return;
         }
         if (!password.equals(rpassword)) {
-            Snackbar.make(view, "两次密码不一致", Snackbar.LENGTH_LONG).show();
+            SnackbarUtils.show(getWindow().getDecorView(), "两次密码不一致");
             return;
         }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("username", username);
-        params.put("password", password);
-        params.put("mail", email);
-
         ProgressUtils.show(this, "正在注册...");
 
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_SIGN, params, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                ProgressUtils.dismiss();
-            }
+        userLogPresenter.signup(username,password,email);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String result = response.body().string();
-                ProgressUtils.dismiss();
-                Gson gson = new Gson();
-                UserBean userBean = gson.fromJson(result, UserBean.class);
-                if (userBean.getStatus() == 100) {
-                    Snackbar.make(view, "注册成功，请先登陆邮箱验证后登陆", Snackbar.LENGTH_LONG).show();
-                } else {
-                    Snackbar.make(view, userBean.getMessage(), Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
     }
+
+    @Override
+    public void loadDataSuccess(UserBean tData) {
+        ProgressUtils.dismiss();
+        if (isLogin) {
+            if (tData.getState() == 1) {
+                SharedPUtils.setCurrentUser(mContext, tData);
+                setResult(RESULT_OK, new Intent());
+                finish();
+            } else {
+                SnackbarUtils.show(getWindow().getDecorView(), "请先登陆邮箱激活账号");
+            }
+        }else {
+            SnackbarUtils.show(getWindow().getDecorView(), "注册成功，请先登陆邮箱验证后登陆");
+        }
+
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+        ProgressUtils.dismiss();
+        SnackbarUtils.show(getWindow().getDecorView(), throwable.getMessage());
+    }
+
 }

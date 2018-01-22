@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.common.Constants;
 
 /**
  * Created by zhouas666 on 2017/12/27.

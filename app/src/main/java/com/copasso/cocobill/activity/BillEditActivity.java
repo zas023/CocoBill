@@ -25,6 +25,7 @@ import com.copasso.cocobill.adapter.MonthAccountAdapter;
 import com.copasso.cocobill.bean.BPay;
 import com.copasso.cocobill.bean.BSort;
 import com.copasso.cocobill.bean.NoteBean;
+import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.*;
 import com.google.gson.Gson;
 import okhttp3.Call;
@@ -165,7 +166,7 @@ public class BillEditActivity extends BaseActivity {
                         SharedPUtils.setUserNoteBean(BillEditActivity.this,msg.obj.toString());
                     }
                 }
-            },Constants.currentUserId);
+            }, Constants.currentUserId);
         }else {
             //成功后加载布局
             setTitleStatus();

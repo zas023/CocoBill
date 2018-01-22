@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import com.copasso.cocobill.bean.BaseBean;
 import com.copasso.cocobill.bean.BillBean;
 import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridLayoutManager;
-import com.copasso.cocobill.utils.Constants;
+import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.DateUtils;
 
 import java.io.IOException;

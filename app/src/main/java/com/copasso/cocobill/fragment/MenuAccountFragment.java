@@ -1,7 +1,5 @@
 package com.copasso.cocobill.fragment;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +13,8 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.AccountCardAdapter;
 import com.copasso.cocobill.bean.MonthAccountBean;
-import com.copasso.cocobill.bean.MonthChartBean;
-import com.copasso.cocobill.utils.Constants;
+import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.DateUtils;
-import com.copasso.cocobill.utils.HttpUtils;
 
 import java.io.IOException;
 import java.util.Calendar;

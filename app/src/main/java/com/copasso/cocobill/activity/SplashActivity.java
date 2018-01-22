@@ -1,13 +1,7 @@
 package com.copasso.cocobill.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.provider.SyncStateContract;
-import android.view.Window;
-import android.view.WindowManager;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.utils.Constants;
 import com.copasso.cocobill.utils.ThemeManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;

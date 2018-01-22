@@ -12,6 +12,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.widget.VerifyCodeButton;
 import okhttp3.Call;

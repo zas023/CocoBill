@@ -11,6 +11,7 @@ import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.*;
+import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridAdapter;
 import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.widget.SwipeMenuView;

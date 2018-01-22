@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.UserBean;
+import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.*;
 
 import android.net.Uri;

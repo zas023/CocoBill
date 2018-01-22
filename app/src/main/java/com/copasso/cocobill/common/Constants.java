@@ -1,4 +1,4 @@
-package com.copasso.cocobill.utils;
+package com.copasso.cocobill.common;
 
 public class Constants {
 

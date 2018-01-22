@@ -7,10 +7,7 @@ import java.io.Serializable;
  * 通用javabean
  */
 
-public class BaseBean implements Serializable {
-
-
-    private static final long serialVersionUID = 1L;
+public class BaseBean {
     /**
      * status : 1
      * message : 成功！

@@ -1,6 +1,5 @@
 package com.copasso.cocobill.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
@@ -11,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +19,7 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.SortEditAdapter;
 import com.copasso.cocobill.bean.BSort;
 import com.copasso.cocobill.bean.NoteBean;
-import com.copasso.cocobill.utils.Constants;
+import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.HttpUtils;
 import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.utils.SharedPUtils;

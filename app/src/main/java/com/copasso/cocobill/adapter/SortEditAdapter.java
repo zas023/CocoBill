@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.BSort;
-import com.copasso.cocobill.utils.Constants;
+import com.copasso.cocobill.common.Constants;
 
 import java.util.List;
 

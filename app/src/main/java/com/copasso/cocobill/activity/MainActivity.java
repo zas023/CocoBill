@@ -1,6 +1,5 @@
 package com.copasso.cocobill.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,11 +24,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.MainFragmentPagerAdapter;
-import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.fragment.MenuAccountFragment;
 import com.copasso.cocobill.fragment.MenuChartFragment;
 import com.copasso.cocobill.fragment.MenuDetailFragment;
-import com.copasso.cocobill.utils.Constants;
+import com.copasso.cocobill.common.Constants;
 
 import butterknife.BindView;
 import butterknife.OnClick;
