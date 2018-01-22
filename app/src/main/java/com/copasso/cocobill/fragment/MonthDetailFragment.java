@@ -19,6 +19,8 @@ import com.copasso.cocobill.adapter.MonthDetailAdapter;
 import com.copasso.cocobill.bean.BaseBean;
 import com.copasso.cocobill.bean.BillBean;
 import com.copasso.cocobill.bean.MonthDetailBean;
+import com.copasso.cocobill.presenter.Imp.MonthDetailPresenterImp;
+import com.copasso.cocobill.presenter.MonthDetailPresenter;
 import com.copasso.cocobill.stickyheader.StickyHeaderGridLayoutManager;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.DateUtils;
@@ -31,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.utils.OkHttpUtils;
+import com.copasso.cocobill.view.MonthDetailView;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,7 +45,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 /**
  * -明细
  */
-public class MonthDetailFragment extends BaseFragment {
+public class MonthDetailFragment extends BaseFragment implements MonthDetailView{
 
     @BindView(R.id.data_year)
     TextView dataYear;
@@ -63,6 +66,8 @@ public class MonthDetailFragment extends BaseFragment {
     @BindView(R.id.float_btn)
     FloatingActionButton floatBtn;
 
+    private MonthDetailPresenter presenter;
+
     private static final int SPAN_SIZE = 1;
     private StickyHeaderGridLayoutManager mLayoutManager;
     private MonthDetailAdapter adapter;
@@ -76,7 +81,6 @@ public class MonthDetailFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_menu_detail;
     }
-
 
     @Override
     protected void initEventAndData() {
@@ -93,7 +97,7 @@ public class MonthDetailFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 swipe.setRefreshing(false);
-                setBillData(Constants.currentUserId, setYear, setMonth);
+                getBills(Constants.currentUserId, setYear, setMonth);
             }
         });
 
@@ -188,8 +192,9 @@ public class MonthDetailFragment extends BaseFragment {
             }
         });
 
+        presenter=new MonthDetailPresenterImp(this);
         //请求当月数据
-        setBillData(Constants.currentUserId, setYear, setMonth);
+        getBills(Constants.currentUserId, setYear, setMonth);
     }
 
     /**
@@ -199,7 +204,7 @@ public class MonthDetailFragment extends BaseFragment {
      * @param year
      * @param month
      */
-    private void setBillData(final int userid, String year, String month) {
+    private void getBills(int userid, String year, String month) {
         if (userid == 0) {
             Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
             return;
@@ -211,32 +216,22 @@ public class MonthDetailFragment extends BaseFragment {
         tOutcome.setText("0.00");
         tIncome.setText("0.00");
         //请求某年某月数据
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_MONTH_DETIAL + "/" + userid + "/" + year + "/" + month,
-                null, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+        presenter.getMonthDetailBills(String.valueOf(Constants.currentUserId), setYear, setMonth);
 
-                    }
+    }
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        Gson gson = new Gson();
-                        data = gson.fromJson(response.body().string(), MonthDetailBean.class);
-                        //data不为空且status==100:处理成功！
-                        if (data != null && data.getStatus() == 100) {
-                            mActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tOutcome.setText(data.getT_outcome());
-                                    tIncome.setText(data.getT_income());
-                                    list = data.getDaylist();
-                                    adapter.setmDatas(list);
-                                    adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
-                                }
-                            });
-                        }
-                    }
-                });
+    @Override
+    public void loadDataSuccess(MonthDetailBean tData) {
+        tOutcome.setText(tData.getT_outcome());
+        tIncome.setText(tData.getT_income());
+        list = tData.getDaylist();
+        adapter.setmDatas(list);
+        adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+
     }
 
 
@@ -258,7 +253,7 @@ public class MonthDetailFragment extends BaseFragment {
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         setYear = DateUtils.date2Str(date, "yyyy");
                         setMonth = DateUtils.date2Str(date, "MM");
-                        setBillData(Constants.currentUserId, setYear, setMonth);
+                        getBills(Constants.currentUserId, setYear, setMonth);
                     }
                 }).setRangDate(null, Calendar.getInstance())
                         .setType(new boolean[]{true, true, false, false, false, false})
@@ -282,7 +277,8 @@ public class MonthDetailFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            setBillData(Constants.currentUserId, setYear, setMonth);
+            getBills(Constants.currentUserId, setYear, setMonth);
         }
     }
+
 }
