@@ -46,6 +46,16 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     // Splash闪屏页库
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
+    // RxAndroid+RxJava
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }
