@@ -33,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.utils.OkHttpUtils;
+import com.copasso.cocobill.utils.SnackbarUtils;
 import com.copasso.cocobill.view.MonthDetailView;
 import com.google.gson.Gson;
 import okhttp3.Call;
@@ -85,21 +86,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     @Override
     protected void initEventAndData() {
 
-        dataYear.setText(setYear + " 年");
-        dataMonth.setText(setMonth);
-        //改变加载显示的颜色
-        swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
-        //设置向下拉多少出现刷新
-        swipe.setDistanceToTriggerSync(200);
-        //设置刷新出现的位置
-        swipe.setProgressViewEndTarget(false, 200);
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipe.setRefreshing(false);
-                getBills(Constants.currentUserId, setYear, setMonth);
-            }
-        });
+        initView();
 
         mLayoutManager = new StickyHeaderGridLayoutManager(SPAN_SIZE);
         mLayoutManager.setHeaderBottomOverlapMargin(5);
@@ -198,6 +185,27 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     }
 
     /**
+     * 初始化view
+     */
+    private void initView() {
+        dataYear.setText(setYear + " 年");
+        dataMonth.setText(setMonth);
+        //改变加载显示的颜色
+        swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
+        //设置向下拉多少出现刷新
+        swipe.setDistanceToTriggerSync(200);
+        //设置刷新出现的位置
+        swipe.setProgressViewEndTarget(false, 200);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setRefreshing(false);
+                getBills(Constants.currentUserId, setYear, setMonth);
+            }
+        });
+    }
+
+    /**
      * 获取账单数据
      *
      * @param userid
@@ -220,6 +228,10 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
 
     }
 
+    /**
+     * 数据请求成功
+     * @param tData
+     */
     @Override
     public void loadDataSuccess(MonthDetailBean tData) {
         tOutcome.setText(tData.getT_outcome());
@@ -229,16 +241,24 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
     }
 
+    /**
+     * 抛出异常
+     * @param throwable
+     */
     @Override
     public void loadDataError(Throwable throwable) {
-
+        SnackbarUtils.show(mActivity.getWindow().getDecorView(),throwable.getMessage());
     }
 
 
+    /**
+     * 监听点击事件
+     * @param view
+     */
     @OnClick({R.id.float_btn, R.id.layout_data, R.id.top_ll_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.float_btn:
+            case R.id.float_btn:  //添加
                 if (Constants.currentUserId == 0) {
                     Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
                 } else {
@@ -246,25 +266,32 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
                     startActivityForResult(intent, 0);
                 }
                 break;
-            case R.id.layout_data:
-                //时间选择器
-                new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
-                    @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
-                        setYear = DateUtils.date2Str(date, "yyyy");
-                        setMonth = DateUtils.date2Str(date, "MM");
-                        getBills(Constants.currentUserId, setYear, setMonth);
-                    }
-                }).setRangDate(null, Calendar.getInstance())
-                        .setType(new boolean[]{true, true, false, false, false, false})
-//                        .isDialog(true)//是否显示为对话框样式
-                        .build()
-                        .show();
+            case R.id.layout_data:  //日期选择
+                showTimePicker();
                 break;
             case R.id.top_ll_out:
 
                 break;
         }
+    }
+
+    /**
+     * 时间选择器
+     */
+    public void showTimePicker(){
+        //时间选择器
+        new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                setYear = DateUtils.date2Str(date, "yyyy");
+                setMonth = DateUtils.date2Str(date, "MM");
+                getBills(Constants.currentUserId, setYear, setMonth);
+            }
+        }).setRangDate(null, Calendar.getInstance())
+                .setType(new boolean[]{true, true, false, false, false, false})
+//                        .isDialog(true)//是否显示为对话框样式
+                .build()
+                .show();
     }
 
     /**
