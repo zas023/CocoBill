@@ -247,7 +247,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
      */
     @Override
     public void loadDataError(Throwable throwable) {
-        SnackbarUtils.show(mActivity.getWindow().getDecorView(),throwable.getMessage());
+        SnackbarUtils.show(mActivity,throwable.getMessage());
     }
 
 

@@ -121,6 +121,18 @@ public class MonthChartFragment extends BaseFragment
     @Override
     protected void initEventAndData() {
 
+        initView();
+
+        presenter=new MonthChartPresenterImp(this);
+
+        //请求当月数据
+        getChartData(Constants.currentUserId, setYear, setMonth);
+    }
+
+    /**
+     * 初始化view
+     */
+    private void initView() {
         //初始化饼状图
         PieChartUtils.initPieChart(mChart);
         //设置圆盘是否转动，默认转动
@@ -144,12 +156,6 @@ public class MonthChartFragment extends BaseFragment
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MonthChartAdapter(getActivity(), null);
         rvList.setAdapter(adapter);
-
-
-        presenter=new MonthChartPresenterImp(this);
-
-        //请求当月数据
-        getChartData(Constants.currentUserId, setYear, setMonth);
     }
 
 
@@ -178,7 +184,7 @@ public class MonthChartFragment extends BaseFragment
 
     @Override
     public void loadDataError(Throwable throwable) {
-
+        SnackbarUtils.show(mActivity,throwable.getMessage());
     }
 
     /**

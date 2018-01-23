@@ -14,6 +14,8 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.AccountCardAdapter;
 import com.copasso.cocobill.bean.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.presenter.Imp.MonthAccountPresenterImp;
+import com.copasso.cocobill.presenter.MonthAccountPresenter;
 import com.copasso.cocobill.utils.DateUtils;
 
 import java.io.IOException;
@@ -23,6 +25,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import com.copasso.cocobill.utils.OkHttpUtils;
+import com.copasso.cocobill.utils.SnackbarUtils;
+import com.copasso.cocobill.view.MonthAccountView;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -34,7 +38,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 /**
  * 我的账户
  */
-public class MonthAccountFragment extends BaseFragment {
+public class MonthAccountFragment extends BaseFragment implements MonthAccountView{
 
     @BindView(R.id.data_year)
     TextView dataYear;
@@ -51,6 +55,7 @@ public class MonthAccountFragment extends BaseFragment {
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
 
+    private MonthAccountPresenter presenter;
 
     private AccountCardAdapter adapter;
 
@@ -70,6 +75,18 @@ public class MonthAccountFragment extends BaseFragment {
     @Override
     protected void initEventAndData() {
 
+        initView();
+
+        presenter=new MonthAccountPresenterImp(this);
+
+        //请求当月数据
+        getAcountData(Constants.currentUserId, setYear, setMonth);
+    }
+
+    /**
+     * 初始化view
+     */
+    private void initView() {
         dataYear.setText(DateUtils.getCurYear("yyyy 年"));
         dataMonth.setText(DateUtils.date2Str(new Date(), "MM"));
         //改变加载显示的颜色
@@ -82,7 +99,7 @@ public class MonthAccountFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 swipe.setRefreshing(false);
-                setAcountData(Constants.currentUserId, setYear, setMonth);
+                getAcountData(Constants.currentUserId, setYear, setMonth);
             }
         });
 
@@ -94,11 +111,7 @@ public class MonthAccountFragment extends BaseFragment {
             }
         });
         rvList.setAdapter(adapter);
-
-        //请求当月数据
-        setAcountData(Constants.currentUserId, setYear, setMonth);
     }
-
 
     /**
      * 获取账单数据
@@ -106,39 +119,30 @@ public class MonthAccountFragment extends BaseFragment {
      * @param year
      * @param month
      */
-    private void setAcountData(final int userid, String year, String month) {
+    private void getAcountData(final int userid, String year, String month) {
         if (userid==0){
             Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
             return;
         }
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_MONTH_CARD
-                        + "/" + userid + "/" + year + "/" + month,
-                null, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
 
-                    }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        Gson gson = new Gson();
-                        monthAccountBean = gson.fromJson(response.body().string(), MonthAccountBean.class);
-                        //data不为空且status==100:处理成功！
-                        if (monthAccountBean!=null && monthAccountBean.getStatus() == 100) {
-                            mActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tOutcome.setText(monthAccountBean.getTotalOut());
-                                    tIncome.setText(monthAccountBean.getTotalIn());
-                                    list = monthAccountBean.getList();
-                                    adapter.setmDatas(list);
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                    }
-                });
+        presenter.getMonthAccountBills(String.valueOf(userid),year,month);
+    }
+
+    @Override
+    public void loadDataSuccess(MonthAccountBean tData) {
+        monthAccountBean=tData;
+        tOutcome.setText(monthAccountBean.getTotalOut());
+        tIncome.setText(monthAccountBean.getTotalIn());
+        list = monthAccountBean.getList();
+        adapter.setmDatas(list);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+        SnackbarUtils.show(mActivity,throwable.getMessage());
     }
 
     @OnClick({R.id.layout_data,R.id.top_ll_out})
@@ -151,7 +155,7 @@ public class MonthAccountFragment extends BaseFragment {
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         setYear=DateUtils.date2Str(date, "yyyy");
                         setMonth=DateUtils.date2Str(date, "MM");
-                        setAcountData(Constants.currentUserId,setYear,setMonth);
+                        getAcountData(Constants.currentUserId,setYear,setMonth);
                     }
                 }).setRangDate(null, Calendar.getInstance())
                         .setType(new boolean[]{true, true, false, false, false, false})
@@ -163,5 +167,4 @@ public class MonthAccountFragment extends BaseFragment {
                 break;
         }
     }
-
 }
