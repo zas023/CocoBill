@@ -8,7 +8,6 @@ import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.common.HttpConfig;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -42,6 +41,7 @@ public interface APIService {
 
     /**
      * 每月账单详情
+     *
      * @param id
      * @param year
      * @param month
@@ -53,6 +53,7 @@ public interface APIService {
 
     /**
      * 每月账单分类
+     *
      * @param id
      * @param year
      * @param month
@@ -64,6 +65,7 @@ public interface APIService {
 
     /**
      * 每月账户统计
+     *
      * @param id
      * @param year
      * @param month
@@ -72,4 +74,22 @@ public interface APIService {
     @GET(HttpConfig.BILL_MONTH_CARD)
     Observable<MonthAccountBean> getMonthAccount(@Path("id") String id, @Path("year") String year
             , @Path("month") String month);
+
+    /**
+     * 添加账单
+     * @param userid
+     * @param sortid
+     * @param payid
+     * @param cost
+     * @param crdate
+     * @param content
+     * @param income
+     * @return
+     */
+    @GET(HttpConfig.BILL_ADD)
+    Observable<MonthAccountBean> addBill(@Query("userid") String userid, @Query("sortid") String sortid
+            , @Query("payid") String payid, @Query("cost") String cost, @Query("crdate") String crdate
+            , @Query("content") String content, @Query("income") String income);
+
+
 }
