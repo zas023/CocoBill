@@ -5,7 +5,7 @@ public interface MonthDetailModel {
     /**
      * 每月账单详情
      */
-    void getMonthDetailBills(String id, String year, String mail);
+    void getMonthDetailBills(String id, String year, String month);
 
     void onUnsubscribe();
 }

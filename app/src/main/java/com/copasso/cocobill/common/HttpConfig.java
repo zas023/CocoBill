@@ -14,8 +14,8 @@ public class HttpConfig {
     public static final String USER_CHANGEPW = "user/changePw";
     public static final String USER_FORGETPW = "user/forgetPw";
     public static final String BILL_MONTH_DETIAL = "bill/user/{id}/{year}/{month}";
-    public static final String BILL_MONTH_CHART = "bill/chart";
-    public static final String BILL_MONTH_CARD = "bill/pay";
+    public static final String BILL_MONTH_CHART = "bill/chart/{id}/{year}/{month}";
+    public static final String BILL_MONTH_CARD = "bill/pay/{id}/{year}/{month}";
     public static final String BILL_DELETE = "bill/delete";
     public static final String BILL_UPDATE = "bill/update";
     public static final String BILL_ADD = "bill/add";

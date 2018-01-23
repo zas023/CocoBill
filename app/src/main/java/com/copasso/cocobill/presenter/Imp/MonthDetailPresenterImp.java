@@ -27,8 +27,8 @@ public class MonthDetailPresenterImp extends MonthDetailPresenter implements Mon
     }
 
     @Override
-    public void getMonthDetailBills(String id, String year, String mail) {
-        monthDetailModel.getMonthDetailBills(id,year,mail);
+    public void getMonthDetailBills(String id, String year, String month) {
+        monthDetailModel.getMonthDetailBills(id,year,month);
     }
 
 }

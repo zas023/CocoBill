@@ -1,6 +1,8 @@
 package com.copasso.cocobill.api;
 
 
+import com.copasso.cocobill.bean.MonthAccountBean;
+import com.copasso.cocobill.bean.MonthChartBean;
 import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.common.HttpConfig;
@@ -47,5 +49,27 @@ public interface APIService {
      */
     @GET(HttpConfig.BILL_MONTH_DETIAL)
     Observable<MonthDetailBean> getMonthDetial(@Path("id") String id, @Path("year") String year
+            , @Path("month") String month);
+
+    /**
+     * 每月账单分类
+     * @param id
+     * @param year
+     * @param month
+     * @return
+     */
+    @GET(HttpConfig.BILL_MONTH_CHART)
+    Observable<MonthChartBean> getMonthChart(@Path("id") String id, @Path("year") String year
+            , @Path("month") String month);
+
+    /**
+     * 每月账户统计
+     * @param id
+     * @param year
+     * @param month
+     * @return
+     */
+    @GET(HttpConfig.BILL_MONTH_CARD)
+    Observable<MonthAccountBean> getMonthAccount(@Path("id") String id, @Path("year") String year
             , @Path("month") String month);
 }

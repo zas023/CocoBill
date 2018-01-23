@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity implements UserLogView {
         String username = usernameET.getText().toString();
         String password = passwordET.getText().toString();
         if (username.length() == 0 || password.length() == 0) {
-            Snackbar.make(getWindow().getDecorView(), "用户名或密码不能为空", Snackbar.LENGTH_SHORT).show();
+            SnackbarUtils.show(mContext, "用户名或密码不能为空");
             return;
         }
 
@@ -141,15 +141,15 @@ public class LoginActivity extends BaseActivity implements UserLogView {
         String password = passwordET.getText().toString();
         String rpassword = rpasswordET.getText().toString();
         if (email.length() == 0 || username.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
-            SnackbarUtils.show(getWindow().getDecorView(), "请填写必要信息");
+            SnackbarUtils.show(mContext, "请填写必要信息");
             return;
         }
         if (!StringUtils.checkEmail(email)) {
-            SnackbarUtils.show(getWindow().getDecorView(), "请输入正确的邮箱格式");
+            SnackbarUtils.show(mContext, "请输入正确的邮箱格式");
             return;
         }
         if (!password.equals(rpassword)) {
-            SnackbarUtils.show(getWindow().getDecorView(), "两次密码不一致");
+            SnackbarUtils.show(mContext, "两次密码不一致");
             return;
         }
 
@@ -168,10 +168,10 @@ public class LoginActivity extends BaseActivity implements UserLogView {
                 setResult(RESULT_OK, new Intent());
                 finish();
             } else {
-                SnackbarUtils.show(getWindow().getDecorView(), "请先登陆邮箱激活账号");
+                SnackbarUtils.show(mContext, "请先登陆邮箱激活账号");
             }
         }else {
-            SnackbarUtils.show(getWindow().getDecorView(), "注册成功，请先登陆邮箱验证后登陆");
+            SnackbarUtils.show(mContext, "注册成功，请先登陆邮箱验证后登陆");
         }
 
     }
@@ -179,7 +179,7 @@ public class LoginActivity extends BaseActivity implements UserLogView {
     @Override
     public void loadDataError(Throwable throwable) {
         ProgressUtils.dismiss();
-        SnackbarUtils.show(getWindow().getDecorView(), throwable.getMessage());
+        SnackbarUtils.show(mContext, throwable.getMessage());
     }
 
 }

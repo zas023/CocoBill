@@ -14,7 +14,10 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.MonthChartAdapter;
 import com.copasso.cocobill.bean.MonthChartBean;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.presenter.Imp.MonthChartPresenterImp;
+import com.copasso.cocobill.presenter.MonthChartPresenter;
 import com.copasso.cocobill.utils.*;
+import com.copasso.cocobill.view.MonthChartView;
 import com.copasso.cocobill.widget.CircleImageView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -43,7 +46,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
  * 类别报表
  */
 public class MonthChartFragment extends BaseFragment
-        implements OnChartValueSelectedListener {
+        implements MonthChartView,OnChartValueSelectedListener {
 
 
     @BindView(R.id.chart)
@@ -93,6 +96,8 @@ public class MonthChartFragment extends BaseFragment
     @BindView(R.id.layout_typedata)
     LinearLayout layoutTypedata;
 
+    private MonthChartPresenter presenter;
+
     private boolean TYPE = true;//默认总收入true
     private List<MonthChartBean.SortTypeList> tMoneyBeanList;
     private String sort_image;//饼状图与之相对应的分类图片地址
@@ -131,7 +136,7 @@ public class MonthChartFragment extends BaseFragment
             @Override
             public void onRefresh() {
                 swipe.setRefreshing(false);
-                setChartData(Constants.currentUserId, setYear, setMonth);
+                getChartData(Constants.currentUserId, setYear, setMonth);
             }
         });
 
@@ -140,8 +145,11 @@ public class MonthChartFragment extends BaseFragment
         adapter = new MonthChartAdapter(getActivity(), null);
         rvList.setAdapter(adapter);
 
+
+        presenter=new MonthChartPresenterImp(this);
+
         //请求当月数据
-        setChartData(Constants.currentUserId, setYear, setMonth);
+        getChartData(Constants.currentUserId, setYear, setMonth);
     }
 
 
@@ -151,7 +159,7 @@ public class MonthChartFragment extends BaseFragment
      * @param year
      * @param month
      */
-    private void setChartData(final int userid, String year, String month) {
+    private void getChartData(int userid, String year, String month) {
         if (userid==0){
             Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
             return;
@@ -159,28 +167,18 @@ public class MonthChartFragment extends BaseFragment
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
         //请求某年某月数据
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_MONTH_CHART
-                        + "/" + userid + "/" + year + "/" + month,
-                null, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+        presenter.getMonthChartBills(String.valueOf(userid),year,month);
+    }
 
-                    }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        Gson gson = new Gson();
-                        monthChartBean = gson.fromJson(response.body().string(), MonthChartBean.class);
-                        //data不为空且status==100:处理成功！
-                        if (monthChartBean!=null && monthChartBean.getStatus() == 100) {
-                            mActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setReportData();
-                                }
-                            });
-                        }
-                    }
-                });
+    @Override
+    public void loadDataSuccess(MonthChartBean tData) {
+        monthChartBean=tData;
+        setReportData();
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+
     }
 
     /**
@@ -275,25 +273,12 @@ public class MonthChartFragment extends BaseFragment
     @OnClick({R.id.layout_center, R.id.layout_data, R.id.item_type, R.id.item_other})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.layout_center:
-
+            case R.id.layout_center:  //图表中心键
                 TYPE = !TYPE;
                 setReportData();
                 break;
-            case R.id.layout_data:
-                //时间选择器
-                new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
-                    @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
-                        setYear = DateUtils.date2Str(date, "yyyy");
-                        setMonth = DateUtils.date2Str(date, "MM");
-                        setChartData(Constants.currentUserId, setYear, setMonth);
-                    }
-                })
-                        .setRangDate(null, Calendar.getInstance())
-                        .setType(new boolean[]{true, true, false, false, false, false})
-                        .build()
-                        .show();
+            case R.id.layout_data:  //日期选择
+                showTimePicker();
                 break;
             case R.id.item_type:
                 break;
@@ -301,5 +286,24 @@ public class MonthChartFragment extends BaseFragment
                 break;
         }
     }
+
+    /**
+     * 时间选择器
+     */
+    private void showTimePicker() {
+        new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                setYear = DateUtils.date2Str(date, "yyyy");
+                setMonth = DateUtils.date2Str(date, "MM");
+                getChartData(Constants.currentUserId, setYear, setMonth);
+            }
+        })
+                .setRangDate(null, Calendar.getInstance())
+                .setType(new boolean[]{true, true, false, false, false, false})
+                .build()
+                .show();
+    }
+
 
 }

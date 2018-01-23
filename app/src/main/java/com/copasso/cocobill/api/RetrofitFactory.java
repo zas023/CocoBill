@@ -21,9 +21,9 @@ public class RetrofitFactory {
                 .connectTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
                 .readTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
                 .writeTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
-                .build();
                 //.addInterceptor(InterceptorUtil.HeaderInterceptor())
                 //.addInterceptor(InterceptorUtil.LogInterceptor())//添加日志拦截器
+                .build();
         Retrofit mRetrofit=new Retrofit.Builder()
                 .baseUrl(HttpConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())//添加gson转换器

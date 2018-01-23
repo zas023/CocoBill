@@ -2,32 +2,30 @@ package com.copasso.cocobill.model.Imp;
 
 import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
-import com.copasso.cocobill.bean.MonthDetailBean;
-import com.copasso.cocobill.bean.UserBean;
+import com.copasso.cocobill.bean.MonthChartBean;
+import com.copasso.cocobill.model.MonthChartModel;
 import com.copasso.cocobill.model.MonthDetailModel;
-import com.copasso.cocobill.model.UserLogModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MonthDetailModelImp implements MonthDetailModel {
+public class MonthChartModelImp implements MonthChartModel {
 
-    private MonthDetailOnListener listener;
+    private MonthChartOnListener listener;
 
-    public MonthDetailModelImp(MonthDetailOnListener listener) {
+    public MonthChartModelImp(MonthChartOnListener listener) {
         this.listener = listener;
     }
 
-
     @Override
-    public void getMonthDetailBills(String id, String year, String month) {
+    public void getMonthChartBills(String id, String year, String month) {
         RetrofitFactory.getInstence().API()
-                .getMonthDetial(id,year,month)
+                .getMonthChart(id,year,month)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<MonthDetailBean>() {
+                .subscribe(new BaseObserver<MonthChartBean>() {
                     @Override
-                    protected void onSuccees(MonthDetailBean monthDetailBean) throws Exception {
-                        listener.onSuccess(monthDetailBean);
+                    protected void onSuccees(MonthChartBean monthChartBean) throws Exception {
+                        listener.onSuccess(monthChartBean);
                     }
 
                     @Override
@@ -45,9 +43,9 @@ public class MonthDetailModelImp implements MonthDetailModel {
     /**
      * 回调接口
      */
-    public interface MonthDetailOnListener {
+    public interface MonthChartOnListener {
 
-        void onSuccess(MonthDetailBean bean);
+        void onSuccess(MonthChartBean bean);
 
         void onFailure(Throwable e);
     }
