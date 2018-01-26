@@ -494,16 +494,16 @@ public class BillEditActivity extends BaseActivity implements BillView {
                 if (mMonth + 1 < 10) {
                     if (mDay < 10) {
                         days = new StringBuffer().append(mYear).append("-").append("0").
-                                append(mMonth + 1).append("-").append("0").append(mDay).append("-").toString();
+                                append(mMonth + 1).append("-").append("0").append(mDay).toString();
                     } else {
-                        days = new StringBuffer().append(mYear).append("年").append("0").
-                                append(mMonth + 1).append("-").append(mDay).append("-").toString();
+                        days = new StringBuffer().append(mYear).append("-").append("0").
+                                append(mMonth + 1).append("-").append(mDay).toString();
                     }
 
                 } else {
                     if (mDay < 10) {
                         days = new StringBuffer().append(mYear).append("-").
-                                append(mMonth + 1).append("-").append("0").append(mDay).append("-").toString();
+                                append(mMonth + 1).append("-").append("0").append(mDay).toString();
                     } else {
                         days = new StringBuffer().append(mYear).append("-").
                                 append(mMonth + 1).append("-").append(mDay).toString();
