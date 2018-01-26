@@ -16,7 +16,7 @@ public class HttpConfig {
     public static final String BILL_MONTH_DETIAL = "bill/user/{id}/{year}/{month}";
     public static final String BILL_MONTH_CHART = "bill/chart/{id}/{year}/{month}";
     public static final String BILL_MONTH_CARD = "bill/pay/{id}/{year}/{month}";
-    public static final String BILL_DELETE = "bill/delete";
+    public static final String BILL_DELETE = "bill/delete/{id}";
     public static final String BILL_UPDATE = "bill/update";
     public static final String BILL_ADD = "bill/add";
     public static final String NOTE_USER = "note/user";

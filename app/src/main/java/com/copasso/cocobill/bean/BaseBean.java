@@ -1,15 +1,13 @@
 package com.copasso.cocobill.bean;
 
-import java.io.Serializable;
-
 /**
- * Created by Administrator on 2017/10/16 0016.
+ * Created by zhouas666 on 2017/10/16 0016.
  * 通用javabean
  */
 
 public class BaseBean {
     /**
-     * status : 1
+     * status : 100
      * message : 成功！
      */
 
