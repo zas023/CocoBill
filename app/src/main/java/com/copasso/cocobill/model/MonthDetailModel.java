@@ -7,5 +7,10 @@ public interface MonthDetailModel {
      */
     void getMonthDetailBills(String id, String year, String month);
 
+    /**
+     * 删除账单
+     */
+    void delete(int id);
+
     void onUnsubscribe();
 }

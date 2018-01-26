@@ -34,6 +34,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.utils.SnackbarUtils;
+import com.copasso.cocobill.view.BillView;
 import com.copasso.cocobill.view.MonthDetailView;
 import com.google.gson.Gson;
 import okhttp3.Call;
@@ -74,6 +75,8 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     private MonthDetailAdapter adapter;
     private List<MonthDetailBean.DaylistBean> list;
     private MonthDetailBean data;
+
+    int part,index;
 
     private String setYear = DateUtils.getCurYear(FORMAT_Y);
     private String setMonth = DateUtils.getCurMonth(FORMAT_M);
@@ -136,31 +139,11 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         //adapter的侧滑选项事件监听
         adapter.setOnStickyHeaderClickListener(new MonthDetailAdapter.OnStickyHeaderClickListener() {
             @Override
-            public void OnDeleteClick(int id, final int section, final int offset) {
-                OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_DELETE
-                                + "/" +id, null,
-                        new Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
+            public void OnDeleteClick(int id, int section,  int offset) {
 
-                            }
-
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                Gson gson = new Gson();
-                                BaseBean baseBean = gson.fromJson(response.body().string(), BaseBean.class);
-                                if (baseBean.getStatus() == 100) {
-                                    mActivity.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            adapter.remove(section,offset);
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(mContext, "删除失败", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                presenter.deleteBill(id);
+                part=section;
+                index=offset;
             }
 
             @Override
@@ -239,6 +222,15 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         list = tData.getDaylist();
         adapter.setmDatas(list);
         adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
+    }
+
+    /**
+     * 删除账单成功
+     * @param tData
+     */
+    @Override
+    public void loadDataSuccess(BaseBean tData) {
+        adapter.remove(part,index);
     }
 
     /**

@@ -5,13 +5,13 @@ public interface BillModel {
     /**
      * 添加账单
      */
-    void add(int userid, int sortid, int payid,Float cost, String content,
+    void add(int userid, int sortid, int payid,String cost, String content,
              String crdate, boolean income);
 
     /**
      * 修改账单
      */
-    void update(int id, int userid, int sortid, int payid,Float cost, String content,
+    void update(int id, int userid, int sortid, int payid,String cost, String content,
                 String crdate, boolean income);
 
     /**

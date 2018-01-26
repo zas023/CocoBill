@@ -16,7 +16,7 @@ public class BillModelImp implements BillModel{
     }
 
     @Override
-    public void add(int userid, int sortid, int payid, Float cost, String content, String crdate, boolean income) {
+    public void add(int userid, int sortid, int payid, String cost, String content, String crdate, boolean income) {
         RetrofitFactory.getInstence().API()
                 .addBill(userid,sortid,payid,cost,content,crdate,income)
                 .subscribeOn(Schedulers.io())
@@ -35,13 +35,41 @@ public class BillModelImp implements BillModel{
     }
 
     @Override
-    public void update(int id, int userid, int sortid, int payid, Float cost, String content, String crdate, boolean income) {
+    public void update(int id, int userid, int sortid, int payid, String cost, String content, String crdate, boolean income) {
+        RetrofitFactory.getInstence().API()
+                .updateBill(id,userid,sortid,payid,cost,content,crdate,income)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseBean>() {
+                    @Override
+                    protected void onSuccees(BaseBean baseBean) throws Exception {
+                        listener.onSuccess(baseBean);
+                    }
 
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
     }
 
     @Override
     public void delete(int id) {
+        RetrofitFactory.getInstence().API()
+                .deleteBill(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseBean>() {
+                    @Override
+                    protected void onSuccees(BaseBean baseBean) throws Exception {
+                        listener.onSuccess(baseBean);
+                    }
 
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
     }
 
     @Override

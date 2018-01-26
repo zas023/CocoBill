@@ -1,5 +1,6 @@
 package com.copasso.cocobill.presenter.Imp;
 
+import com.copasso.cocobill.bean.BaseBean;
 import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.model.Imp.MonthDetailModelImp;
 import com.copasso.cocobill.model.MonthDetailModel;
@@ -22,6 +23,11 @@ public class MonthDetailPresenterImp extends MonthDetailPresenter implements Mon
     }
 
     @Override
+    public void onSuccess(BaseBean bean) {
+        monthDetailView.loadDataSuccess(bean);
+    }
+
+    @Override
     public void onFailure(Throwable e) {
         monthDetailView.loadDataError(e);
     }
@@ -29,6 +35,11 @@ public class MonthDetailPresenterImp extends MonthDetailPresenter implements Mon
     @Override
     public void getMonthDetailBills(String id, String year, String month) {
         monthDetailModel.getMonthDetailBills(id,year,month);
+    }
+
+    @Override
+    public void deleteBill(int id) {
+        monthDetailModel.delete(id);
     }
 
 }

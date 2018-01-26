@@ -86,8 +86,35 @@ public interface APIService {
      */
     @GET(HttpConfig.BILL_ADD)
     Observable<BaseBean> addBill(@Query("userid") int userid, @Query("sortid") int sortid
-            , @Query("payid") int payid, @Query("cost") Float cost
+            , @Query("payid") int payid, @Query("cost") String cost
             , @Query("content") String content, @Query("crdate") String crdate, @Query("income") boolean income);
+
+    /**
+     * 修改账单
+     *
+     * @param id
+     * @param userid
+     * @param sortid
+     * @param payid
+     * @param cost
+     * @param content
+     * @param crdate
+     * @param income
+     * @return
+     */
+    @GET(HttpConfig.BILL_UPDATE)
+    Observable<BaseBean> updateBill(@Query("id") int id, @Query("userid") int userid, @Query("sortid") int sortid
+            , @Query("payid") int payid, @Query("cost") String cost
+            , @Query("content") String content, @Query("crdate") String crdate, @Query("income") boolean income);
+
+    /**
+     * 删除账单
+     *
+     * @param id
+     * @return
+     */
+    @GET(HttpConfig.BILL_DELETE)
+    Observable<BaseBean> deleteBill(@Path("id") int id);
 
 
 }

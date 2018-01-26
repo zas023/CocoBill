@@ -22,6 +22,8 @@ import com.copasso.cocobill.adapter.BookNoteAdapter;
 import com.copasso.cocobill.adapter.MonthAccountAdapter;
 import com.copasso.cocobill.bean.*;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.presenter.BillPresenter;
+import com.copasso.cocobill.presenter.Imp.BillPresenterImp;
 import com.copasso.cocobill.utils.*;
 
 import java.io.IOException;
@@ -30,6 +32,7 @@ import java.util.*;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.copasso.cocobill.view.BillView;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -41,7 +44,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 /**
  * 添加账单
  */
-public class BillAddActivity extends BaseActivity {
+public class BillAddActivity extends BaseActivity implements BillView{
 
     @BindView(R.id.tb_note_income)
     TextView incomeTv;    //收入按钮
@@ -61,6 +64,9 @@ public class BillAddActivity extends BaseActivity {
     ViewPager viewpagerItem;
     @BindView(R.id.layout_icon)
     LinearLayout layoutIcon;
+
+
+    private BillPresenter presenter;
 
 
     public boolean isOutcome = true;
@@ -116,6 +122,22 @@ public class BillAddActivity extends BaseActivity {
         days = DateUtils.getCurDateStr("yyyy-MM-dd");
         dateTv.setText(days);
 
+        presenter=new BillPresenterImp(this);
+
+    }
+
+    @Override
+    public void loadDataSuccess(BaseBean tData) {
+        ProgressUtils.dismiss();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+        ProgressUtils.dismiss();
+        SnackbarUtils.show(mContext,throwable.getMessage());
     }
 
     /**
@@ -475,39 +497,9 @@ public class BillAddActivity extends BaseActivity {
         }
 
         ProgressUtils.show(BillAddActivity.this, "正在提交...");
-        Map<String, String> params = new HashMap<>();
-        params.put("userid", String.valueOf(Constants.currentUserId));
-        params.put("sortid", String.valueOf(lastBean.getId()));
-        params.put("payid", String.valueOf(noteBean.getPayinfo().get(selectedPayinfoIndex).getId()));
-        params.put("cost", num + dotNum);
-        params.put("crdate", crDate);
-        params.put("content", remarkInput);
-        params.put("income", isOutcome ? "false" : "true");
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.BILL_ADD, params,
-                new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        ProgressUtils.dismiss();
-                        mContext.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(BillAddActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        ProgressUtils.dismiss();
-                        Gson gson = new Gson();
-                        String result = response.body().string();
-
-                        Intent intent = new Intent();
-                        intent.putExtra("billJsonStr", result);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    }
-                });
+        presenter.add(Constants.currentUserId,lastBean.getId(),noteBean.getPayinfo().get(selectedPayinfoIndex).getId()
+                ,num + dotNum,remarkInput,crDate,!isOutcome);
     }
 
     /**
@@ -584,5 +576,4 @@ public class BillAddActivity extends BaseActivity {
             }
         }
     }
-
 }

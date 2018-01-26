@@ -2,6 +2,7 @@ package com.copasso.cocobill.model.Imp;
 
 import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
+import com.copasso.cocobill.bean.BaseBean;
 import com.copasso.cocobill.bean.MonthDetailBean;
 import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.model.MonthDetailModel;
@@ -38,6 +39,25 @@ public class MonthDetailModelImp implements MonthDetailModel {
     }
 
     @Override
+    public void delete(int id) {
+        RetrofitFactory.getInstence().API()
+                .deleteBill(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseBean>() {
+                    @Override
+                    protected void onSuccees(BaseBean baseBean) throws Exception {
+                        listener.onSuccess(baseBean);
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
+    }
+
+    @Override
     public void onUnsubscribe() {
 
     }
@@ -48,6 +68,8 @@ public class MonthDetailModelImp implements MonthDetailModel {
     public interface MonthDetailOnListener {
 
         void onSuccess(MonthDetailBean bean);
+
+        void onSuccess(BaseBean bean);
 
         void onFailure(Throwable e);
     }
