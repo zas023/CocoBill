@@ -25,9 +25,12 @@ import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.bean.UserBean;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.presenter.Imp.UserInfoPresenterImp;
+import com.copasso.cocobill.presenter.UserInfoPresenter;
 import com.copasso.cocobill.utils.*;
 
 import android.net.Uri;
+import com.copasso.cocobill.view.UserInfoView;
 import com.copasso.cocobill.widget.CommonItemLayout;
 import okhttp3.*;
 
@@ -40,7 +43,7 @@ import java.util.Map;
  * Created by zhouas666 on 2017/12/24.
  * 用户信息管理中心
  */
-public class UserInfoActivity extends BaseActivity {
+public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -57,8 +60,7 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.cil_email)
     CommonItemLayout emailCL;
 
-    //当前用户
-    private UserBean currentUser;
+    private UserInfoPresenter presenter;
 
     //选择图片来源
     private AlertDialog iconDialog;
@@ -95,8 +97,6 @@ public class UserInfoActivity extends BaseActivity {
             }
         });
 
-        //获取当前账户信息
-        currentUser = SharedPUtils.getCurrentUser(this);
         if (currentUser != null) {
             //加载到布局中
             initData();
@@ -111,6 +111,8 @@ public class UserInfoActivity extends BaseActivity {
 
             }
         }
+
+        presenter = new UserInfoPresenterImp(this);
     }
 
     /**
@@ -121,6 +123,32 @@ public class UserInfoActivity extends BaseActivity {
         sexCL.setRightText(currentUser.getGender());
         phoneCL.setRightText(currentUser.getPhone());
         emailCL.setRightText(currentUser.getMail());
+    }
+
+    @Override
+    public void loadDataSuccess(UserBean tData) {
+        ProgressUtils.dismiss();
+        SharedPUtils.setCurrentUser(mContext, currentUser);
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+        ProgressUtils.dismiss();
+        SnackbarUtils.show(mContext, "修改失败");
+    }
+
+    /**
+     * 更新用户数据
+     */
+    public void doUpdate() {
+        if (currentUser == null)
+            return;
+
+        ProgressUtils.show(UserInfoActivity.this, "正在修改...");
+
+        presenter.update(currentUser.getId(), currentUser.getUsername(), currentUser.getGender()
+                , currentUser.getPhone(), currentUser.getMail());
+
     }
 
     /**
@@ -136,8 +164,7 @@ public class UserInfoActivity extends BaseActivity {
                 showIconDialog();
                 break;
             case R.id.cil_username:  //用户名
-                Toast.makeText(getApplicationContext(), "江湖人行不更名，坐不改姓！",
-                        Toast.LENGTH_SHORT).show();
+                SnackbarUtils.show(mContext, "江湖人行不更名，坐不改姓！");
                 break;
             case R.id.cil_sex:  //性别
                 showGenderDialog();
@@ -294,37 +321,6 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     /**
-     * 更新用户数据
-     */
-    public void doUpdate() {
-        if (currentUser == null)
-            return;
-
-        ProgressUtils.show(UserInfoActivity.this, "正在修改...");
-        Map<String, String> params = new HashMap<>();
-        params.put("id", String.valueOf(currentUser.getId()));
-        params.put("username", currentUser.getUsername());
-        params.put("password", currentUser.getPassword());
-        params.put("gender", currentUser.getGender());
-        params.put("phone", currentUser.getPhone());
-        params.put("mail", currentUser.getMail());
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_UPDATE, params,
-                new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        ProgressUtils.dismiss();
-                        Toast.makeText(UserInfoActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        ProgressUtils.dismiss();
-                        SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
-                    }
-                });
-    }
-
-    /**
      * 监听Activity返回结果
      *
      * @param requestCode
@@ -440,7 +436,7 @@ public class UserInfoActivity extends BaseActivity {
      */
     private void uploadPic(Bitmap bitmap) {
         // 上传至服务器
-        // ... 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
+        // 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
         // 注意这里得到的图片已经是圆形图片了
         // bitmap是没有做个圆形处理的，但已经被裁剪了
         String imagename = Constants.currentUserId + "_" + String.valueOf(System.currentTimeMillis());
@@ -495,5 +491,4 @@ public class UserInfoActivity extends BaseActivity {
             Toast.makeText(this, "需要存储权限", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

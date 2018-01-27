@@ -37,6 +37,20 @@ public interface APIService {
             , @Query("mail") String mail);
 
     /**
+     * 修改账号信息
+     *
+     * @param id
+     * @param username
+     * @param gender
+     * @param phone
+     * @param mail
+     * @return
+     */
+    @GET(HttpConfig.USER_UPDATE)
+    Observable<UserBean> updateUser(@Query("id") int id,@Query("username") String username
+            , @Query("gender") String gender, @Query("phone") String phone, @Query("mail") String mail);
+
+    /**
      * 每月账单详情
      *
      * @param id
