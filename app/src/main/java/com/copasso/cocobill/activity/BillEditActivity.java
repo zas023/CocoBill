@@ -113,6 +113,8 @@ public class BillEditActivity extends BaseActivity implements BillView {
     @Override
     protected void initEventAndData() {
 
+        presenter=new BillPresenterImp(this);
+
         //获取旧数据
         setOldBill();
 
@@ -123,12 +125,11 @@ public class BillEditActivity extends BaseActivity implements BillView {
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
         mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M));
 
-        presenter=new BillPresenterImp(this);
-
     }
 
     @Override
     public void loadDataSuccess(NoteBean tData) {
+        noteBean=tData;
         //成功后加载布局
         setTitleStatus();
         //保存数据

@@ -112,6 +112,8 @@ public class BillAddActivity extends BaseActivity implements BillView{
     @Override
     protected void initEventAndData() {
 
+        presenter=new BillPresenterImp(this);
+
         //初始化分类数据
         initSortView();
 
@@ -122,12 +124,11 @@ public class BillAddActivity extends BaseActivity implements BillView{
         days = DateUtils.getCurDateStr("yyyy-MM-dd");
         dateTv.setText(days);
 
-        presenter=new BillPresenterImp(this);
-
     }
 
     @Override
     public void loadDataSuccess(NoteBean tData) {
+        noteBean=tData;
         //成功后加载布局
         setTitleStatus();
         //保存数据
@@ -157,7 +158,7 @@ public class BillAddActivity extends BaseActivity implements BillView{
         //本地获取失败后
         if (noteBean == null) {
             //同步获取分类、支付方式信息
-            presenter.getNote(currentUser.getId());
+            presenter.getNote(Constants.currentUserId);
         } else {
             //成功后加载布局
             setTitleStatus();
@@ -216,11 +217,12 @@ public class BillAddActivity extends BaseActivity implements BillView{
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
             if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 15; j++) {
-                    if (i != 0) {
-                        tempList.add(tempData.get(i * 15 + j));
-                    } else {
-                        tempList.add(tempData.get(i + j));
-                    }
+                    tempList.add(tempData.get(i * 15 + j));
+//                    if (i != 0) {
+//                        tempList.add(tempData.get(i * 15 + j));
+//                    } else {
+//                        tempList.add(tempData.get(i + j));
+//                    }
                 }
             } else {
                 for (int j = 0; j < tempData.size() % 15; j++) {
