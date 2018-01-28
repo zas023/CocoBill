@@ -17,12 +17,15 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.SortEditAdapter;
+import com.copasso.cocobill.bean.BPay2;
 import com.copasso.cocobill.bean.BSort;
+import com.copasso.cocobill.bean.BSort2;
 import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.common.Constants;
-import com.copasso.cocobill.utils.HttpUtils;
-import com.copasso.cocobill.utils.OkHttpUtils;
-import com.copasso.cocobill.utils.SharedPUtils;
+import com.copasso.cocobill.presenter.Imp.NotePresenterImp;
+import com.copasso.cocobill.presenter.NotePresenter;
+import com.copasso.cocobill.utils.*;
+import com.copasso.cocobill.view.NoteView;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,7 +41,7 @@ import java.util.Map;
 /**
  * Created by zhouas666 on 2017/12/30.
  */
-public class SortEditActivity extends BaseActivity{
+public class SortEditActivity extends BaseActivity implements NoteView{
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -48,6 +51,8 @@ public class SortEditActivity extends BaseActivity{
     TextView outcomeTv;   //支出按钮
 
     private AlertDialog alertDialog;
+
+    private NotePresenter presenter;
 
     public boolean isOutcome = true;
 
@@ -70,29 +75,42 @@ public class SortEditActivity extends BaseActivity{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
 
+        presenter=new NotePresenterImp(this);
+
         noteBean= SharedPUtils.getUserNoteBean(this);
         //本地获取失败后
         if (noteBean==null){
             //同步获取分类、支付方式信息
-            HttpUtils.getNote(new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    Gson gson = new Gson();
-                    noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
-                    //status==100:处理成功！
-                    if (noteBean.getStatus() == 100) {
-                        //成功后加载布局
-                        setTitleStatus();
-                        //保存数据
-                        SharedPUtils.setUserNoteBean(mContext,msg.obj.toString());
-                    }
-                }
-            },Constants.currentUserId);
+            presenter.getNote(Constants.currentUserId);
         }else {
             //成功后加载布局
             setTitleStatus();
         }
+    }
+
+    @Override
+    public void loadDataSuccess(BSort2 tData) {
+        ProgressUtils.dismiss();
+        SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
+    }
+
+    @Override
+    public void loadDataSuccess(BPay2 tData) {
+
+    }
+
+    @Override
+    public void loadDataSuccess(NoteBean tData) {
+        //成功后加载布局
+        setTitleStatus();
+        //保存数据
+        SharedPUtils.setUserNoteBean(mContext,tData);
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+        ProgressUtils.dismiss();
+        SnackbarUtils.show(mContext,throwable.getMessage());
     }
 
     /**
@@ -213,30 +231,10 @@ public class SortEditActivity extends BaseActivity{
                     public void onClick(DialogInterface dialog, int which) {
                         String input = editText.getText().toString();
                         if (input.equals("")) {
-                            Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
-                                    Toast.LENGTH_SHORT).show();
+                            SnackbarUtils.show(mContext, "内容不能为空！");
                         } else {
-                            Map<String ,String > params=new HashMap<>();
-                            params.put("uid",String.valueOf(Constants.currentUserId));
-                            params.put("sortImg","sort_tianjiade.png");
-                            params.put("income", isOutcome ? "false" : "true");
-                            try {
-                                params.put("sortName",java.net.URLEncoder.encode(input,"utf-8"));
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
-                            OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.NOTE_SORT_ADD, params,
-                                    new Callback() {
-                                        @Override
-                                        public void onFailure(Call call, IOException e) {
-
-                                        }
-
-                                        @Override
-                                        public void onResponse(Call call, Response response) throws IOException {
-                                            SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
-                                        }
-                                    });
+                            ProgressUtils.show(mContext);
+                            presenter.addSort(Constants.currentUserId, input, "sort_tianjiade.png", !isOutcome);
                         }
                     }
                 })
@@ -277,4 +275,5 @@ public class SortEditActivity extends BaseActivity{
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

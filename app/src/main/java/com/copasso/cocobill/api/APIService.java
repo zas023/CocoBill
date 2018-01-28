@@ -47,7 +47,7 @@ public interface APIService {
      * @return
      */
     @GET(HttpConfig.USER_UPDATE)
-    Observable<UserBean> updateUser(@Query("id") int id,@Query("username") String username
+    Observable<UserBean> updateUser(@Query("id") int id, @Query("username") String username
             , @Query("gender") String gender, @Query("phone") String phone, @Query("mail") String mail);
 
     /**
@@ -129,6 +129,40 @@ public interface APIService {
      */
     @GET(HttpConfig.BILL_DELETE)
     Observable<BaseBean> deleteBill(@Path("id") int id);
+
+
+    /**
+     * 获取用户分类和支付方式
+     *
+     * @param id
+     * @return
+     */
+    @GET(HttpConfig.NOTE_USER)
+    Observable<NoteBean> getNote(@Path("id") int id);
+
+    /**
+     * 添加账单分类
+     * @param uid
+     * @param sortName
+     * @param sortImg
+     * @param income
+     * @return
+     */
+    @GET(HttpConfig.NOTE_SORT_ADD)
+    Observable<BSort2> addSort(@Query("uid") int uid, @Query("sortName") String sortName
+            , @Query("sortImg") String sortImg, @Query("income") Boolean income);
+
+    /**
+     * 添加账单支付方式
+     * @param uid
+     * @param sortName
+     * @param sortImg
+     * @param payNum
+     * @return
+     */
+    @GET(HttpConfig.NOTE_PAY_ADD)
+    Observable<BPay2> addPay(@Query("uid") int uid, @Query("payName") String sortName
+            , @Query("payImg") String sortImg, @Query("payNum") String payNum);
 
 
 }

@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * Created by zhouas666 on 2018/1/14.
  */
-public class PayEditActivity extends BaseActivity {
+public class PayEditActivity extends BaseActivity{
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;

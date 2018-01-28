@@ -19,7 +19,7 @@ public class HttpConfig {
     public static final String BILL_DELETE = "bill/delete/{id}";
     public static final String BILL_UPDATE = "bill/update";
     public static final String BILL_ADD = "bill/add";
-    public static final String NOTE_USER = "note/user";
+    public static final String NOTE_USER = "note/user/{id}";
     public static final String NOTE_SORT_ADD = "note/sort/add";
     public static final String NOTE_SORT_UPDATE = "note/sort/update";
     public static final String NOTE_PAY_ADD = "note/pay/add";
