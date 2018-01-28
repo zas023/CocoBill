@@ -2,6 +2,7 @@ package com.copasso.cocobill.model;
 
 public interface BillModel {
 
+    void getNote(int id);
     /**
      * 添加账单
      */

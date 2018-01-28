@@ -260,7 +260,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
                 .setNegativeButton("取消", null)
                 .show();
     }
-    
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

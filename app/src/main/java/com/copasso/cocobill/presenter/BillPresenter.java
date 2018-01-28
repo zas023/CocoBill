@@ -5,6 +5,12 @@ import com.copasso.cocobill.base.BasePresenter;
 public abstract  class BillPresenter extends BasePresenter {
 
     /**
+     * 获取信息
+     * @param id
+     */
+    public abstract void getNote(int id);
+
+    /**
      * 添加账单
      */
     public abstract void add(int userid, int sortid, int payid,String cost, String content,

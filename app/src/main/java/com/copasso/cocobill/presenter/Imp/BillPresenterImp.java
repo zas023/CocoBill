@@ -1,6 +1,7 @@
 package com.copasso.cocobill.presenter.Imp;
 
 import com.copasso.cocobill.bean.BaseBean;
+import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.model.BillModel;
 import com.copasso.cocobill.model.Imp.BillModelImp;
 import com.copasso.cocobill.presenter.BillPresenter;
@@ -22,8 +23,18 @@ public class BillPresenterImp extends BillPresenter implements BillModelImp.Bill
     }
 
     @Override
+    public void onSuccess(NoteBean bean) {
+        view.loadDataSuccess(bean);
+    }
+
+    @Override
     public void onFailure(Throwable e) {
         view.loadDataError(e);
+    }
+
+    @Override
+    public void getNote(int id) {
+        model.getNote(id);
     }
 
     @Override
