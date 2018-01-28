@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 忘记密码 Activity ！
+ * 忘记密码 Activity
  */
 public class ForgetPasswordActivity extends BaseActivity {
 
