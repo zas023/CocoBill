@@ -81,7 +81,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
         //本地获取失败后
         if (noteBean==null){
             //同步获取分类、支付方式信息
-            presenter.getNote(Constants.currentUserId);
+            presenter.getNote(currentUser.getId());
         }else {
             //成功后加载布局
             setTitleStatus();
@@ -234,7 +234,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
                             SnackbarUtils.show(mContext, "内容不能为空！");
                         } else {
                             ProgressUtils.show(mContext);
-                            presenter.addSort(Constants.currentUserId, input, "sort_tianjiade.png", !isOutcome);
+                            presenter.addSort(currentUser.getId(), input, "sort_tianjiade.png", !isOutcome);
                         }
                     }
                 })
@@ -260,9 +260,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
                 .setNegativeButton("取消", null)
                 .show();
     }
-
-
-
+    
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

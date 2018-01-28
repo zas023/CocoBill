@@ -19,9 +19,14 @@ import butterknife.OnClick;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.adapter.PayEditAdapter;
 import com.copasso.cocobill.bean.BPay;
+import com.copasso.cocobill.bean.BPay2;
+import com.copasso.cocobill.bean.BSort2;
 import com.copasso.cocobill.bean.NoteBean;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.presenter.Imp.NotePresenterImp;
+import com.copasso.cocobill.presenter.NotePresenter;
 import com.copasso.cocobill.utils.*;
+import com.copasso.cocobill.view.NoteView;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -36,7 +41,7 @@ import java.util.Map;
 /**
  * Created by zhouas666 on 2018/1/14.
  */
-public class PayEditActivity extends BaseActivity{
+public class PayEditActivity extends BaseActivity implements NoteView{
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -45,7 +50,7 @@ public class PayEditActivity extends BaseActivity{
 
     private AlertDialog alertDialog;
 
-    public boolean isOutcome = true;
+    private NotePresenter presenter;
 
     private PayEditAdapter payEditAdapter;
 
@@ -65,29 +70,43 @@ public class PayEditActivity extends BaseActivity{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
 
+        presenter=new NotePresenterImp(this);
+
         noteBean = SharedPUtils.getUserNoteBean(this);
         //本地获取失败后
         if (noteBean == null) {
             //同步获取分类、支付方式信息
-            HttpUtils.getNote(new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    Gson gson = new Gson();
-                    noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
-                    //status==100:处理成功！
-                    if (noteBean.getStatus() == 100) {
-                        //成功后加载布局
-                        setTitleStatus();
-                        //保存数据
-                        SharedPUtils.setUserNoteBean(mContext, msg.obj.toString());
-                    }
-                }
-            }, Constants.currentUserId);
+            presenter.getNote(currentUser.getId());
         } else {
             //成功后加载布局
             setTitleStatus();
         }
+    }
+
+    @Override
+    public void loadDataSuccess(BSort2 tData) {
+
+    }
+
+    @Override
+    public void loadDataSuccess(BPay2 tData) {
+        SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
+        ProgressUtils.dismiss();
+        initEventAndData();
+    }
+
+    @Override
+    public void loadDataSuccess(NoteBean tData) {
+        //成功后加载布局
+        setTitleStatus();
+        //保存数据
+        SharedPUtils.setUserNoteBean(mContext, tData);
+    }
+
+    @Override
+    public void loadDataError(Throwable throwable) {
+        ProgressUtils.dismiss();
+        SnackbarUtils.show(mContext,throwable.getMessage());
     }
 
     /**
@@ -195,30 +214,10 @@ public class PayEditActivity extends BaseActivity{
                     public void onClick(DialogInterface dialog, int which) {
                         String input = editText.getText().toString();
                         if (input.equals("")) {
-                            Toast.makeText(getApplicationContext(), "内容不能为空！" + input,
-                                    Toast.LENGTH_SHORT).show();
+                            SnackbarUtils.show(mContext, "内容不能为空！");
                         } else {
-                            Map<String, String> params = new HashMap<>();
-                            params.put("uid", String.valueOf(currentUser.getId()));
-                            params.put("payImg", "card_bank.png");
-                            params.put("payName", input);
-                            params.put("payNum", editText1.getText().toString());
-                            OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.NOTE_PAY_ADD, params,
-                                    new Callback() {
-                                        @Override
-                                        public void onFailure(Call call, IOException e) {
-                                            Toast.makeText(mContext,"添加失败",Toast.LENGTH_SHORT).show();
-                                            ProgressUtils.dismiss();
-                                        }
-
-                                        @Override
-                                        public void onResponse(Call call, Response response) throws IOException {
-                                            SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
-                                            ProgressUtils.dismiss();
-                                            initEventAndData();
-                                        }
-
-                                    });
+                            ProgressUtils.show(mContext);
+                            presenter.addPay(currentUser.getId(),input,"card_bank.png",editText1.getText().toString());
                         }
                     }
                 })
