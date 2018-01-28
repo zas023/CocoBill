@@ -128,6 +128,14 @@ public class BillEditActivity extends BaseActivity implements BillView {
     }
 
     @Override
+    public void loadDataSuccess(NoteBean tData) {
+        //成功后加载布局
+        setTitleStatus();
+        //保存数据
+        SharedPUtils.setUserNoteBean(mContext,tData);
+    }
+
+    @Override
     public void loadDataSuccess(BaseBean tData) {
         ProgressUtils.dismiss();
         Intent intent = new Intent();
@@ -174,21 +182,7 @@ public class BillEditActivity extends BaseActivity implements BillView {
         //本地获取失败后
         if (noteBean==null){
             //同步获取分类、支付方式信息
-            HttpUtils.getNote(new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    Gson gson = new Gson();
-                    noteBean = gson.fromJson(msg.obj.toString(), NoteBean.class);
-                    //status==100:处理成功！
-                    if (noteBean.getStatus() == 100) {
-                        //成功后加载布局
-                        setTitleStatus();
-                        //保存数据
-                        SharedPUtils.setUserNoteBean(BillEditActivity.this,msg.obj.toString());
-                    }
-                }
-            }, Constants.currentUserId);
+            presenter.getNote(currentUser.getId());
         }else {
             //成功后加载布局
             setTitleStatus();
@@ -643,4 +637,5 @@ public class BillEditActivity extends BaseActivity implements BillView {
             }
         }
     }
+
 }
