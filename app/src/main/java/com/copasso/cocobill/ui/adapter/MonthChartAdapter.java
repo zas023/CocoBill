@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.BillBean;
+import com.copasso.cocobill.model.bean.packages.BBillBean;
 
 import java.util.List;
 /**
@@ -18,18 +18,18 @@ public class MonthChartAdapter extends RecyclerView.Adapter<MonthChartAdapter.Vi
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<BillBean> mDatas;
+    private List<BBillBean> mDatas;
     private String sortName;
 
     public void setSortName(String sortName) {
         this.sortName = sortName;
     }
 
-    public void setmDatas(List<BillBean> mDatas) {
+    public void setmDatas(List<BBillBean> mDatas) {
         this.mDatas = mDatas;
     }
 
-    public MonthChartAdapter(Context context, List<BillBean> datas){
+    public MonthChartAdapter(Context context, List<BBillBean> datas){
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this. mDatas = datas;

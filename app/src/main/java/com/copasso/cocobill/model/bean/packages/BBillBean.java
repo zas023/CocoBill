@@ -1,9 +1,12 @@
-package com.copasso.cocobill.model.bean;
+package com.copasso.cocobill.model.bean.packages;
+
+import com.copasso.cocobill.model.bean.BSort;
+import com.copasso.cocobill.model.bean.BaseBean;
 
 /**
  * 账单bean
  */
-public class BillBean extends BaseBean{
+public class BBillBean extends BaseBean {
 
     /**
      * id : 72

@@ -1,4 +1,4 @@
-package com.copasso.cocobill.activity;
+package com.copasso.cocobill.ui.activity;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.UserBean;
+import com.copasso.cocobill.model.bean.packages.UserBean;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.Imp.UserInfoPresenterImp;
 import com.copasso.cocobill.mvp.presenter.UserInfoPresenter;

@@ -1,4 +1,4 @@
-package com.copasso.cocobill.fragment;
+package com.copasso.cocobill.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;

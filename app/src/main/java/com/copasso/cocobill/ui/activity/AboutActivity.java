@@ -1,4 +1,4 @@
-package com.copasso.cocobill.activity;
+package com.copasso.cocobill.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;

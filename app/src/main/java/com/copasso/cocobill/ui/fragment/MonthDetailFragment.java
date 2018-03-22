@@ -1,4 +1,4 @@
-package com.copasso.cocobill.fragment;
+package com.copasso.cocobill.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.activity.BillAddActivity;
-import com.copasso.cocobill.activity.BillEditActivity;
+import com.copasso.cocobill.ui.activity.BillAddActivity;
+import com.copasso.cocobill.ui.activity.BillEditActivity;
 import com.copasso.cocobill.ui.adapter.MonthDetailAdapter;
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.BillBean;
+import com.copasso.cocobill.model.bean.packages.BBillBean;
 import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
 import com.copasso.cocobill.mvp.presenter.Imp.MonthDetailPresenterImp;
 import com.copasso.cocobill.mvp.presenter.MonthDetailPresenter;
@@ -140,7 +140,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
             }
 
             @Override
-            public void OnEditClick(BillBean item, int section, int offset) {
+            public void OnEditClick(BBillBean item, int section, int offset) {
                 Intent intent = new Intent(mContext, BillEditActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", item.getId());

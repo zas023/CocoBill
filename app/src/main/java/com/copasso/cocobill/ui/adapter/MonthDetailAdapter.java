@@ -10,8 +10,8 @@ import android.view.Window;
 import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.*;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.model.bean.packages.BBillBean;
 import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
 import com.copasso.cocobill.widget.stickyheader.StickyHeaderGridAdapter;
 import com.copasso.cocobill.utils.*;
@@ -179,7 +179,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
      */
     public interface OnStickyHeaderClickListener {
         void OnDeleteClick(int id, int section, int offset);
-        void OnEditClick(BillBean item, int section, int offset);
+        void OnEditClick(BBillBean item, int section, int offset);
     }
 
     public static class MyHeaderViewHolder extends HeaderViewHolder {

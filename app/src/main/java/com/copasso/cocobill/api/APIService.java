@@ -2,9 +2,7 @@ package com.copasso.cocobill.api;
 
 import com.copasso.cocobill.model.bean.*;
 import com.copasso.cocobill.common.HttpConfig;
-import com.copasso.cocobill.model.bean.packages.MonthAccountBean;
-import com.copasso.cocobill.model.bean.packages.MonthChartBean;
-import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
+import com.copasso.cocobill.model.bean.packages.*;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -151,7 +149,7 @@ public interface APIService {
      * @return
      */
     @GET(HttpConfig.NOTE_SORT_ADD)
-    Observable<BSort2> addSort(@Query("uid") int uid, @Query("sortName") String sortName
+    Observable<BSortBean> addSort(@Query("uid") int uid, @Query("sortName") String sortName
             , @Query("sortImg") String sortImg, @Query("income") Boolean income);
 
     /**
@@ -163,7 +161,7 @@ public interface APIService {
      * @return
      */
     @GET(HttpConfig.NOTE_PAY_ADD)
-    Observable<BPay2> addPay(@Query("uid") int uid, @Query("payName") String sortName
+    Observable<BPayBean> addPay(@Query("uid") int uid, @Query("payName") String sortName
             , @Query("payImg") String sortImg, @Query("payNum") String payNum);
 
 

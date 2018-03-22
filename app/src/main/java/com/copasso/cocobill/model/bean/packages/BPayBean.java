@@ -1,6 +1,9 @@
-package com.copasso.cocobill.model.bean;
+package com.copasso.cocobill.model.bean.packages;
 
-public class BPay2 extends BaseBean{
+import com.copasso.cocobill.model.bean.BPay;
+import com.copasso.cocobill.model.bean.BaseBean;
+
+public class BPayBean extends BaseBean {
     private Integer id;
 
     private Integer uid;
@@ -11,11 +14,11 @@ public class BPay2 extends BaseBean{
 
     private String payNum;
 
-    public BPay2(){
+    public BPayBean(){
         super();
     }
 
-    public BPay2(BPay pay){
+    public BPayBean(BPay pay){
         this.id=pay.getId();
         this.uid=pay.getUid();
         this.payName = pay.getPayName();
@@ -23,14 +26,14 @@ public class BPay2 extends BaseBean{
         this.payNum = pay.getPayNum();
     }
 
-    public BPay2(Integer uid, String payName, String payImg, String payNum) {
+    public BPayBean(Integer uid, String payName, String payImg, String payNum) {
         this.uid = uid;
         this.payName = payName;
         this.payImg = payImg;
         this.payNum = payNum;
     }
 
-    public BPay2(Integer id, Integer uid, String payName, String payImg, String payNum) {
+    public BPayBean(Integer id, Integer uid, String payName, String payImg, String payNum) {
         this.id = id;
         this.uid = uid;
         this.payName = payName;

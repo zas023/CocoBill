@@ -1,4 +1,4 @@
-package com.copasso.cocobill.activity;
+package com.copasso.cocobill.ui.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,9 +24,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.MainFragmentPagerAdapter;
-import com.copasso.cocobill.fragment.MonthAccountFragment;
-import com.copasso.cocobill.fragment.MonthChartFragment;
-import com.copasso.cocobill.fragment.MonthDetailFragment;
+import com.copasso.cocobill.ui.fragment.MonthAccountFragment;
+import com.copasso.cocobill.ui.fragment.MonthChartFragment;
+import com.copasso.cocobill.ui.fragment.MonthDetailFragment;
 import com.copasso.cocobill.common.Constants;
 
 import butterknife.BindView;

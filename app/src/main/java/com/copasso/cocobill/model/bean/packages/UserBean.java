@@ -1,6 +1,8 @@
-package com.copasso.cocobill.model.bean;
+package com.copasso.cocobill.model.bean.packages;
 
-public class UserBean extends BaseBean{
+import com.copasso.cocobill.model.bean.BaseBean;
+
+public class UserBean extends BaseBean {
     private Integer id;
 
     private String username;

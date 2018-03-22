@@ -1,4 +1,4 @@
-package com.copasso.cocobill.activity;
+package com.copasso.cocobill.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -23,7 +23,7 @@ import com.copasso.cocobill.ui.adapter.MonthAccountAdapter;
 import com.copasso.cocobill.model.bean.BPay;
 import com.copasso.cocobill.model.bean.BSort;
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.NoteBean;
+import com.copasso.cocobill.model.bean.packages.NoteBean;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.BillPresenter;
 import com.copasso.cocobill.mvp.presenter.Imp.BillPresenterImp;
@@ -267,7 +267,7 @@ public class BillEditActivity extends BaseActivity implements BillView {
         List<BSort> tempData=new ArrayList<>();
         tempData.addAll(mDatas);
         //末尾加上添加选项
-        tempData.add(new BSort("添加","sort_tianjia.png"));
+        tempData.add(new BSort(null,null,"添加", "sort_tianjia.png",null,null));
         if (tempData.size() % 15 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(tempData.size() * 1.0 / 15);

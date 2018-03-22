@@ -1,7 +1,7 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.NoteBean;
+import com.copasso.cocobill.model.bean.packages.NoteBean;
 import com.copasso.cocobill.mvp.model.BillModel;
 import com.copasso.cocobill.mvp.model.Imp.BillModelImp;
 import com.copasso.cocobill.mvp.presenter.BillPresenter;

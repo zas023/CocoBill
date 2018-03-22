@@ -1,10 +1,16 @@
 package com.copasso.cocobill.model.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+
 /**
  * 账单分类bean
  */
-
+@Entity
 public class BSort{
+
+    @Id
     private Integer id;
 
     private Integer uid;
@@ -17,15 +23,11 @@ public class BSort{
 
     private Boolean income;
 
-    public BSort(){
-        super();
+    @Generated(hash = 2092983496)
+    public BSort() {
     }
 
-    public BSort(String sortName, String sortImg) {
-        this.sortName = sortName;
-        this.sortImg = sortImg;
-    }
-
+    @Generated(hash = 1968789136)
     public BSort(Integer id, Integer uid, String sortName, String sortImg, Integer priority, Boolean income) {
         this.id = id;
         this.uid = uid;

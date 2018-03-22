@@ -1,8 +1,12 @@
-package com.copasso.cocobill.model.bean;
+package com.copasso.cocobill.model.bean.packages;
+
+import com.copasso.cocobill.model.bean.BPay;
+import com.copasso.cocobill.model.bean.BSort;
+import com.copasso.cocobill.model.bean.BaseBean;
 
 import java.util.List;
 
-public class NoteBean extends BaseBean{
+public class NoteBean extends BaseBean {
 
     private List<BSort> outSortlis;
     private List<BSort> inSortlis;

@@ -23,7 +23,7 @@ android {
 
 greendao{
     schemaVersion 1
-    daoPackage 'com.copasso.cocobook.model.gen'
+    daoPackage 'com.copasso.cocobill.model.gen'
     targetGenDir 'src/main/java'
 }
 

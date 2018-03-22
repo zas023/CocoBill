@@ -1,9 +1,16 @@
 package com.copasso.cocobill.model.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+
 /**
  * 支付方式bean
  */
+@Entity
 public class BPay {
+
+    @Id
     private Integer id;
 
     private Integer uid;
@@ -14,10 +21,11 @@ public class BPay {
 
     private String payNum;
 
-    public BPay(){
-        super();
+    @Generated(hash = 48271616)
+    public BPay() {
     }
 
+    @Generated(hash = 345598464)
     public BPay(Integer id, Integer uid, String payName, String payImg, String payNum) {
         this.id = id;
         this.uid = uid;

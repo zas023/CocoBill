@@ -1,4 +1,4 @@
-package com.copasso.cocobill.fragment;
+package com.copasso.cocobill.ui.fragment;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

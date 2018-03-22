@@ -1,6 +1,9 @@
-package com.copasso.cocobill.model.bean;
+package com.copasso.cocobill.model.bean.packages;
 
-public class BSort2 extends BaseBean{
+import com.copasso.cocobill.model.bean.BSort;
+import com.copasso.cocobill.model.bean.BaseBean;
+
+public class BSortBean extends BaseBean {
     private Integer id;
 
     private Integer uid;
@@ -13,11 +16,11 @@ public class BSort2 extends BaseBean{
 
     private Boolean income;
 
-    public BSort2(){
+    public BSortBean(){
         super();
     }
 
-    public BSort2(BSort sort) {
+    public BSortBean(BSort sort) {
         this.id=sort.getId();
         this.uid = sort.getUid();
         this.sortName = sort.getSortName();
@@ -25,13 +28,13 @@ public class BSort2 extends BaseBean{
         this.income = sort.getIncome();
     }
 
-    public BSort2(Integer uid, String sortName, String sortImg, Boolean income) {
+    public BSortBean(Integer uid, String sortName, String sortImg, Boolean income) {
         this.uid = uid;
         this.sortName = sortName;
         this.sortImg = sortImg;
         this.income = income;
     }
-    public BSort2(Integer id, Integer uid, String sortName, String sortImg, Integer priority, Boolean income) {
+    public BSortBean(Integer id, Integer uid, String sortName, String sortImg, Integer priority, Boolean income) {
         this.id = id;
         this.uid = uid;
         this.sortName = sortName;

@@ -2,7 +2,6 @@ package com.copasso.cocobill.model.bean.packages;
 
 import com.copasso.cocobill.model.bean.BSort;
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.BillBean;
 
 import java.util.List;
 
@@ -66,7 +65,7 @@ public class MonthChartBean extends BaseBean {
         private String back_color;
         private String  money;    //此分类下的当月总收支
         private BSort sort;    //此分类
-        private List<BillBean> list;  //此分类下的当月账单
+        private List<BBillBean> list;  //此分类下的当月账单
 
         public String getBack_color() {
             return back_color;
@@ -84,11 +83,11 @@ public class MonthChartBean extends BaseBean {
             this.money = money;
         }
 
-        public List<BillBean> getList() {
+        public List<BBillBean> getList() {
             return list;
         }
 
-        public void setList(List<BillBean> list) {
+        public void setList(List<BBillBean> list) {
             this.list = list;
         }
 

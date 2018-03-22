@@ -1,7 +1,6 @@
 package com.copasso.cocobill.model.bean.packages;
 
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.BillBean;
 
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class MonthDetailBean extends BaseBean {
 
         private String time;
         private String money;
-        private List<BillBean> list;
+        private List<BBillBean> list;
 
         public String getTime() {
             return time;
@@ -66,11 +65,11 @@ public class MonthDetailBean extends BaseBean {
             this.money = money;
         }
 
-        public List<BillBean> getList() {
+        public List<BBillBean> getList() {
             return list;
         }
 
-        public void setList(List<BillBean> list) {
+        public void setList(List<BBillBean> list) {
             this.list = list;
         }
 

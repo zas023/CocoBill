@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme">
         <!--闪屏页-->
         <activity
-                android:name=".activity.SplashActivity"
+                android:name=".ui.activity.SplashActivity"
                 android:theme="@style/SplashTheme"
                 android:screenOrientation="portrait">
             <intent-filter>
@@ -39,53 +39,53 @@
         </activity>
         <!--主页-->
         <activity
-                android:name=".activity.MainActivity"
+                android:name=".ui.activity.MainActivity"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait">
         </activity>
         <!--添加账单-->
         <activity
-                android:name=".activity.BillAddActivity"
+                android:name=".ui.activity.BillAddActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--编辑账单-->
         <activity
-                android:name=".activity.BillEditActivity"
+                android:name=".ui.activity.BillEditActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--编辑账单分类-->
         <activity
-                android:name=".activity.SortEditActivity"
+                android:name=".ui.activity.SortEditActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--编辑账单支付方式-->
         <activity
-                android:name=".activity.PayEditActivity"
+                android:name=".ui.activity.PayEditActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--登陆注册-->
         <activity
-                android:name=".activity.LoginActivity"
+                android:name=".ui.activity.LoginActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--个人信息-->
         <activity
-                android:name=".activity.UserInfoActivity"
+                android:name=".ui.activity.UserInfoActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--忘记密码-->
         <activity
-                android:name=".activity.ForgetPasswordActivity"
+                android:name=".ui.activity.ForgetPasswordActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--设置-->
         <activity
-                android:name=".activity.SettingActivity"
+                android:name=".ui.activity.SettingActivity"
                 android:screenOrientation="portrait">
         </activity>
         <!--关于-->
         <activity
-                android:name=".activity.AboutActivity"
+                android:name=".ui.activity.AboutActivity"
                 android:screenOrientation="portrait">
         </activity>
 

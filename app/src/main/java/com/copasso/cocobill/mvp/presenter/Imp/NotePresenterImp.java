@@ -1,8 +1,8 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.model.bean.BPay2;
-import com.copasso.cocobill.model.bean.BSort2;
-import com.copasso.cocobill.model.bean.NoteBean;
+import com.copasso.cocobill.model.bean.packages.BPayBean;
+import com.copasso.cocobill.model.bean.packages.BSortBean;
+import com.copasso.cocobill.model.bean.packages.NoteBean;
 import com.copasso.cocobill.mvp.model.Imp.NoteModelImp;
 import com.copasso.cocobill.mvp.model.NoteModel;
 import com.copasso.cocobill.mvp.presenter.NotePresenter;
@@ -24,12 +24,12 @@ public class NotePresenterImp extends NotePresenter implements NoteModelImp.Note
     }
 
     @Override
-    public void onSuccess(BSort2 bean) {
+    public void onSuccess(BSortBean bean) {
         view.loadDataSuccess(bean);
     }
 
     @Override
-    public void onSuccess(BPay2 bean) {
+    public void onSuccess(BPayBean bean) {
         view.loadDataSuccess(bean);
     }
 

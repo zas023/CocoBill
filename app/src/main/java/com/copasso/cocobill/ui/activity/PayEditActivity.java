@@ -1,4 +1,4 @@
-package com.copasso.cocobill.activity;
+package com.copasso.cocobill.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,9 +17,9 @@ import butterknife.OnClick;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.PayEditAdapter;
 import com.copasso.cocobill.model.bean.BPay;
-import com.copasso.cocobill.model.bean.BPay2;
-import com.copasso.cocobill.model.bean.BSort2;
-import com.copasso.cocobill.model.bean.NoteBean;
+import com.copasso.cocobill.model.bean.packages.BPayBean;
+import com.copasso.cocobill.model.bean.packages.BSortBean;
+import com.copasso.cocobill.model.bean.packages.NoteBean;
 import com.copasso.cocobill.mvp.presenter.Imp.NotePresenterImp;
 import com.copasso.cocobill.mvp.presenter.NotePresenter;
 import com.copasso.cocobill.utils.*;
@@ -74,12 +74,12 @@ public class PayEditActivity extends BaseActivity implements NoteView{
     }
 
     @Override
-    public void loadDataSuccess(BSort2 tData) {
+    public void loadDataSuccess(BSortBean tData) {
 
     }
 
     @Override
-    public void loadDataSuccess(BPay2 tData) {
+    public void loadDataSuccess(BPayBean tData) {
         SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
         ProgressUtils.dismiss();
         initEventAndData();
