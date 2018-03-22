@@ -210,7 +210,7 @@ public class DateUtils {
     }
     public static String long2Str(long mseconds ,String format) {
         SimpleDateFormat sdf= new SimpleDateFormat(format);
-        java.util.Date date = new Date(mseconds);
+        Date date = new Date(mseconds);
         return sdf.format(date);
     }
     public static Calendar str2Calendar(String str) {
