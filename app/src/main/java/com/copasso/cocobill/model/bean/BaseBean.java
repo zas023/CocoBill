@@ -1,4 +1,4 @@
-package com.copasso.cocobill.bean;
+package com.copasso.cocobill.model.bean;
 
 /**
  * Created by zhouas666 on 2017/10/16 0016.

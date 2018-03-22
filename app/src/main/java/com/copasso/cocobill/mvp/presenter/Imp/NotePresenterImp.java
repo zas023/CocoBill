@@ -1,8 +1,8 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.bean.BPay2;
-import com.copasso.cocobill.bean.BSort2;
-import com.copasso.cocobill.bean.NoteBean;
+import com.copasso.cocobill.model.bean.BPay2;
+import com.copasso.cocobill.model.bean.BSort2;
+import com.copasso.cocobill.model.bean.NoteBean;
 import com.copasso.cocobill.mvp.model.Imp.NoteModelImp;
 import com.copasso.cocobill.mvp.model.NoteModel;
 import com.copasso.cocobill.mvp.presenter.NotePresenter;

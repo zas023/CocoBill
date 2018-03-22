@@ -1,9 +1,8 @@
 package com.copasso.cocobill.base;
 
 import android.accounts.NetworkErrorException;
-import android.app.ProgressDialog;
 import android.content.Context;
-import com.copasso.cocobill.bean.BaseBean;
+import com.copasso.cocobill.model.bean.BaseBean;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

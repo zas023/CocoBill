@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.activity.BillAddActivity;
 import com.copasso.cocobill.activity.BillEditActivity;
-import com.copasso.cocobill.bean.BSort;
+import com.copasso.cocobill.model.bean.BSort;
 import com.copasso.cocobill.common.Constants;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.bean.BaseBean;
-import com.copasso.cocobill.bean.MonthDetailBean;
+import com.copasso.cocobill.model.bean.BaseBean;
+import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
 import com.copasso.cocobill.mvp.model.Imp.MonthDetailModelImp;
 import com.copasso.cocobill.mvp.model.MonthDetailModel;
 import com.copasso.cocobill.mvp.presenter.MonthDetailPresenter;

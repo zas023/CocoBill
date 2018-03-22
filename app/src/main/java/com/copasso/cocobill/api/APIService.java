@@ -1,8 +1,10 @@
 package com.copasso.cocobill.api;
 
-
-import com.copasso.cocobill.bean.*;
+import com.copasso.cocobill.model.bean.*;
 import com.copasso.cocobill.common.HttpConfig;
+import com.copasso.cocobill.model.bean.packages.MonthAccountBean;
+import com.copasso.cocobill.model.bean.packages.MonthChartBean;
+import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

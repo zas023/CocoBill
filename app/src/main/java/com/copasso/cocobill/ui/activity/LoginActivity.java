@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.bean.UserBean;
+import com.copasso.cocobill.model.bean.UserBean;
 import com.copasso.cocobill.mvp.presenter.Imp.UserLogPresenterImp;
 import com.copasso.cocobill.mvp.presenter.UserLogPresenter;
 import com.copasso.cocobill.utils.*;

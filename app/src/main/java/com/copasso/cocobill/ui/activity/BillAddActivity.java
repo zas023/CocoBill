@@ -18,7 +18,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.BookNoteAdapter;
 import com.copasso.cocobill.ui.adapter.MonthAccountAdapter;
-import com.copasso.cocobill.bean.*;
+import com.copasso.cocobill.model.bean.*;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.BillPresenter;
 import com.copasso.cocobill.mvp.presenter.Imp.BillPresenterImp;

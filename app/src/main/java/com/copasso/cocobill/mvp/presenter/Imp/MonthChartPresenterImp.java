@@ -1,6 +1,6 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.bean.MonthChartBean;
+import com.copasso.cocobill.model.bean.packages.MonthChartBean;
 import com.copasso.cocobill.mvp.model.Imp.MonthChartModelImp;
 import com.copasso.cocobill.mvp.model.MonthChartModel;
 import com.copasso.cocobill.mvp.presenter.MonthChartPresenter;

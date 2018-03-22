@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.bean.MonthAccountBean;
+import com.copasso.cocobill.model.bean.packages.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
 
 import java.util.List;

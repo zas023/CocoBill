@@ -2,8 +2,8 @@ package com.copasso.cocobill.mvp.model.Imp;
 
 import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
-import com.copasso.cocobill.bean.BaseBean;
-import com.copasso.cocobill.bean.MonthDetailBean;
+import com.copasso.cocobill.model.bean.BaseBean;
+import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
 import com.copasso.cocobill.mvp.model.MonthDetailModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

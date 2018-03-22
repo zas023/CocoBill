@@ -1,8 +1,8 @@
 package com.copasso.cocobill.mvp.view;
 
 import com.copasso.cocobill.base.BaseView;
-import com.copasso.cocobill.bean.BaseBean;
-import com.copasso.cocobill.bean.MonthDetailBean;
+import com.copasso.cocobill.model.bean.BaseBean;
+import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
 
 public interface MonthDetailView extends BaseView<MonthDetailBean>{
 

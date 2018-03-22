@@ -1,4 +1,4 @@
-package com.copasso.cocobill.bean;
+package com.copasso.cocobill.model.bean;
 
 import java.util.List;
 

@@ -1,4 +1,7 @@
-package com.copasso.cocobill.bean;
+package com.copasso.cocobill.model.bean.packages;
+
+import com.copasso.cocobill.model.bean.BaseBean;
+import com.copasso.cocobill.model.bean.BillBean;
 
 import java.util.List;
 

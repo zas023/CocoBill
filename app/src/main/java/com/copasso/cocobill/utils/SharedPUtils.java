@@ -2,8 +2,8 @@ package com.copasso.cocobill.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.copasso.cocobill.bean.NoteBean;
-import com.copasso.cocobill.bean.UserBean;
+import com.copasso.cocobill.model.bean.NoteBean;
+import com.copasso.cocobill.model.bean.UserBean;
 import com.google.gson.Gson;
 
 /**

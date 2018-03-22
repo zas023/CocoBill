@@ -1,4 +1,4 @@
-package com.copasso.cocobill.bean;
+package com.copasso.cocobill.model.bean;
 
 public class BPay2 extends BaseBean{
     private Integer id;
