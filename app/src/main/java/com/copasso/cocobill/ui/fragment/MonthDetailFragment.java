@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.model.bean.BBill;
 import com.copasso.cocobill.ui.activity.BillAddActivity;
 import com.copasso.cocobill.ui.activity.BillEditActivity;
 import com.copasso.cocobill.ui.adapter.MonthDetailAdapter;
@@ -21,6 +23,7 @@ import com.copasso.cocobill.model.bean.packages.BBillBean;
 import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
 import com.copasso.cocobill.mvp.presenter.Imp.MonthDetailPresenterImp;
 import com.copasso.cocobill.mvp.presenter.MonthDetailPresenter;
+import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.widget.stickyheader.StickyHeaderGridLayoutManager;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.DateUtils;
@@ -38,9 +41,9 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 
 /**
- * -明细
+ * 明细
  */
-public class MonthDetailFragment extends BaseFragment implements MonthDetailView{
+public class MonthDetailFragment extends BaseFragment implements MonthDetailView {
 
     @BindView(R.id.data_year)
     TextView dataYear;
@@ -69,7 +72,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     private List<MonthDetailBean.DaylistBean> list;
     private MonthDetailBean data;
 
-    int part,index;
+    int part, index;
 
     private String setYear = DateUtils.getCurYear(FORMAT_Y);
     private String setMonth = DateUtils.getCurMonth(FORMAT_M);
@@ -132,11 +135,11 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         //adapter的侧滑选项事件监听
         adapter.setOnStickyHeaderClickListener(new MonthDetailAdapter.OnStickyHeaderClickListener() {
             @Override
-            public void OnDeleteClick(int id, int section,  int offset) {
+            public void OnDeleteClick(int id, int section, int offset) {
 
                 presenter.deleteBill(id);
-                part=section;
-                index=offset;
+                part = section;
+                index = offset;
             }
 
             @Override
@@ -155,7 +158,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
             }
         });
 
-        presenter=new MonthDetailPresenterImp(this);
+        presenter = new MonthDetailPresenterImp(this);
         //请求当月数据
         getBills(Constants.currentUserId, setYear, setMonth);
     }
@@ -200,12 +203,15 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         tOutcome.setText("0.00");
         tIncome.setText("0.00");
         //请求某年某月数据
-        presenter.getMonthDetailBills(String.valueOf(Constants.currentUserId), setYear, setMonth);
+//        if (OkHttpUtils.isNetworkConnected(mContext))
+//            presenter.getMonthDetailBills(String.valueOf(Constants.currentUserId), setYear, setMonth);
+        presenter.getLocalMonthDetailBills(Constants.currentUserId,setYear,setMonth);
 
     }
 
     /**
      * 数据请求成功
+     *
      * @param tData
      */
     @Override
@@ -217,27 +223,35 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
     }
 
+    @Override
+    public void loadDataSuccess(List<BBill> list) {
+        Log.i(TAG, list.toString());
+    }
+
     /**
      * 删除账单成功
+     *
      * @param tData
      */
     @Override
     public void loadDataSuccess(BaseBean tData) {
-        adapter.remove(part,index);
+        adapter.remove(part, index);
     }
 
     /**
      * 抛出异常
+     *
      * @param throwable
      */
     @Override
     public void loadDataError(Throwable throwable) {
-        SnackbarUtils.show(mActivity,throwable.getMessage());
+        SnackbarUtils.show(mActivity, throwable.getMessage());
     }
 
 
     /**
      * 监听点击事件
+     *
      * @param view
      */
     @OnClick({R.id.float_btn, R.id.layout_data, R.id.top_ll_out})
@@ -263,7 +277,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     /**
      * 时间选择器
      */
-    public void showTimePicker(){
+    public void showTimePicker() {
         //时间选择器
         new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -281,6 +295,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
 
     /**
      * Activity返回
+     *
      * @param requestCode
      * @param resultCode
      * @param data

@@ -4,6 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+
 /**
  * 账单bean
  */
@@ -11,7 +12,8 @@ import org.greenrobot.greendao.annotation.Generated;
 public class BBill {
 
     @Id
-    private int id;
+    private int id;  //本地id
+    private int rid;  //服务器端id
     private double cost;
     private String content;
     private int userid;
@@ -19,12 +21,13 @@ public class BBill {
     private int sortid;
     private long crdate;
     private boolean income;
-    private int version;
+    private int version;  //版本
 
-    @Generated(hash = 782767181)
-    public BBill(int id, double cost, String content, int userid, int payid,
-            int sortid, long crdate, boolean income, int version) {
+    @Generated(hash = 863900622)
+    public BBill(int id, int rid, double cost, String content, int userid,
+            int payid, int sortid, long crdate, boolean income, int version) {
         this.id = id;
+        this.rid = rid;
         this.cost = cost;
         this.content = content;
         this.userid = userid;
@@ -45,6 +48,14 @@ public class BBill {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getRid() {
+        return rid;
+    }
+
+    public void setRid(int rid) {
+        this.rid = rid;
     }
 
     public double getCost() {

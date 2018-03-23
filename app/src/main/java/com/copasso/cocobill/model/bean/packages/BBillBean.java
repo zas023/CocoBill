@@ -17,6 +17,7 @@ public class BBillBean extends BaseBean {
      * sortid : 1
      * crdate : 1512379901000
      * income : false
+     * version : 0
      * sort : {"id":72,"uid":0,"sortName":"偿还费用","sortImg":"changhuanfeiyong@2x.png","priority":0,"income":false}
      */
 
@@ -28,6 +29,7 @@ public class BBillBean extends BaseBean {
     private int sortid;
     private long crdate;
     private boolean income;
+    private int version;
     private BSort sort;
 
     public int getId() {
@@ -92,6 +94,14 @@ public class BBillBean extends BaseBean {
 
     public void setIncome(boolean income) {
         this.income = income;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public BSort getSort() {

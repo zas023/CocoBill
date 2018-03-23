@@ -25,14 +25,15 @@ public class BBillDao extends AbstractDao<BBill, Integer> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, int.class, "id", true, "ID");
-        public final static Property Cost = new Property(1, double.class, "cost", false, "COST");
-        public final static Property Content = new Property(2, String.class, "content", false, "CONTENT");
-        public final static Property Userid = new Property(3, int.class, "userid", false, "USERID");
-        public final static Property Payid = new Property(4, int.class, "payid", false, "PAYID");
-        public final static Property Sortid = new Property(5, int.class, "sortid", false, "SORTID");
-        public final static Property Crdate = new Property(6, long.class, "crdate", false, "CRDATE");
-        public final static Property Income = new Property(7, boolean.class, "income", false, "INCOME");
-        public final static Property Version = new Property(8, int.class, "version", false, "VERSION");
+        public final static Property Rid = new Property(1, int.class, "rid", false, "RID");
+        public final static Property Cost = new Property(2, double.class, "cost", false, "COST");
+        public final static Property Content = new Property(3, String.class, "content", false, "CONTENT");
+        public final static Property Userid = new Property(4, int.class, "userid", false, "USERID");
+        public final static Property Payid = new Property(5, int.class, "payid", false, "PAYID");
+        public final static Property Sortid = new Property(6, int.class, "sortid", false, "SORTID");
+        public final static Property Crdate = new Property(7, long.class, "crdate", false, "CRDATE");
+        public final static Property Income = new Property(8, boolean.class, "income", false, "INCOME");
+        public final static Property Version = new Property(9, int.class, "version", false, "VERSION");
     }
 
 
@@ -49,14 +50,15 @@ public class BBillDao extends AbstractDao<BBill, Integer> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"BBILL\" (" + //
                 "\"ID\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
-                "\"COST\" REAL NOT NULL ," + // 1: cost
-                "\"CONTENT\" TEXT," + // 2: content
-                "\"USERID\" INTEGER NOT NULL ," + // 3: userid
-                "\"PAYID\" INTEGER NOT NULL ," + // 4: payid
-                "\"SORTID\" INTEGER NOT NULL ," + // 5: sortid
-                "\"CRDATE\" INTEGER NOT NULL ," + // 6: crdate
-                "\"INCOME\" INTEGER NOT NULL ," + // 7: income
-                "\"VERSION\" INTEGER NOT NULL );"); // 8: version
+                "\"RID\" INTEGER NOT NULL ," + // 1: rid
+                "\"COST\" REAL NOT NULL ," + // 2: cost
+                "\"CONTENT\" TEXT," + // 3: content
+                "\"USERID\" INTEGER NOT NULL ," + // 4: userid
+                "\"PAYID\" INTEGER NOT NULL ," + // 5: payid
+                "\"SORTID\" INTEGER NOT NULL ," + // 6: sortid
+                "\"CRDATE\" INTEGER NOT NULL ," + // 7: crdate
+                "\"INCOME\" INTEGER NOT NULL ," + // 8: income
+                "\"VERSION\" INTEGER NOT NULL );"); // 9: version
     }
 
     /** Drops the underlying database table. */
@@ -69,36 +71,38 @@ public class BBillDao extends AbstractDao<BBill, Integer> {
     protected final void bindValues(DatabaseStatement stmt, BBill entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
-        stmt.bindDouble(2, entity.getCost());
+        stmt.bindLong(2, entity.getRid());
+        stmt.bindDouble(3, entity.getCost());
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(3, content);
+            stmt.bindString(4, content);
         }
-        stmt.bindLong(4, entity.getUserid());
-        stmt.bindLong(5, entity.getPayid());
-        stmt.bindLong(6, entity.getSortid());
-        stmt.bindLong(7, entity.getCrdate());
-        stmt.bindLong(8, entity.getIncome() ? 1L: 0L);
-        stmt.bindLong(9, entity.getVersion());
+        stmt.bindLong(5, entity.getUserid());
+        stmt.bindLong(6, entity.getPayid());
+        stmt.bindLong(7, entity.getSortid());
+        stmt.bindLong(8, entity.getCrdate());
+        stmt.bindLong(9, entity.getIncome() ? 1L: 0L);
+        stmt.bindLong(10, entity.getVersion());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, BBill entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
-        stmt.bindDouble(2, entity.getCost());
+        stmt.bindLong(2, entity.getRid());
+        stmt.bindDouble(3, entity.getCost());
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(3, content);
+            stmt.bindString(4, content);
         }
-        stmt.bindLong(4, entity.getUserid());
-        stmt.bindLong(5, entity.getPayid());
-        stmt.bindLong(6, entity.getSortid());
-        stmt.bindLong(7, entity.getCrdate());
-        stmt.bindLong(8, entity.getIncome() ? 1L: 0L);
-        stmt.bindLong(9, entity.getVersion());
+        stmt.bindLong(5, entity.getUserid());
+        stmt.bindLong(6, entity.getPayid());
+        stmt.bindLong(7, entity.getSortid());
+        stmt.bindLong(8, entity.getCrdate());
+        stmt.bindLong(9, entity.getIncome() ? 1L: 0L);
+        stmt.bindLong(10, entity.getVersion());
     }
 
     @Override
@@ -110,14 +114,15 @@ public class BBillDao extends AbstractDao<BBill, Integer> {
     public BBill readEntity(Cursor cursor, int offset) {
         BBill entity = new BBill( //
             cursor.getInt(offset + 0), // id
-            cursor.getDouble(offset + 1), // cost
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // content
-            cursor.getInt(offset + 3), // userid
-            cursor.getInt(offset + 4), // payid
-            cursor.getInt(offset + 5), // sortid
-            cursor.getLong(offset + 6), // crdate
-            cursor.getShort(offset + 7) != 0, // income
-            cursor.getInt(offset + 8) // version
+            cursor.getInt(offset + 1), // rid
+            cursor.getDouble(offset + 2), // cost
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // content
+            cursor.getInt(offset + 4), // userid
+            cursor.getInt(offset + 5), // payid
+            cursor.getInt(offset + 6), // sortid
+            cursor.getLong(offset + 7), // crdate
+            cursor.getShort(offset + 8) != 0, // income
+            cursor.getInt(offset + 9) // version
         );
         return entity;
     }
@@ -125,14 +130,15 @@ public class BBillDao extends AbstractDao<BBill, Integer> {
     @Override
     public void readEntity(Cursor cursor, BBill entity, int offset) {
         entity.setId(cursor.getInt(offset + 0));
-        entity.setCost(cursor.getDouble(offset + 1));
-        entity.setContent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setUserid(cursor.getInt(offset + 3));
-        entity.setPayid(cursor.getInt(offset + 4));
-        entity.setSortid(cursor.getInt(offset + 5));
-        entity.setCrdate(cursor.getLong(offset + 6));
-        entity.setIncome(cursor.getShort(offset + 7) != 0);
-        entity.setVersion(cursor.getInt(offset + 8));
+        entity.setRid(cursor.getInt(offset + 1));
+        entity.setCost(cursor.getDouble(offset + 2));
+        entity.setContent(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setUserid(cursor.getInt(offset + 4));
+        entity.setPayid(cursor.getInt(offset + 5));
+        entity.setSortid(cursor.getInt(offset + 6));
+        entity.setCrdate(cursor.getLong(offset + 7));
+        entity.setIncome(cursor.getShort(offset + 8) != 0);
+        entity.setVersion(cursor.getInt(offset + 9));
      }
     
     @Override

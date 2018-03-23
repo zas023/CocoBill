@@ -120,17 +120,16 @@ public class DateUtils {
      * 中英混合  如：2010年12月01日  23:15
      */
     public static String FORMAT_YMDHM_CN_EN = "yyyy年MM月dd日  HH:mm";
-
-    public static Calendar calendar = null;
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+    public static Calendar calendar = null;
 
     /*
-    * 日期比较
-    * */
-    public static boolean compareDate(Date startDate , Date endDate){
-        if (startDate != null && endDate != null){
-            if (startDate.getTime() >= endDate.getTime()){
+     * 日期比较
+     * */
+    public static boolean compareDate(Date startDate, Date endDate) {
+        if (startDate != null && endDate != null) {
+            if (startDate.getTime() >= endDate.getTime()) {
 //                ToastTools.showToast("开始日期不能大于或等于结束日期");
 //                ToastUtil.Toast("所选日期不能不能大于或等于当前日期");
                 return false;
@@ -141,9 +140,9 @@ public class DateUtils {
 
 
     /*
-    * 将时间转换为时间戳
-    */
-    public static String date2Stamp(String s) throws ParseException{
+     * 将时间转换为时间戳
+     */
+    public static String date2Stamp(String s) throws ParseException {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         Date date = simpleDateFormat.parse(s);
@@ -153,9 +152,9 @@ public class DateUtils {
     }
 
     /*
- * 将时间转换为时间戳
- */
-    public static String date2Stamp(String format,String s) throws ParseException{
+     * 将时间转换为时间戳
+     */
+    public static String date2Stamp(String format, String s) throws ParseException {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         Date date = simpleDateFormat.parse(s);
@@ -165,9 +164,9 @@ public class DateUtils {
     }
 
     /*
-  * 将时间戳转换为时间
-  */
-    public static String stamp2Date(String s){
+     * 将时间戳转换为时间
+     */
+    public static String stamp2Date(String s) {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         long lt = new Long(s);
@@ -208,11 +207,13 @@ public class DateUtils {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
         return formatter.format(date);
     }
-    public static String long2Str(long mseconds ,String format) {
-        SimpleDateFormat sdf= new SimpleDateFormat(format);
+
+    public static String long2Str(long mseconds, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
         Date date = new Date(mseconds);
         return sdf.format(date);
     }
+
     public static Calendar str2Calendar(String str) {
         return str2Calendar(str, null);
     }
@@ -264,9 +265,10 @@ public class DateUtils {
                 c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) +
                 ":" + c.get(Calendar.SECOND);
     }
+
     /*
-    * 获取当前日期  2017年8月5日
-    * */
+     * 获取当前日期  2017年8月5日
+     * */
     public static Date getCurDate(String str) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
         Date today = null;
@@ -276,10 +278,6 @@ public class DateUtils {
             e.printStackTrace();
         }
         return today;
-    }
-    public static String getLastYearDateOfYM() {
-        Calendar c = Calendar.getInstance();
-        return c.get(Calendar.YEAR) - 1 + "年" + (c.get(Calendar.MONTH) + 1 + "月");
     }
 
     /**
@@ -297,7 +295,6 @@ public class DateUtils {
      * @param time 当前的时间
      * @return 格式到秒
      */
-    //
     public static String getMillon(long time) {
         return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(time);
     }
@@ -312,11 +309,12 @@ public class DateUtils {
 
     /**
      * 根据传入的日期，获取指定的日期
+     *
      * @param strDate
      * @param day
      * @return
      */
-    public static String getDay(String strDate,int day) {
+    public static String getDay(String strDate, int day) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
@@ -326,12 +324,13 @@ public class DateUtils {
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH,day);
+        calendar.add(Calendar.DAY_OF_MONTH, day);
 
         Date dateNew = calendar.getTime();
         SimpleDateFormat format = new SimpleDateFormat("MM.dd");
         return format.format(dateNew);
     }
+
     /**
      * @param time 时间
      * @return 返回一个毫秒
@@ -339,6 +338,11 @@ public class DateUtils {
     // 格式到毫秒
     public static String getSMillon(long time) {
         return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(time);
+    }
+
+    public static String getLastYearDateOfYM() {
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.YEAR) - 1 + "年" + (c.get(Calendar.MONTH) + 1 + "月");
     }
 
     /**
@@ -487,6 +491,12 @@ public class DateUtils {
         return calendar.getTimeInMillis();
     }
 
+    public static long getMillis(String strDate) {
+        calendar = Calendar.getInstance();
+        calendar.setTime(parse(strDate));
+        return calendar.getTimeInMillis();
+    }
+
     /**
      * 按默认格式的字符串距离今天的天数
      *
@@ -553,7 +563,6 @@ public class DateUtils {
      * @param day    天
      * @param format 日期格式
      */
-
     public static String getDay(int day, String format) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());

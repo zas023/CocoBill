@@ -17,7 +17,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseFragment extends Fragment {
-
+    protected String TAG;
     protected View mView;
     protected Activity mActivity;
     protected Context mContext;
@@ -27,6 +27,8 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         mActivity = (Activity) context;
         mContext = context;
+        // 设置 TAG
+        TAG = this.getClass().getSimpleName();
         super.onAttach(context);
     }
 

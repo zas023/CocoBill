@@ -8,6 +8,11 @@ public interface MonthDetailModel {
     void getMonthDetailBills(String id, String year, String month);
 
     /**
+     * 每月本地账单详情
+     */
+    void getLocalMonthDetailBills(int id, String year, String month);
+
+    /**
      * 删除账单
      */
     void delete(int id);
