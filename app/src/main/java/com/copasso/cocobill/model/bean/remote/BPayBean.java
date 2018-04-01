@@ -1,6 +1,6 @@
-package com.copasso.cocobill.model.bean.packages;
+package com.copasso.cocobill.model.bean.remote;
 
-import com.copasso.cocobill.model.bean.BPay;
+import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.BaseBean;
 
 public class BPayBean extends BaseBean {
@@ -19,11 +19,8 @@ public class BPayBean extends BaseBean {
     }
 
     public BPayBean(BPay pay){
-        this.id=pay.getId();
-        this.uid=pay.getUid();
         this.payName = pay.getPayName();
         this.payImg = pay.getPayImg();
-        this.payNum = pay.getPayNum();
     }
 
     public BPayBean(Integer uid, String payName, String payImg, String payNum) {

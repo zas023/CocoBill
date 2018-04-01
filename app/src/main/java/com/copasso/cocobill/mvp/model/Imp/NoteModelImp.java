@@ -2,12 +2,17 @@ package com.copasso.cocobill.mvp.model.Imp;
 
 import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
-import com.copasso.cocobill.model.bean.packages.BPayBean;
-import com.copasso.cocobill.model.bean.packages.BSortBean;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
+import com.copasso.cocobill.model.bean.local.BPay;
+import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.remote.BPayBean;
+import com.copasso.cocobill.model.bean.remote.BSortBean;
+import com.copasso.cocobill.model.bean.local.NoteBean;
+import com.copasso.cocobill.model.local.LocalRepository;
 import com.copasso.cocobill.mvp.model.NoteModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.List;
 
 public class NoteModelImp implements NoteModel{
 
@@ -19,17 +24,44 @@ public class NoteModelImp implements NoteModel{
 
 
     @Override
-    public void getNote(int id) {
-        RetrofitFactory.getInstence().API()
-                .getNote(id)
+    public void getNote() {
+        final NoteBean note=new NoteBean();
+        LocalRepository.getInstance()
+                .getBPay()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<NoteBean>() {
+                .subscribe(new BaseObserver<List<BPay>>() {
                     @Override
-                    protected void onSuccees(NoteBean noteBean) throws Exception {
-                        listener.onSuccess(noteBean);
+                    protected void onSuccees(List<BPay> bPays) throws Exception {
+                        note.setPayinfo(bPays);
                     }
-
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
+        LocalRepository.getInstance().getBSort(false)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<List<BSort>>(){
+                    @Override
+                    protected void onSuccees(List<BSort> sorts) throws Exception {
+                        note.setOutSortlis(sorts);
+                    }
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
+        LocalRepository.getInstance().getBSort(true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<List<BSort>>(){
+                    @Override
+                    protected void onSuccees(List<BSort> sorts) throws Exception {
+                        note.setInSortlis(sorts);
+                        listener.onSuccess(note);
+                    }
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
                         listener.onFailure(e);
@@ -38,41 +70,13 @@ public class NoteModelImp implements NoteModel{
     }
 
     @Override
-    public void addSort(int userid, String sortName, String sortImg, boolean income) {
-        RetrofitFactory.getInstence().API()
-                .addSort(userid,sortName,sortImg,income)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BSortBean>() {
-                    @Override
-                    protected void onSuccees(BSortBean bSortBean) throws Exception {
-                        listener.onSuccess(bSortBean);
-                    }
+    public void addSort(BSort bSort) {
 
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
     }
 
     @Override
-    public void addPay(int userid, String payName, String payImg, String payNum) {
-        RetrofitFactory.getInstence().API()
-                .addPay(userid,payName,payImg,payNum)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BPayBean>() {
-                    @Override
-                    protected void onSuccees(BPayBean bPayBean) throws Exception {
-                        listener.onSuccess(bPayBean);
-                    }
+    public void addPay(BPay bPay) {
 
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
     }
 
     @Override

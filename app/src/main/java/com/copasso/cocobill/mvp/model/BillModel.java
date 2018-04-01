@@ -1,24 +1,22 @@
 package com.copasso.cocobill.mvp.model;
 
+import com.copasso.cocobill.model.bean.local.BBill;
+
 public interface BillModel {
 
-    void getNote(int id);
+    void getNote();
     /**
      * 添加账单
      */
-    void add(int userid, int sortid, int payid, String cost, String content,
-             String crdate, boolean income);
-
+    void add(BBill bBill);
     /**
      * 修改账单
      */
-    void update(int id, int userid, int sortid, int payid, String cost, String content,
-                String crdate, boolean income);
-
+    void update(BBill bBill);
     /**
      * 删除账单
      */
-    void delete(int id);
+    void delete(Long id);
 
     void onUnsubscribe();
 }

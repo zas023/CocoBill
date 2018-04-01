@@ -1,4 +1,4 @@
-package com.copasso.cocobill.model.bean.packages;
+package com.copasso.cocobill.model.bean.local;
 
 import com.copasso.cocobill.model.bean.BaseBean;
 
@@ -8,7 +8,6 @@ public class MonthDetailBean extends BaseBean {
 
     private String t_income;
     private String t_outcome;
-    private String l_outcome;
     private List<DaylistBean> daylist;
 
     public String getT_income() {
@@ -27,14 +26,6 @@ public class MonthDetailBean extends BaseBean {
         this.t_outcome = t_outcome;
     }
 
-    public String getL_outcome() {
-        return l_outcome;
-    }
-
-    public void setL_outcome(String l_outcome) {
-        this.l_outcome = l_outcome;
-    }
-
     public List<DaylistBean> getDaylist() {
         return daylist;
     }
@@ -47,7 +38,7 @@ public class MonthDetailBean extends BaseBean {
 
         private String time;
         private String money;
-        private List<BBillBean> list;
+        private List<BBill> list;
 
         public String getTime() {
             return time;
@@ -65,13 +56,12 @@ public class MonthDetailBean extends BaseBean {
             this.money = money;
         }
 
-        public List<BBillBean> getList() {
+        public List<BBill> getList() {
             return list;
         }
 
-        public void setList(List<BBillBean> list) {
+        public void setList(List<BBill> list) {
             this.list = list;
         }
-
     }
 }

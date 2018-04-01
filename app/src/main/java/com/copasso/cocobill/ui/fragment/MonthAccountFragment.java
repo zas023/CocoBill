@@ -12,7 +12,7 @@ import butterknife.OnClick;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.AccountCardAdapter;
-import com.copasso.cocobill.model.bean.packages.MonthAccountBean;
+import com.copasso.cocobill.model.bean.remote.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.Imp.MonthAccountPresenterImp;
 import com.copasso.cocobill.mvp.presenter.MonthAccountPresenter;

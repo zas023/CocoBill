@@ -1,4 +1,4 @@
-package com.copasso.cocobill.model.bean;
+package com.copasso.cocobill.model.bean.local;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -11,46 +11,24 @@ import org.greenrobot.greendao.annotation.Id;
 public class BSort{
 
     @Id
-    private Integer id;
-
-    private Integer uid;
-
+    private Long id;
     private String sortName;
-
     private String sortImg;
-
-    private Integer priority;
-
+    private float cost;
     private Boolean income;
 
     @Generated(hash = 2092983496)
     public BSort() {
     }
 
-    @Generated(hash = 1968789136)
-    public BSort(Integer id, Integer uid, String sortName, String sortImg, Integer priority, Boolean income) {
+    @Generated(hash = 1031921844)
+    public BSort(Long id, String sortName, String sortImg, float cost,
+            Boolean income) {
         this.id = id;
-        this.uid = uid;
         this.sortName = sortName;
         this.sortImg = sortImg;
-        this.priority = priority;
+        this.cost = cost;
         this.income = income;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
     }
 
     public String getSortName() {
@@ -58,7 +36,7 @@ public class BSort{
     }
 
     public void setSortName(String sortName) {
-        this.sortName = sortName == null ? null : sortName.trim();
+        this.sortName = sortName;
     }
 
     public String getSortImg() {
@@ -66,15 +44,7 @@ public class BSort{
     }
 
     public void setSortImg(String sortImg) {
-        this.sortImg = sortImg == null ? null : sortImg.trim();
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
+        this.sortImg = sortImg;
     }
 
     public Boolean getIncome() {
@@ -83,5 +53,21 @@ public class BSort{
 
     public void setIncome(Boolean income) {
         this.income = income;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -14,16 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.BBill;
 import com.copasso.cocobill.ui.activity.BillAddActivity;
 import com.copasso.cocobill.ui.activity.BillEditActivity;
 import com.copasso.cocobill.ui.adapter.MonthDetailAdapter;
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.packages.BBillBean;
-import com.copasso.cocobill.model.bean.packages.MonthDetailBean;
+import com.copasso.cocobill.model.bean.remote.BBillBean;
+import com.copasso.cocobill.model.bean.local.MonthDetailBean;
 import com.copasso.cocobill.mvp.presenter.Imp.MonthDetailPresenterImp;
 import com.copasso.cocobill.mvp.presenter.MonthDetailPresenter;
-import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.widget.stickyheader.StickyHeaderGridLayoutManager;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.DateUtils;
@@ -203,10 +201,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         tOutcome.setText("0.00");
         tIncome.setText("0.00");
         //请求某年某月数据
-//        if (OkHttpUtils.isNetworkConnected(mContext))
-//            presenter.getMonthDetailBills(String.valueOf(Constants.currentUserId), setYear, setMonth);
-        presenter.getLocalMonthDetailBills(Constants.currentUserId,setYear,setMonth);
-
+        presenter.getMonthDetailBills(Constants.currentUserId, setYear, setMonth);
     }
 
     /**
@@ -216,16 +211,12 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
      */
     @Override
     public void loadDataSuccess(MonthDetailBean tData) {
+        Log.i(TAG,tData.getDaylist().toString());
         tOutcome.setText(tData.getT_outcome());
         tIncome.setText(tData.getT_income());
         list = tData.getDaylist();
         adapter.setmDatas(list);
         adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
-    }
-
-    @Override
-    public void loadDataSuccess(List<BBill> list) {
-        Log.i(TAG, list.toString());
     }
 
     /**

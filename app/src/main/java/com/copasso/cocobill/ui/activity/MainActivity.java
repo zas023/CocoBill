@@ -23,6 +23,9 @@ import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.local.NoteBean;
+import com.copasso.cocobill.model.local.LocalRepository;
 import com.copasso.cocobill.ui.adapter.MainFragmentPagerAdapter;
 import com.copasso.cocobill.ui.fragment.MonthAccountFragment;
 import com.copasso.cocobill.ui.fragment.MonthChartFragment;
@@ -34,8 +37,10 @@ import butterknife.OnClick;
 import com.copasso.cocobill.utils.ImageUtils;
 import com.copasso.cocobill.utils.SharedPUtils;
 import com.copasso.cocobill.utils.ThemeManager;
+import com.google.gson.Gson;
 
 import java.io.File;
+import java.util.List;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -69,6 +74,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void initEventAndData() {
 
+        //第一次进入将默认账单分类添加到数据库
+        if(SharedPUtils.isFirstStart(mContext)){
+            Log.i(TAG,"第一次进入将默认账单分类添加到数据库");
+            NoteBean note= new Gson().fromJson(Constants.BILL_NOTE, NoteBean.class);
+            List<BSort> sorts=note.getOutSortlis();
+            sorts.addAll(note.getInSortlis());
+            LocalRepository.getInstance().saveBsorts(sorts);
+            LocalRepository.getInstance().saveBPays(note.getPayinfo());
+        }
 
         //初始化ViewPager
         mFragmentManager = getSupportFragmentManager();

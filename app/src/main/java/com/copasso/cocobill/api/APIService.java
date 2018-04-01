@@ -2,7 +2,8 @@ package com.copasso.cocobill.api;
 
 import com.copasso.cocobill.model.bean.*;
 import com.copasso.cocobill.common.HttpConfig;
-import com.copasso.cocobill.model.bean.packages.*;
+import com.copasso.cocobill.model.bean.local.NoteBean;
+import com.copasso.cocobill.model.bean.remote.*;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

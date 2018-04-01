@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.BPay;
+import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.common.Constants;
 
 import java.util.List;
@@ -36,11 +36,11 @@ public class PayEditAdapter extends RecyclerView.Adapter<PayEditAdapter.MyItemVi
 
     @Override
     public void onBindViewHolder(MyItemViewHolder holder, int position) {
-        if (mData.get(position).getPayNum() == null) {
-            holder.item_name.setText(mData.get(position).getPayName());
-        }else {
-            holder.item_name.setText(mData.get(position).getPayName() + ":" + mData.get(position).getPayNum());
-        }
+//        if (mData.get(position).getPayNum() == null) {
+//            holder.item_name.setText(mData.get(position).getPayName());
+//        }else {
+//            holder.item_name.setText(mData.get(position).getPayName() + ":" + mData.get(position).getPayNum());
+//        }
         Glide.with(mContext).load(Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg())
                 .into(holder.item_img);
         Log.i("adapter",Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg());

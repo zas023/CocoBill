@@ -296,7 +296,7 @@ public class DateUtils {
      * @return 格式到秒
      */
     public static String getMillon(long time) {
-        return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(time);
+        return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date(time));
     }
 
     /**
@@ -304,7 +304,9 @@ public class DateUtils {
      * @return 当前的天
      */
     public static String getDay(long time) {
-        return new SimpleDateFormat("yyyy-MM-dd").format(time);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
     }
 
     /**
@@ -329,15 +331,6 @@ public class DateUtils {
         Date dateNew = calendar.getTime();
         SimpleDateFormat format = new SimpleDateFormat("MM.dd");
         return format.format(dateNew);
-    }
-
-    /**
-     * @param time 时间
-     * @return 返回一个毫秒
-     */
-    // 格式到毫秒
-    public static String getSMillon(long time) {
-        return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(time);
     }
 
     public static String getLastYearDateOfYM() {

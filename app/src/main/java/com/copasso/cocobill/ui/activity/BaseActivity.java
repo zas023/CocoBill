@@ -20,8 +20,8 @@ import android.view.Window;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.copasso.cocobill.model.bean.packages.UserBean;
-import com.copasso.cocobill.utils.ActivityManagerUtil;
+import com.copasso.cocobill.model.bean.remote.UserBean;
+import com.copasso.cocobill.utils.ActivityManagerUtils;
 import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.utils.SharedPUtils;
 import com.copasso.cocobill.utils.ThemeManager;
@@ -72,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         initEventAndData();
-        ActivityManagerUtil.mActivities.add(this);
+        ActivityManagerUtils.mActivities.add(this);
     }
 
 
@@ -186,7 +186,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         OkHttpUtils.getInstance().cancel(this);
         mUnBinder.unbind();
-        ActivityManagerUtil.mActivities.remove(this);
+        ActivityManagerUtils.mActivities.remove(this);
     }
 
     protected abstract int getLayout();

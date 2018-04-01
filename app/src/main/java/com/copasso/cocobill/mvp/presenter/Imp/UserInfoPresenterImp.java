@@ -1,6 +1,6 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.model.bean.packages.UserBean;
+import com.copasso.cocobill.model.bean.remote.UserBean;
 import com.copasso.cocobill.mvp.model.Imp.UserInfoModelImp;
 import com.copasso.cocobill.mvp.model.UserInfoModel;
 import com.copasso.cocobill.mvp.presenter.UserInfoPresenter;

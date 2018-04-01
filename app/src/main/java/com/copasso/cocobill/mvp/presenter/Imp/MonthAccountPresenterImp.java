@@ -1,6 +1,6 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.model.bean.packages.MonthAccountBean;
+import com.copasso.cocobill.model.bean.remote.MonthAccountBean;
 import com.copasso.cocobill.mvp.model.Imp.MonthAccountModelImp;
 import com.copasso.cocobill.mvp.model.MonthAccountModel;
 import com.copasso.cocobill.mvp.presenter.MonthAccountPresenter;

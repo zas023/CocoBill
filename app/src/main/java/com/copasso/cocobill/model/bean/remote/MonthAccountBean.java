@@ -1,6 +1,6 @@
-package com.copasso.cocobill.model.bean.packages;
+package com.copasso.cocobill.model.bean.remote;
 
-import com.copasso.cocobill.model.bean.BPay;
+import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.BaseBean;
 
 import java.util.List;

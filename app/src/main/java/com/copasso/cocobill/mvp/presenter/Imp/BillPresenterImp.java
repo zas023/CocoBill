@@ -1,7 +1,8 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
+import com.copasso.cocobill.model.bean.local.BBill;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.mvp.model.BillModel;
 import com.copasso.cocobill.mvp.model.Imp.BillModelImp;
 import com.copasso.cocobill.mvp.presenter.BillPresenter;
@@ -33,22 +34,22 @@ public class BillPresenterImp extends BillPresenter implements BillModelImp.Bill
     }
 
     @Override
-    public void getNote(int id) {
-        model.getNote(id);
+    public void getNote() {
+        model.getNote();
     }
 
     @Override
-    public void add(int userid, int sortid, int payid, String cost, String content, String crdate, boolean income) {
-        model.add(userid,sortid,payid,cost,content,crdate,income);
+    public void add(BBill bBill) {
+        model.add(bBill);
     }
 
     @Override
-    public void update(int id, int userid, int sortid, int payid, String cost, String content, String crdate, boolean income) {
-        model.update(id,userid,sortid,payid,cost,content,crdate,income);
+    public void update(BBill bBill) {
+        model.update(bBill);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         model.delete(id);
     }
 }

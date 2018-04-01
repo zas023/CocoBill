@@ -8,9 +8,9 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.copasso.cocobill.model.bean.BBill;
-import com.copasso.cocobill.model.bean.BPay;
-import com.copasso.cocobill.model.bean.BSort;
+import com.copasso.cocobill.model.bean.local.BBill;
+import com.copasso.cocobill.model.bean.local.BPay;
+import com.copasso.cocobill.model.bean.local.BSort;
 
 import com.copasso.cocobill.model.gen.BBillDao;
 import com.copasso.cocobill.model.gen.BPayDao;

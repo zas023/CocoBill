@@ -10,15 +10,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.SortEditAdapter;
-import com.copasso.cocobill.model.bean.packages.BPayBean;
-import com.copasso.cocobill.model.bean.BSort;
-import com.copasso.cocobill.model.bean.packages.BSortBean;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
+import com.copasso.cocobill.model.bean.remote.BPayBean;
+import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.remote.BSortBean;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.mvp.presenter.Imp.NotePresenterImp;
 import com.copasso.cocobill.mvp.presenter.NotePresenter;
 import com.copasso.cocobill.utils.*;
@@ -70,7 +69,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
         //本地获取失败后
         if (noteBean==null){
             //同步获取分类、支付方式信息
-            presenter.getNote(currentUser.getId());
+            presenter.getNote();
         }else {
             //成功后加载布局
             setTitleStatus();
@@ -152,12 +151,12 @@ public class SortEditActivity extends BaseActivity implements NoteView{
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 //侧滑事件
-                if (mDatas.get(viewHolder.getAdapterPosition()).getUid()>0){
-                    showDeteteDialog(viewHolder.getAdapterPosition());
-                }else {
-                    Toast.makeText(SortEditActivity.this,"系统分类，不可删除",Toast.LENGTH_SHORT).show();
-                    sortEditAdapter.notifyDataSetChanged();
-                }
+//                if (mDatas.get(viewHolder.getAdapterPosition()).getUid()>0){
+//                    showDeteteDialog(viewHolder.getAdapterPosition());
+//                }else {
+//                    Toast.makeText(SortEditActivity.this,"系统分类，不可删除",Toast.LENGTH_SHORT).show();
+//                    sortEditAdapter.notifyDataSetChanged();
+//                }
             }
 
             @Override
@@ -223,7 +222,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
                             SnackbarUtils.show(mContext, "内容不能为空！");
                         } else {
                             ProgressUtils.show(mContext);
-                            presenter.addSort(currentUser.getId(), input, "sort_tianjiade.png", !isOutcome);
+//                            presenter.addSort(currentUser.getId(), input, "sort_tianjiade.png", !isOutcome);
                         }
                     }
                 })

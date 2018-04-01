@@ -33,20 +33,25 @@ public abstract class BaseObserver<T> implements Observer<T> {
     @Override
     public void onNext(T t) {
         onRequestEnd();
-        BaseBean temp=((BaseBean)t);
-        if (temp.getStatus()==100) {
-            try {
-                onSuccees(t);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                onCodeError(t);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            onSuccees(t);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+//        BaseBean temp=((BaseBean)t);
+//        if (temp.getStatus()==100) {
+//            try {
+//                onSuccees(t);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            try {
+//                onCodeError(t);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Override

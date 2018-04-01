@@ -16,7 +16,9 @@ import android.widget.*;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
+import com.copasso.cocobill.model.bean.local.BBill;
+import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.ui.adapter.BookNoteAdapter;
 import com.copasso.cocobill.ui.adapter.MonthAccountAdapter;
 import com.copasso.cocobill.model.bean.*;
@@ -125,8 +127,6 @@ public class BillAddActivity extends BaseActivity implements BillView{
         noteBean=tData;
         //成功后加载布局
         setTitleStatus();
-        //保存数据
-        SharedPUtils.setUserNoteBean(mContext,tData);
     }
 
     @Override
@@ -148,15 +148,7 @@ public class BillAddActivity extends BaseActivity implements BillView{
      */
     private void initSortView() {
         //获取本地分类、支付方式信息
-        noteBean = SharedPUtils.getUserNoteBean(BillAddActivity.this);
-        //本地获取失败后
-        if (noteBean == null) {
-            //同步获取分类、支付方式信息
-            presenter.getNote(Constants.currentUserId);
-        } else {
-            //成功后加载布局
-            setTitleStatus();
-        }
+        presenter.getNote();
     }
 
     /**
@@ -185,8 +177,6 @@ public class BillAddActivity extends BaseActivity implements BillView{
         cardItem = new ArrayList<>();
         for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
             String itemStr = noteBean.getPayinfo().get(i).getPayName();
-            if (noteBean.getPayinfo().get(i).getPayNum()!=null)
-                itemStr=itemStr+noteBean.getPayinfo().get(i).getPayNum();
             cardItem.add(itemStr);
         }
 
@@ -201,7 +191,7 @@ public class BillAddActivity extends BaseActivity implements BillView{
         List<BSort> tempData=new ArrayList<>();
         tempData.addAll(mDatas);
         //末尾加上添加选项
-        tempData.add(new BSort(null,null,"添加", "sort_tianjia.png",null,null));
+        tempData.add(new BSort(null,"添加", "sort_tianjia.png",0,null));
         if (tempData.size() % 15 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(tempData.size() * 1.0 / 15);
@@ -487,9 +477,11 @@ public class BillAddActivity extends BaseActivity implements BillView{
         }
 
         ProgressUtils.show(BillAddActivity.this, "正在提交...");
-
-        presenter.add(currentUser.getId(),lastBean.getId(),noteBean.getPayinfo().get(selectedPayinfoIndex).getId()
-                ,num + dotNum,remarkInput,crDate,!isOutcome);
+        presenter.add(new BBill(null,0,Float.valueOf(num + dotNum),remarkInput,currentUser.getId(),
+                noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
+                noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(),
+                lastBean.getSortName(),lastBean.getSortImg(),
+                DateUtils.getMillis(crDate),!isOutcome,0));
     }
 
     /**

@@ -1,9 +1,9 @@
 package com.copasso.cocobill.mvp.view;
 
 import com.copasso.cocobill.base.BaseView;
-import com.copasso.cocobill.model.bean.packages.BPayBean;
-import com.copasso.cocobill.model.bean.packages.BSortBean;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
+import com.copasso.cocobill.model.bean.remote.BPayBean;
+import com.copasso.cocobill.model.bean.remote.BSortBean;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 
 public interface NoteView extends BaseView<NoteBean>{
 

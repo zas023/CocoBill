@@ -1,12 +1,17 @@
 package com.copasso.cocobill.mvp.model.Imp;
 
-import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
+import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
+import com.copasso.cocobill.model.bean.local.BPay;
+import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.local.NoteBean;
+import com.copasso.cocobill.model.local.LocalRepository;
 import com.copasso.cocobill.mvp.model.BillModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.List;
 
 public class BillModelImp implements BillModel{
 
@@ -17,17 +22,44 @@ public class BillModelImp implements BillModel{
     }
 
     @Override
-    public void getNote(int id) {
-        RetrofitFactory.getInstence().API()
-                .getNote(id)
+    public void getNote() {
+        final NoteBean note=new NoteBean();
+        LocalRepository.getInstance()
+                .getBPay()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<NoteBean>() {
+                .subscribe(new BaseObserver<List<BPay>>() {
                     @Override
-                    protected void onSuccees(NoteBean noteBean) throws Exception {
-                        listener.onSuccess(noteBean);
+                    protected void onSuccees(List<BPay> bPays) throws Exception {
+                        note.setPayinfo(bPays);
                     }
-
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
+        LocalRepository.getInstance().getBSort(false)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<List<BSort>>(){
+                    @Override
+                    protected void onSuccees(List<BSort> sorts) throws Exception {
+                        note.setOutSortlis(sorts);
+                    }
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
+        LocalRepository.getInstance().getBSort(true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<List<BSort>>(){
+                    @Override
+                    protected void onSuccees(List<BSort> sorts) throws Exception {
+                        note.setInSortlis(sorts);
+                        listener.onSuccess(note);
+                    }
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
                         listener.onFailure(e);
@@ -36,60 +68,22 @@ public class BillModelImp implements BillModel{
     }
 
     @Override
-    public void add(int userid, int sortid, int payid, String cost, String content, String crdate, boolean income) {
-        RetrofitFactory.getInstence().API()
-                .addBill(userid,sortid,payid,cost,content,crdate,income)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BaseBean>() {
-                    @Override
-                    protected void onSuccees(BaseBean baseBean) throws Exception {
-                        listener.onSuccess(baseBean);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
+    public void add(BBill bBill) {
+        Long l=LocalRepository.getInstance().saveBBill(bBill);
+       if ( l!=null)
+           listener.onSuccess(new BaseBean());
     }
 
     @Override
-    public void update(int id, int userid, int sortid, int payid, String cost, String content, String crdate, boolean income) {
-        RetrofitFactory.getInstence().API()
-                .updateBill(id,userid,sortid,payid,cost,content,crdate,income)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BaseBean>() {
-                    @Override
-                    protected void onSuccees(BaseBean baseBean) throws Exception {
-                        listener.onSuccess(baseBean);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
+    public void update(BBill bBill) {
+        LocalRepository.getInstance()
+                .updateBBill(bBill);
     }
 
     @Override
-    public void delete(int id) {
-        RetrofitFactory.getInstence().API()
-                .deleteBill(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BaseBean>() {
-                    @Override
-                    protected void onSuccees(BaseBean baseBean) throws Exception {
-                        listener.onSuccess(baseBean);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
+    public void delete(Long id) {
+        LocalRepository.getInstance()
+                .deleteBBillById(id);
     }
 
     @Override
@@ -101,10 +95,8 @@ public class BillModelImp implements BillModel{
      * 回调接口
      */
     public interface BillOnListener {
-
         void onSuccess(BaseBean bean);
         void onSuccess(NoteBean bean);
-
         void onFailure(Throwable e);
     }
 }

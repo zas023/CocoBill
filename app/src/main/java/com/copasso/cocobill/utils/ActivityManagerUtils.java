@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ActivityManagerUtil {
+public class ActivityManagerUtils {
 	
 	/** 记录处于前台的Activity */
 	public static Activity mForegroundActivity = null;

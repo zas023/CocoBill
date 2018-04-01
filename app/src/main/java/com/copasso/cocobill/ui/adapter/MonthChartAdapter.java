@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.packages.BBillBean;
+import com.copasso.cocobill.model.bean.remote.BBillBean;
 
 import java.util.List;
 /**

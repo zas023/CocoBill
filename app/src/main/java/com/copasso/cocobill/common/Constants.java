@@ -20,9 +20,9 @@ public class Constants {
     public static final String NOTE_SORT_UPDATE = "/note/sort/update";
     public static final String NOTE_PAY_ADD = "/note/pay/add";
     public static final String NOTE_PAY_UPDATE = "/note/pay/update";
-    public static final String IMAGE_USER ="/upload/";
-    public static final String IMAGE_SORT ="/upload/noteImg/sort/";
-    public static final String IMAGE_PAY ="/upload/noteImg/pay/";
+    public static final String IMAGE_USER = "/upload/";
+    public static final String IMAGE_SORT = "/upload/noteImg/sort/";
+    public static final String IMAGE_PAY = "/upload/noteImg/pay/";
 
 
     public static final String CACHE = "cache";
@@ -30,7 +30,46 @@ public class Constants {
     public static final int BASE_COLUMN = 100000000;
 
     //当前用户
-    public static int currentUserId=0;
+    public static int currentUserId = 0;
 
-    public static String EXTRA_IS_UPDATE_THEME  = "com.copasso.cocobill.IS_UPDATE_THEME";
+    public static String EXTRA_IS_UPDATE_THEME = "com.copasso.cocobill.IS_UPDATE_THEME";
+
+    //默认note(账单分类和支付方式)
+    public static String BILL_NOTE = "{\"status\":100,\"message\":\"处理成功！\"," +
+            "\"outSortlis\":[" +
+            "{\"id\":1,\"uid\":0,\"sortName\":\"还款\",\"sortImg\":\"sort_huankuan.png\",\"priority\":0,\"income\":false}," +
+            "{\"id\":2,\"uid\":0,\"sortName\":\"手续费\",\"sortImg\":\"sort_shouxufei.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":3,\"uid\":0,\"sortName\":\"违约金\",\"sortImg\":\"sort_weiyuejin.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":4,\"uid\":0,\"sortName\":\"住房\",\"sortImg\":\"sort_zhufang.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":5,\"uid\":0,\"sortName\":\"办公\",\"sortImg\":\"sort_bangong.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":6,\"uid\":0,\"sortName\":\"餐饮\",\"sortImg\":\"sort_canyin.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":7,\"uid\":0,\"sortName\":\"医疗\",\"sortImg\":\"sort_yiliao.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":8,\"uid\":0,\"sortName\":\"运动\",\"sortImg\":\"sort_yundong@2x.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":9,\"uid\":0,\"sortName\":\"娱乐\",\"sortImg\":\"sort_yule@2x.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":10,\"uid\":0,\"sortName\":\"居家\",\"sortImg\":\"sort_jujia.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":11,\"uid\":0,\"sortName\":\"宠物\",\"sortImg\":\"sort_chongwu.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":12,\"uid\":0,\"sortName\":\"数码\",\"sortImg\":\"sort_shuma.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":13,\"uid\":0,\"sortName\":\"捐赠\",\"sortImg\":\"sort_juanzeng.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":14,\"uid\":0,\"sortName\":\"零食\",\"sortImg\":\"sort_lingshi.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":15,\"uid\":0,\"sortName\":\"孩子\",\"sortImg\":\"sort_haizi.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":16,\"uid\":0,\"sortName\":\"长辈\",\"sortImg\":\"sort_zhangbei.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":17,\"uid\":0,\"sortName\":\"礼物\",\"sortImg\":\"sort_liwu.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":18,\"uid\":0,\"sortName\":\"学习\",\"sortImg\":\"sort_xuexi.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":19,\"uid\":0,\"sortName\":\"水果\",\"sortImg\":\"sort_shuiguo.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":20,\"uid\":0,\"sortName\":\"美容\",\"sortImg\":\"sort_meirong.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":21,\"uid\":0,\"sortName\":\"维修\",\"sortImg\":\"sort_weixiu.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":22,\"uid\":0,\"sortName\":\"旅行\",\"sortImg\":\"sort_lvxing.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":23,\"uid\":0,\"sortName\":\"交通\",\"sortImg\":\"sort_jiaotong.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":24,\"uid\":0,\"sortName\":\"饮料\",\"sortImg\":\"sort_jiushui.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":25,\"uid\":0,\"sortName\":\"礼金\",\"sortImg\":\"sort_lijin.png\",\"priority\":null,\"income\":false}]," +
+            "\"inSortlis\":[" +
+            "{\"id\":26,\"uid\":0,\"sortName\":\"礼金\",\"sortImg\":\"sort_lijin.png\",\"priority\":null,\"income\":true}," +
+            "{\"id\":27,\"uid\":0,\"sortName\":\"奖励\",\"sortImg\":\"sort_jiangjin.png\",\"priority\":null,\"income\":true}," +
+            "{\"id\":28,\"uid\":0,\"sortName\":\"利息\",\"sortImg\":\"sort_lixi.png\",\"priority\":null,\"income\":true}," +
+            "{\"id\":29,\"uid\":0,\"sortName\":\"返现\",\"sortImg\":\"sort_fanxian.png\",\"priority\":null,\"income\":true}," +
+            "{\"id\":30,\"uid\":0,\"sortName\":\"兼职\",\"sortImg\":\"sort_jianzhi.png\",\"priority\":null,\"income\":true}]," +
+            "\"payinfo\":[" +
+            "{\"id\":1,\"uid\":0,\"payName\":\"现金\",\"payImg\":\"card_cash.png\",\"payNum\":null}," +
+            "{\"id\":2,\"uid\":0,\"payName\":\"支付宝\",\"payImg\":\"card_account.png\",\"payNum\":null}," +
+            "{\"id\":3,\"uid\":0,\"payName\":\"微信\",\"payImg\":\"card_account.png\",\"payNum\":\"null\"}]}\n";
 }

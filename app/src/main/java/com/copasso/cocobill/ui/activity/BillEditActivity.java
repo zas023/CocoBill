@@ -20,11 +20,10 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.BookNoteAdapter;
 import com.copasso.cocobill.ui.adapter.MonthAccountAdapter;
-import com.copasso.cocobill.model.bean.BPay;
-import com.copasso.cocobill.model.bean.BSort;
+import com.copasso.cocobill.model.bean.local.BPay;
+import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
-import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.mvp.presenter.BillPresenter;
 import com.copasso.cocobill.mvp.presenter.Imp.BillPresenterImp;
 import com.copasso.cocobill.utils.*;
@@ -176,7 +175,7 @@ public class BillEditActivity extends BaseActivity implements BillView {
         //本地获取失败后
         if (noteBean==null){
             //同步获取分类、支付方式信息
-            presenter.getNote(currentUser.getId());
+            presenter.getNote();
         }else {
             //成功后加载布局
             setTitleStatus();
@@ -190,18 +189,19 @@ public class BillEditActivity extends BaseActivity implements BillView {
      * @return
      */
     private BSort findSortById(int id) {
-        if (isOutcome) {
-            for (BSort e : noteBean.getOutSortlis()) {
-                if (e.getId() == id)
-                    return e;
-            }
-        } else {
-            for (BSort e : noteBean.getInSortlis()) {
-                if (e.getId() == id)
-                    return e;
-            }
-        }
-        return isOutcome? noteBean.getOutSortlis().get(0):noteBean.getInSortlis().get(0);
+//        if (isOutcome) {
+//            for (BSort e : noteBean.getOutSortlis()) {
+//                if (e.getId() == id)
+//                    return e;
+//            }
+//        } else {
+//            for (BSort e : noteBean.getInSortlis()) {
+//                if (e.getId() == id)
+//                    return e;
+//            }
+//        }
+//        return isOutcome? noteBean.getOutSortlis().get(0):noteBean.getInSortlis().get(0);
+        return null;
     }
 
     /**
@@ -212,10 +212,10 @@ public class BillEditActivity extends BaseActivity implements BillView {
      */
     private int findPayById(int id) {
         List<BPay> list = noteBean.getPayinfo();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId() == id)
-                return i;
-        }
+//        for (int i = 0; i < list.size(); i++) {
+//            if (list.get(i).getId() == id)
+//                return i;
+//        }
         return 0;
     }
 
@@ -243,12 +243,12 @@ public class BillEditActivity extends BaseActivity implements BillView {
         sortTv.setText(lastBean.getSortName());
 
         cardItem = new ArrayList<>();
-        for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
-            String itemStr = noteBean.getPayinfo().get(i).getPayName();
-            if (noteBean.getPayinfo().get(i).getPayNum()!=null)
-                itemStr=itemStr+noteBean.getPayinfo().get(i).getPayNum();
-            cardItem.add(itemStr);
-        }
+//        for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
+//            String itemStr = noteBean.getPayinfo().get(i).getPayName();
+//            if (noteBean.getPayinfo().get(i).getPayNum()!=null)
+//                itemStr=itemStr+noteBean.getPayinfo().get(i).getPayNum();
+//            cardItem.add(itemStr);
+//        }
         //设置支付方式
         selectedPayinfoIndex = findPayById(bundle.getInt("payId"));
         cashTv.setText(cardItem.get(selectedPayinfoIndex));
@@ -267,7 +267,7 @@ public class BillEditActivity extends BaseActivity implements BillView {
         List<BSort> tempData=new ArrayList<>();
         tempData.addAll(mDatas);
         //末尾加上添加选项
-        tempData.add(new BSort(null,null,"添加", "sort_tianjia.png",null,null));
+//        tempData.add(new BSort(null,null,"添加", "sort_tianjia.png",null,null));
         if (tempData.size() % 15 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(tempData.size() * 1.0 / 15);
@@ -553,9 +553,9 @@ public class BillEditActivity extends BaseActivity implements BillView {
 
         ProgressUtils.show(BillEditActivity.this, "正在修改...");
 
-        presenter.update(bundle.getInt("id"),Constants.currentUserId,lastBean.getId(),
-                noteBean.getPayinfo().get(selectedPayinfoIndex).getId(),num + dotNum,remarkInput,
-                crDate,!isOutcome);
+//        presenter.update(bundle.getInt("id"),Constants.currentUserId,lastBean.getId(),
+//                noteBean.getPayinfo().get(selectedPayinfoIndex).getId(),num + dotNum,remarkInput,
+//                crDate,!isOutcome);
     }
 
     /**

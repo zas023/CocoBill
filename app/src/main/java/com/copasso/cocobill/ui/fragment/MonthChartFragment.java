@@ -12,7 +12,7 @@ import android.widget.*;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.MonthChartAdapter;
-import com.copasso.cocobill.model.bean.packages.MonthChartBean;
+import com.copasso.cocobill.model.bean.remote.MonthChartBean;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.Imp.MonthChartPresenterImp;
 import com.copasso.cocobill.mvp.presenter.MonthChartPresenter;

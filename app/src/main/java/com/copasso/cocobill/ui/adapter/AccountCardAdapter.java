@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.packages.MonthAccountBean;
+import com.copasso.cocobill.model.bean.remote.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
 
 import java.util.List;
@@ -71,13 +71,13 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
                 .load(Constants.BASE_URL+Constants.IMAGE_PAY + mDatas.get(position).getbPay().getPayImg())
                 .into(holder.img);
 
-        if(mDatas.get(position).getbPay().getUid()>0){
-            //自定义支付方式
-            holder.code.setVisibility(View.VISIBLE);
-            holder.code.setText(mDatas.get(position).getbPay().getPayNum());
-        }else{
-            holder.code.setVisibility(View.GONE);
-        }
+//        if(mDatas.get(position).getbPay().getUid()>0){
+//            //自定义支付方式
+//            holder.code.setVisibility(View.VISIBLE);
+//            holder.code.setText(mDatas.get(position).getbPay().getPayNum());
+//        }else{
+//            holder.code.setVisibility(View.GONE);
+//        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

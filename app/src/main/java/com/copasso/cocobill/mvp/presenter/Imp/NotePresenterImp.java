@@ -1,8 +1,10 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.model.bean.packages.BPayBean;
-import com.copasso.cocobill.model.bean.packages.BSortBean;
-import com.copasso.cocobill.model.bean.packages.NoteBean;
+import com.copasso.cocobill.model.bean.local.BPay;
+import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.remote.BPayBean;
+import com.copasso.cocobill.model.bean.remote.BSortBean;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.mvp.model.Imp.NoteModelImp;
 import com.copasso.cocobill.mvp.model.NoteModel;
 import com.copasso.cocobill.mvp.presenter.NotePresenter;
@@ -39,18 +41,18 @@ public class NotePresenterImp extends NotePresenter implements NoteModelImp.Note
     }
 
     @Override
-    public void getNote(int id) {
-        model.getNote(id);
+    public void getNote() {
+        model.getNote();
     }
 
     @Override
-    public void addSort(int userid, String sortName, String sortImg, boolean income) {
-        model.addSort(userid,sortName,sortImg,income);
+    public void addSort(BSort bSort) {
+        model.addSort(bSort);
     }
 
     @Override
-    public void addPay(int userid, String payName, String payImg, String payNum) {
-        model.addPay(userid,payName,payImg,payNum);
+    public void addPay(BPay bPay) {
+        model.addPay(bPay);
     }
 
     @Override

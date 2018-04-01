@@ -1,6 +1,6 @@
-package com.copasso.cocobill.model.bean.packages;
+package com.copasso.cocobill.model.bean.remote;
 
-import com.copasso.cocobill.model.bean.BSort;
+import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.model.bean.BaseBean;
 
 public class BSortBean extends BaseBean {
@@ -21,8 +21,6 @@ public class BSortBean extends BaseBean {
     }
 
     public BSortBean(BSort sort) {
-        this.id=sort.getId();
-        this.uid = sort.getUid();
         this.sortName = sort.getSortName();
         this.sortImg = sort.getSortImg();
         this.income = sort.getIncome();
