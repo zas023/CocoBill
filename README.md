@@ -34,7 +34,6 @@ v0.3.1:2017.12.28
 </p>
 
 ##### 注：本程序素材来源网络，如有影响你的权益，请及时联系本人
-    其中部分界面借鉴于：https://github.com/wangjjj/TallyBook
 
 ### Thanks to
  1. butterknife: https://github.com/JakeWharton/butterknife
