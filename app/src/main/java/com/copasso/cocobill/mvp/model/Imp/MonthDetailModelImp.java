@@ -34,7 +34,7 @@ public class MonthDetailModelImp implements MonthDetailModel {
                 .subscribe(new BaseObserver<List<BBill>>() {
                     @Override
                     protected void onSuccees(List<BBill> bBills) throws Exception {
-                        listener.onSuccess(BillUtils.packageList(bBills));
+                        listener.onSuccess(BillUtils.packageDetailList(bBills));
                     }
 
                     @Override

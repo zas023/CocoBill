@@ -1,6 +1,6 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.model.bean.remote.MonthChartBean;
+import com.copasso.cocobill.model.bean.local.MonthChartBean;
 import com.copasso.cocobill.mvp.model.Imp.MonthChartModelImp;
 import com.copasso.cocobill.mvp.model.MonthChartModel;
 import com.copasso.cocobill.mvp.presenter.MonthChartPresenter;
@@ -27,7 +27,7 @@ public class MonthChartPresenterImp extends MonthChartPresenter implements Month
     }
 
     @Override
-    public void getMonthChartBills(String id, String year, String month) {
+    public void getMonthChartBills(int id, String year, String month) {
         model.getMonthChartBills(id,year,month);
     }
 

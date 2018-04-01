@@ -12,7 +12,7 @@ import android.widget.*;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.MonthChartAdapter;
-import com.copasso.cocobill.model.bean.remote.MonthChartBean;
+import com.copasso.cocobill.model.bean.local.MonthChartBean;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.Imp.MonthChartPresenterImp;
 import com.copasso.cocobill.mvp.presenter.MonthChartPresenter;
@@ -42,7 +42,6 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
  */
 public class MonthChartFragment extends BaseFragment
         implements MonthChartView,OnChartValueSelectedListener {
-
 
     @BindView(R.id.chart)
     PieChart mChart;
@@ -168,7 +167,7 @@ public class MonthChartFragment extends BaseFragment
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
         //请求某年某月数据
-        presenter.getMonthChartBills(String.valueOf(userid),year,month);
+        presenter.getMonthChartBills(userid,year,month);
     }
 
     @Override
@@ -196,16 +195,16 @@ public class MonthChartFragment extends BaseFragment
             centerTitle.setText("总支出");
             centerImg.setImageResource(R.mipmap.tallybook_output);
             tMoneyBeanList = monthChartBean.getOutSortlist();
-            totalMoney = Float.parseFloat(monthChartBean.getTotalOut());
+            totalMoney = monthChartBean.getTotalOut();
         } else {
             centerTitle.setText("总收入");
             centerImg.setImageResource(R.mipmap.tallybook_input);
             tMoneyBeanList = monthChartBean.getInSortlist();
-            totalMoney = Float.parseFloat(monthChartBean.getTotalIn());
+            totalMoney = monthChartBean.getTotalIn();
         }
 
-        tOutcome.setText(monthChartBean.getTotalOut());
-        tIncome.setText(monthChartBean.getTotalIn());
+        tOutcome.setText(""+monthChartBean.getTotalOut());
+        tIncome.setText(""+monthChartBean.getTotalIn());
         centerMoney.setText("" + totalMoney);
 
         ArrayList<PieEntry> entries = new ArrayList<>();
@@ -214,9 +213,9 @@ public class MonthChartFragment extends BaseFragment
         if (tMoneyBeanList != null && tMoneyBeanList.size() > 0) {
             layoutTypedata.setVisibility(View.VISIBLE);
             for (int i = 0; i < tMoneyBeanList.size(); i++) {
-                float scale = Float.parseFloat(tMoneyBeanList.get(i).getMoney()) / totalMoney;
+                float scale =tMoneyBeanList.get(i).getMoney()/ totalMoney;
                 float value = (scale < 0.06f) ? 0.06f : scale;
-                entries.add(new PieEntry(value, PieChartUtils.getDrawable(tMoneyBeanList.get(i).getSort().getSortImg())));
+                entries.add(new PieEntry(value, PieChartUtils.getDrawable(tMoneyBeanList.get(i).getSortImg())));
                 colors.add(Color.parseColor(tMoneyBeanList.get(i).getBack_color()));
             }
             setNoteData(0,entries.get(0).getValue());
@@ -235,8 +234,8 @@ public class MonthChartFragment extends BaseFragment
      * @param index
      */
     private void setNoteData(int index, float value) {
-        sort_image = tMoneyBeanList.get(index).getSort().getSortImg();
-        sort_name = tMoneyBeanList.get(index).getSort().getSortName();
+        sort_image = tMoneyBeanList.get(index).getSortImg();
+        sort_name = tMoneyBeanList.get(index).getSortName();
         back_color = tMoneyBeanList.get(index).getBack_color();
         if (TYPE) {
             money.setText("-" + tMoneyBeanList.get(index).getMoney());
@@ -247,7 +246,7 @@ public class MonthChartFragment extends BaseFragment
         title.setText(sort_name+" : "+df.format(value));
         rankTitle.setText(sort_name + "排行榜");
         circleBg.setImageDrawable(new ColorDrawable(Color.parseColor(back_color)));
-        circleImg.setImageDrawable(PieChartUtils.getDrawable(tMoneyBeanList.get(index).getSort().getSortImg()));
+        circleImg.setImageDrawable(PieChartUtils.getDrawable(tMoneyBeanList.get(index).getSortImg()));
 
         adapter.setSortName(sort_name);
         adapter.setmDatas(tMoneyBeanList.get(index).getList());

@@ -101,14 +101,16 @@ public class LocalRepository {
         return queryListToRx(queryBuilder);
     }
 
-    public Observable<List<BBill>> getBBillByUserIdWithYMD(int id, String ymd) {
-        return null;
-    }
-
     public Observable<List<BSort>> getBSort(boolean income){
         QueryBuilder<BSort> queryBuilder = mSession.getBSortDao()
                 .queryBuilder()
                 .where(BSortDao.Properties.Income.eq(income));
+        return queryListToRx(queryBuilder);
+    }
+
+    public Observable<List<BSort>> getBSort(){
+        QueryBuilder<BSort> queryBuilder = mSession.getBSortDao()
+                .queryBuilder();
         return queryListToRx(queryBuilder);
     }
 
@@ -117,6 +119,7 @@ public class LocalRepository {
                 .queryBuilder();
         return queryListToRx(queryBuilder);
     }
+
 
     /******************************update**************************************/
     public Observable<BBill> updateBBill(BBill bill) {
