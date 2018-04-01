@@ -6,5 +6,5 @@ public abstract  class MonthDetailPresenter extends BasePresenter {
 
     public abstract void getMonthDetailBills(int id,String year,String month);
 
-    public abstract void deleteBill(int id);
+    public abstract void deleteBill(Long id);
 }

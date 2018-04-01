@@ -44,8 +44,8 @@ public class Constants {
             "{\"id\":5,\"uid\":0,\"sortName\":\"办公\",\"sortImg\":\"sort_bangong.png\",\"priority\":null,\"income\":false}," +
             "{\"id\":6,\"uid\":0,\"sortName\":\"餐饮\",\"sortImg\":\"sort_canyin.png\",\"priority\":null,\"income\":false}," +
             "{\"id\":7,\"uid\":0,\"sortName\":\"医疗\",\"sortImg\":\"sort_yiliao.png\",\"priority\":null,\"income\":false}," +
-            "{\"id\":8,\"uid\":0,\"sortName\":\"运动\",\"sortImg\":\"sort_yundong@2x.png\",\"priority\":null,\"income\":false}," +
-            "{\"id\":9,\"uid\":0,\"sortName\":\"娱乐\",\"sortImg\":\"sort_yule@2x.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":8,\"uid\":0,\"sortName\":\"运动\",\"sortImg\":\"sort_yundong.png\",\"priority\":null,\"income\":false}," +
+            "{\"id\":9,\"uid\":0,\"sortName\":\"娱乐\",\"sortImg\":\"sort_yule.png\",\"priority\":null,\"income\":false}," +
             "{\"id\":10,\"uid\":0,\"sortName\":\"居家\",\"sortImg\":\"sort_jujia.png\",\"priority\":null,\"income\":false}," +
             "{\"id\":11,\"uid\":0,\"sortName\":\"宠物\",\"sortImg\":\"sort_chongwu.png\",\"priority\":null,\"income\":false}," +
             "{\"id\":12,\"uid\":0,\"sortName\":\"数码\",\"sortImg\":\"sort_shuma.png\",\"priority\":null,\"income\":false}," +

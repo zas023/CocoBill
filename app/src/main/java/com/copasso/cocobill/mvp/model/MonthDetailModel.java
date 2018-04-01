@@ -10,7 +10,7 @@ public interface MonthDetailModel {
     /**
      * 删除账单
      */
-    void delete(int id);
+    void delete(Long id);
 
     void onUnsubscribe();
 }

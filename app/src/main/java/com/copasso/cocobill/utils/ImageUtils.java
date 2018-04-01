@@ -164,6 +164,8 @@ public class ImageUtils {
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_juanzeng);
         else if(imgUrl.equals("sort_lingshi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_lingshi);
+        else if(imgUrl.equals("sort_jiangjin.png"))
+            drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_jiangjin);
         else if(imgUrl.equals("sort_haizi.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_haizi);
         else if(imgUrl.equals("sort_zhangbei.png"))
@@ -192,7 +194,7 @@ public class ImageUtils {
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_jianzhi);
         else if(imgUrl.equals("sort_tianjiade.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_tianjiade);
-        else if(imgUrl.equals("sort_tianjiade.png"))
+        else if(imgUrl.equals("sort_tianjia.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_tianjia);
         else
             drawable=null;

@@ -46,22 +46,8 @@ public class MonthDetailModelImp implements MonthDetailModel {
 
 
     @Override
-    public void delete(int id) {
-        RetrofitFactory.getInstence().API()
-                .deleteBill(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BaseBean>() {
-                    @Override
-                    protected void onSuccees(BaseBean baseBean) throws Exception {
-                        listener.onSuccess(baseBean);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
+    public void delete(Long id) {
+        LocalRepository.getInstance().deleteBBillById(id);
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.ui.activity.BillAddActivity;
 import com.copasso.cocobill.ui.activity.BillEditActivity;
 import com.copasso.cocobill.ui.adapter.MonthDetailAdapter;
@@ -133,7 +134,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         //adapter的侧滑选项事件监听
         adapter.setOnStickyHeaderClickListener(new MonthDetailAdapter.OnStickyHeaderClickListener() {
             @Override
-            public void OnDeleteClick(int id, int section, int offset) {
+            public void OnDeleteClick(Long id, int section, int offset) {
 
                 presenter.deleteBill(id);
                 part = section;
@@ -141,12 +142,13 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
             }
 
             @Override
-            public void OnEditClick(BBillBean item, int section, int offset) {
+            public void OnEditClick(BBill item, int section, int offset) {
                 Intent intent = new Intent(mContext, BillEditActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("id", item.getId());
-                bundle.putInt("sortId", item.getSortid());
-                bundle.putInt("payId", item.getPayid());
+                bundle.putLong("id", item.getId());
+                bundle.putInt("rid", item.getRid());
+                bundle.putString("sortName", item.getSortName());
+                bundle.putString("payName", item.getPayName());
                 bundle.putString("content", item.getContent());
                 bundle.putDouble("cost", item.getCost());
                 bundle.putLong("date", item.getCrdate());

@@ -12,6 +12,7 @@ import com.copasso.cocobill.ui.activity.BillAddActivity;
 import com.copasso.cocobill.ui.activity.BillEditActivity;
 import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.utils.ImageUtils;
 
 import java.util.List;
 
@@ -66,13 +67,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.title.setText(mDatas.get(position).getSortName());
-        if (eContext == null) {
-            Glide.with(mContext).load(Constants.BASE_URL + Constants.IMAGE_SORT + mDatas.get(position).getSortImg())
-                    .into(holder.img);
-        } else {
-            Glide.with(eContext).load(Constants.BASE_URL + Constants.IMAGE_SORT + mDatas.get(position).getSortImg())
-                    .into(holder.img);
-        }
+        holder.img.setImageDrawable(ImageUtils.getDrawable(mDatas.get(position).getSortImg()));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

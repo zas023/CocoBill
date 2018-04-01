@@ -43,7 +43,7 @@ public class MonthDetailPresenterImp extends MonthDetailPresenter implements Mon
     }
 
     @Override
-    public void deleteBill(int id) {
+    public void deleteBill(Long id) {
         monthDetailModel.delete(id);
     }
 

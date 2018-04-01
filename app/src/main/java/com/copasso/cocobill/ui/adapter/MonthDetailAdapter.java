@@ -111,17 +111,17 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                 final int section = getAdapterPositionSection(holder.getAdapterPosition());
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
 
-                //确认删除
-//                new AlertDialog.Builder(mContext).setTitle("是否删除此条记录")
-//                        .setNegativeButton("取消", null)
-//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                onStickyHeaderClickListener.OnDeleteClick(
-//                                        mDatas.get(section).getList().get(offset).getId(), section, offset);
-//                            }
-//                        })
-//                        .show();
+//                确认删除
+                new AlertDialog.Builder(mContext).setTitle("是否删除此条记录")
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                onStickyHeaderClickListener.OnDeleteClick(
+                                        mDatas.get(section).getList().get(offset).getId(), section, offset);
+                            }
+                        })
+                        .show();
             }
         });
         //监听侧滑编辑事件
@@ -130,8 +130,8 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
             public void onClick(View v) {
                 final int section = getAdapterPositionSection(holder.getAdapterPosition());
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
-//                onStickyHeaderClickListener.OnEditClick(
-//                        mDatas.get(section).getList().get(offset), section, offset);
+                onStickyHeaderClickListener.OnEditClick(
+                        mDatas.get(section).getList().get(offset), section, offset);
             }
         });
         //监听单击显示详情事件
@@ -176,8 +176,8 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
      * 自定义编辑、删除接口
      */
     public interface OnStickyHeaderClickListener {
-        void OnDeleteClick(int id, int section, int offset);
-        void OnEditClick(BBillBean item, int section, int offset);
+        void OnDeleteClick(Long id, int section, int offset);
+        void OnEditClick(BBill item, int section, int offset);
     }
 
     public static class MyHeaderViewHolder extends HeaderViewHolder {

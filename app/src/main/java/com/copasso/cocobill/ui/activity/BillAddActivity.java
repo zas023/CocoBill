@@ -62,42 +62,42 @@ public class BillAddActivity extends BaseActivity implements BillView{
     LinearLayout layoutIcon;
 
 
-    private BillPresenter presenter;
+    protected BillPresenter presenter;
 
 
     public boolean isOutcome = true;
     //计算器
-    private boolean isDot;
-    private String num = "0";               //整数部分
-    private String dotNum = ".00";          //小数部分
-    private final int MAX_NUM = 9999999;    //最大整数
-    private final int DOT_NUM = 2;          //小数部分最大位数
-    private int count = 0;
+    protected boolean isDot;
+    protected String num = "0";               //整数部分
+    protected String dotNum = ".00";          //小数部分
+    protected final int MAX_NUM = 9999999;    //最大整数
+    protected final int DOT_NUM = 2;          //小数部分最大位数
+    protected int count = 0;
     //选择器
-    private OptionsPickerView pvCustomOptions;
-    private List<String> cardItem;
-    private int selectedPayinfoIndex = 0;      //选择的支付方式序号
+    protected OptionsPickerView pvCustomOptions;
+    protected List<String> cardItem;
+    protected int selectedPayinfoIndex = 0;      //选择的支付方式序号
     //viewpager数据
-    private int page;
-    private boolean isTotalPage;
-    private int sortPage = -1;
-    private List<BSort> mDatas;
-    private List<BSort> tempList;
+    protected int page;
+    protected boolean isTotalPage;
+    protected int sortPage = -1;
+    protected List<BSort> mDatas;
+    protected List<BSort> tempList;
     //记录上一次点击后的分类
     public BSort lastBean;
 
     //备注对话框
-    private AlertDialog alertDialog;
+    protected AlertDialog alertDialog;
 
     //选择时间
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-    private String days;
+    protected int mYear;
+    protected int mMonth;
+    protected int mDay;
+    protected String days;
 
     //备注
-    private String remarkInput = "";
-    private NoteBean noteBean = null;
+    protected String remarkInput = "";
+    protected NoteBean noteBean = null;
 
 
     @Override
@@ -146,7 +146,7 @@ public class BillAddActivity extends BaseActivity implements BillView{
     /**
      * 初始化分类数据
      */
-    private void initSortView() {
+    protected void initSortView() {
         //获取本地分类、支付方式信息
         presenter.getNote();
     }
@@ -154,20 +154,9 @@ public class BillAddActivity extends BaseActivity implements BillView{
     /**
      * 设置状态
      */
-    private void setTitleStatus() {
+    protected void setTitleStatus() {
 
-        if (isOutcome) {
-            //设置支付状态
-            outcomeTv.setSelected(true);
-            incomeTv.setSelected(false);
-            mDatas = noteBean.getOutSortlis();
-        } else {
-            //设置收入状态
-            incomeTv.setSelected(true);
-            outcomeTv.setSelected(false);
-            mDatas = noteBean.getInSortlis();
-        }
-
+        setTitle();
         //默认选择第一个分类
         lastBean = mDatas.get(0);
         //设置选择的分类
@@ -183,7 +172,21 @@ public class BillAddActivity extends BaseActivity implements BillView{
         initViewPager();
     }
 
-    private void initViewPager() {
+    protected void setTitle(){
+        if (isOutcome) {
+            //设置支付状态
+            outcomeTv.setSelected(true);
+            incomeTv.setSelected(false);
+            mDatas = noteBean.getOutSortlis();
+        } else {
+            //设置收入状态
+            incomeTv.setSelected(true);
+            outcomeTv.setSelected(false);
+            mDatas = noteBean.getInSortlis();
+        }
+    }
+
+    protected void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
         viewList = new ArrayList<>();// 创建一个View的集合对象
         //声明一个局部变量来存储分类集合
@@ -202,11 +205,6 @@ public class BillAddActivity extends BaseActivity implements BillView{
             if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 15; j++) {
                     tempList.add(tempData.get(i * 15 + j));
-//                    if (i != 0) {
-//                        tempList.add(tempData.get(i * 15 + j));
-//                    } else {
-//                        tempList.add(tempData.get(i + j));
-//                    }
                 }
             } else {
                 for (int j = 0; j < tempData.size() % 15; j++) {
@@ -272,13 +270,13 @@ public class BillAddActivity extends BaseActivity implements BillView{
         initIcon();
     }
 
-    private List<View> viewList;
-    private ImageView[] icons;
+    protected List<View> viewList;
+    protected ImageView[] icons;
 
     /**
      * 添加账单分类指示器
      */
-    private void initIcon() {
+    protected void initIcon() {
         icons = new ImageView[viewList.size()];
         layoutIcon.removeAllViews();
         for (int i = 0; i < icons.length; i++) {
@@ -476,7 +474,7 @@ public class BillAddActivity extends BaseActivity implements BillView{
             return;
         }
 
-        ProgressUtils.show(BillAddActivity.this, "正在提交...");
+        ProgressUtils.show(mContext, "正在提交...");
         presenter.add(new BBill(null,0,Float.valueOf(num + dotNum),remarkInput,currentUser.getId(),
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(),
@@ -523,7 +521,7 @@ public class BillAddActivity extends BaseActivity implements BillView{
      *
      * @param money
      */
-    private void calcMoney(int money) {
+    protected void calcMoney(int money) {
         if (num.equals("0") && money == 0)
             return;
         if (isDot) {
