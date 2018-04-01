@@ -126,6 +126,7 @@ public  class BillUtils {
             sortTypeList.setSortName(entry.getKey());
             sortTypeList.setSortImg(entry.getValue().get(0).getSortImg());
             sortTypeList.setMoney(moneyOut.get(entry.getKey()));
+            sortTypeList.setBack_color(StringUtils.randomColor());
             outSortlist.add(sortTypeList);
         }
         for (Map.Entry<String,List<BBill>> entry : mapIn.entrySet()) {
@@ -134,6 +135,7 @@ public  class BillUtils {
             sortTypeList.setSortName(entry.getKey());
             sortTypeList.setSortImg(entry.getValue().get(0).getSortImg());
             sortTypeList.setMoney(moneyIn.get(entry.getKey()));
+            sortTypeList.setBack_color(StringUtils.randomColor());
             inSortlist.add(sortTypeList);
         }
 
@@ -141,6 +143,7 @@ public  class BillUtils {
         bean.setOutSortlist(outSortlist);
         bean.setTotalIn(t_income);
         bean.setTotalOut(t_outcome);
-        return null;
+
+        return bean;
     }
 }
