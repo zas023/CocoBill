@@ -1,14 +1,13 @@
 package com.copasso.cocobill.model.bean.remote;
 
 import com.copasso.cocobill.model.bean.local.BPay;
-import com.copasso.cocobill.model.bean.BaseBean;
 
 import java.util.List;
 
 /**
  * 月账单报表信息
  */
-public class MonthAccountBean extends BaseBean {
+public class MonthAccountBean {
 
     String totalOut;    //总支出
     String totalIn;    //总收入

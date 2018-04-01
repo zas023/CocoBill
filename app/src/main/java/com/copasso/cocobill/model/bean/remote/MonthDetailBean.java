@@ -1,10 +1,8 @@
 package com.copasso.cocobill.model.bean.remote;
 
-import com.copasso.cocobill.model.bean.BaseBean;
-
 import java.util.List;
 
-public class MonthDetailBean extends BaseBean {
+public class MonthDetailBean {
 
     private String t_income;
     private String t_outcome;

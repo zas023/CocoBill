@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import com.copasso.cocobill.utils.SnackbarUtils;
 import com.copasso.cocobill.mvp.view.MonthAccountView;
+import com.copasso.cocobill.utils.ToastUtils;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
@@ -126,6 +127,7 @@ public class MonthAccountFragment extends BaseFragment implements MonthAccountVi
 
     @Override
     public void loadDataSuccess(MonthAccountBean tData) {
+//        ToastUtils.show(mContext,tData.getList().size());
         monthAccountBean=tData;
         tOutcome.setText(""+monthAccountBean.getTotalOut());
         tIncome.setText(""+monthAccountBean.getTotalIn());

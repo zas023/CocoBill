@@ -1,11 +1,10 @@
 package com.copasso.cocobill.model.bean.remote;
 
 import com.copasso.cocobill.model.bean.local.BSort;
-import com.copasso.cocobill.model.bean.BaseBean;
 
 import java.util.List;
 
-public class MonthChartBean extends BaseBean {
+public class MonthChartBean {
     String totalOut;    //总支出
     String totalIn;    //总收入
     String l_totalOut;  //上月总支出

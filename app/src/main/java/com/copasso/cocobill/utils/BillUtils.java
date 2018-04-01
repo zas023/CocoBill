@@ -168,11 +168,14 @@ public  class BillUtils {
                     List<BBill> bBills=mapAccount.get(pay);
                     bBills.add(bBill);
                     mapAccount.put(pay,bBills);
-                    mapMoneyIn.put(pay,mapMoneyIn.get(pay)+bBill.getCost());
                 }else {
                     List<BBill> bBills=new ArrayList<>();
                     bBills.add(bBill);
                     mapAccount.put(pay,bBills);
+                }
+                if (mapMoneyIn.containsKey(pay)){
+                    mapMoneyIn.put(pay,mapMoneyIn.get(pay)+bBill.getCost());
+                }else {
                     mapMoneyIn.put(pay,bBill.getCost());
                 }
             }else {
@@ -180,11 +183,14 @@ public  class BillUtils {
                     List<BBill> bBills=mapAccount.get(pay);
                     bBills.add(bBill);
                     mapAccount.put(pay,bBills);
-                    mapMoneyOut.put(pay,mapMoneyOut.get(pay)+bBill.getCost());
                 }else {
                     List<BBill> bBills=new ArrayList<>();
                     bBills.add(bBill);
                     mapAccount.put(pay,bBills);
+                }
+                if (mapMoneyOut.containsKey(pay)){
+                    mapMoneyOut.put(pay,mapMoneyOut.get(pay)+bBill.getCost());
+                }else {
                     mapMoneyOut.put(pay,bBill.getCost());
                 }
             }
