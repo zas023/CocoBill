@@ -1,7 +1,10 @@
 package com.copasso.cocobill.mvp.model.Imp;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
+import com.copasso.cocobill.model.bean.BmobUser;
 import com.copasso.cocobill.model.bean.remote.UserBean;
 import com.copasso.cocobill.mvp.model.UserLogModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -17,6 +20,12 @@ public class UserLogModelImp implements UserLogModel {
 
     @Override
     public void login(String username, String password) {
+//        BmobUser.loginByAccount(username, password, new LogInListener<BmobUser>() {
+//            @Override
+//            public void done(BmobUser bmobUser, BmobException e) {
+//
+//            }
+//        });
         RetrofitFactory.getInstence().API()
                 .login(username, password)
                 .subscribeOn(Schedulers.io())
