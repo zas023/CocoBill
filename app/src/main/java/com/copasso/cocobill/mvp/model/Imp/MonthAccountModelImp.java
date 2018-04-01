@@ -1,11 +1,15 @@
 package com.copasso.cocobill.mvp.model.Imp;
 
-import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
-import com.copasso.cocobill.model.bean.remote.MonthAccountBean;
+import com.copasso.cocobill.model.bean.local.BBill;
+import com.copasso.cocobill.model.bean.local.MonthAccountBean;
+import com.copasso.cocobill.model.local.LocalRepository;
 import com.copasso.cocobill.mvp.model.MonthAccountModel;
+import com.copasso.cocobill.utils.BillUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.List;
 
 public class MonthAccountModelImp implements MonthAccountModel {
 
@@ -17,15 +21,14 @@ public class MonthAccountModelImp implements MonthAccountModel {
 
 
     @Override
-    public void getMonthAccountBills(String id, String year, String month) {
-        RetrofitFactory.getInstence().API()
-                .getMonthAccount(id,year,month)
+    public void getMonthAccountBills(int id, String year, String month) {
+        LocalRepository.getInstance().getBBillByUserIdWithYM(id, year, month)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<MonthAccountBean>() {
+                .subscribe(new BaseObserver<List<BBill>>() {
                     @Override
-                    protected void onSuccees(MonthAccountBean bean) throws Exception {
-                        listener.onSuccess(bean);
+                    protected void onSuccees(List<BBill> bBills) throws Exception {
+                        listener.onSuccess(BillUtils.packageAccountList(bBills));
                     }
 
                     @Override

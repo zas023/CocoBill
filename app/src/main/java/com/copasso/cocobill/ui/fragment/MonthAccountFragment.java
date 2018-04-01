@@ -12,7 +12,7 @@ import butterknife.OnClick;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.ui.adapter.AccountCardAdapter;
-import com.copasso.cocobill.model.bean.remote.MonthAccountBean;
+import com.copasso.cocobill.model.bean.local.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.Imp.MonthAccountPresenterImp;
 import com.copasso.cocobill.mvp.presenter.MonthAccountPresenter;
@@ -121,14 +121,14 @@ public class MonthAccountFragment extends BaseFragment implements MonthAccountVi
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
 
-        presenter.getMonthAccountBills(String.valueOf(userid),year,month);
+        presenter.getMonthAccountBills(userid,year,month);
     }
 
     @Override
     public void loadDataSuccess(MonthAccountBean tData) {
         monthAccountBean=tData;
-        tOutcome.setText(monthAccountBean.getTotalOut());
-        tIncome.setText(monthAccountBean.getTotalIn());
+        tOutcome.setText(""+monthAccountBean.getTotalOut());
+        tIncome.setText(""+monthAccountBean.getTotalIn());
         list = monthAccountBean.getList();
         adapter.setmDatas(list);
         adapter.notifyDataSetChanged();

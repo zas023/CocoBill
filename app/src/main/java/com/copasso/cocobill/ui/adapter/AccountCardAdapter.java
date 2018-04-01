@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.remote.MonthAccountBean;
+import com.copasso.cocobill.model.bean.local.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
 
 import java.util.List;
@@ -66,9 +66,9 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.money_out.setText("-"+mDatas.get(position).getOutcome());
         holder.money_in.setText("+"+mDatas.get(position).getIncome());
-        holder.title.setText(mDatas.get(position).getbPay().getPayName());
+        holder.title.setText(mDatas.get(position).getPayName());
         Glide.with(mContext)
-                .load(Constants.BASE_URL+Constants.IMAGE_PAY + mDatas.get(position).getbPay().getPayImg())
+                .load(Constants.BASE_URL+Constants.IMAGE_PAY + mDatas.get(position).getPayImg())
                 .into(holder.img);
 
 //        if(mDatas.get(position).getbPay().getUid()>0){
