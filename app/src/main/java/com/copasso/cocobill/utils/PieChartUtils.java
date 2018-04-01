@@ -195,7 +195,7 @@ public class PieChartUtils {
 
 
     /**
-     * 根据服务器返回的type设置与之相对应的本地图片
+     * 根据图片url设置与之相对应的本地图片
      * @param imgUrl
      * @return
      */
@@ -271,6 +271,8 @@ public class PieChartUtils {
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_jianzhi);
         else if(imgUrl.equals("sort_tianjiade.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_qita);
+        else if(imgUrl.equals("sort_tianjia.png"))
+            drawable = MyApplication.application.getResources().getDrawable(R.mipmap.type_tianjiade);
         else
             drawable=null;
 
