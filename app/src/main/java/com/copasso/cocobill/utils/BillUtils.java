@@ -145,11 +145,10 @@ public class BillUtils {
             inSortlist.add(sortTypeList);
         }
 
-        bean.setInSortlist(inSortlist);
         bean.setOutSortlist(outSortlist);
+        bean.setInSortlist(inSortlist);
         bean.setTotalIn(t_income);
         bean.setTotalOut(t_outcome);
-
         return bean;
     }
 

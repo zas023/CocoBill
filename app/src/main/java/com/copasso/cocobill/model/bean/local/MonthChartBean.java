@@ -40,7 +40,7 @@ public class MonthChartBean extends BaseBean {
     }
 
     public void setInSortlist(List<SortTypeList> inSortlist) {
-        inSortlist = inSortlist;
+        this.inSortlist = inSortlist;
     }
 
     public static class SortTypeList {

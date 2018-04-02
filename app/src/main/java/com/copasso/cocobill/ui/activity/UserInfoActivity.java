@@ -210,20 +210,14 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case GENDER_MAN: // 男性
-                                    if (currentUser.getGender().equals("F")) {
-                                        currentUser.setGender("M");
-                                        sexCL.setRightText(currentUser.getGender());
-                                        doUpdate();
-                                    }
+                                    currentUser.setGender("男");
                                     break;
                                 case GENDER_FEMALE: // 女性
-                                    if (currentUser.getGender().equals("M")) {
-                                        currentUser.setGender("F");
-                                        sexCL.setRightText(currentUser.getGender());
-                                        doUpdate();
-                                    }
+                                    currentUser.setGender("女");
                                     break;
                             }
+                            sexCL.setRightText(currentUser.getGender());
+                            doUpdate();
                         }
                     }).create();
         }
