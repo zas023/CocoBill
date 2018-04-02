@@ -12,6 +12,7 @@ public class BBill{
 
     @Id(autoincrement = true)
     private Long id;  //本地id
+
     private String rid;  //服务器端id
     private float cost;  //金额
     private String content;  //内容

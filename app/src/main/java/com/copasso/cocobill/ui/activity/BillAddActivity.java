@@ -14,11 +14,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.model.bean.local.NoteBean;
+import com.copasso.cocobill.model.bean.remote.CoBill;
 import com.copasso.cocobill.ui.adapter.BookNoteAdapter;
 import com.copasso.cocobill.ui.adapter.MonthAccountAdapter;
 import com.copasso.cocobill.model.bean.*;
@@ -475,11 +478,22 @@ public class BillAddActivity extends BaseActivity implements BillView{
         }
 
         ProgressUtils.show(mContext, "正在提交...");
-        presenter.add(new BBill(null,null,Float.valueOf(num + dotNum),remarkInput,currentUser.getObjectId(),
+        BBill bBill=new BBill(null,null,Float.valueOf(num + dotNum),remarkInput,currentUser.getObjectId(),
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(),
                 lastBean.getSortName(),lastBean.getSortImg(),
-                DateUtils.getMillis(crDate),!isOutcome,0));
+                DateUtils.getMillis(crDate),!isOutcome,0);
+        presenter.add(bBill);
+//        CoBill coBill=new CoBill(bBill);
+//        coBill.save(new SaveListener<String>() {
+//            @Override
+//            public void done(String s, BmobException e) {
+//                if (e==null)
+//                    ToastUtils.show(mContext,s);
+//                else
+//                    ToastUtils.show(mContext,e.getMessage());
+//            }
+//        });
     }
 
     /**

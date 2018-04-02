@@ -188,6 +188,7 @@ public class BmobRepository {
             listsave.add(bBill);
         }
         //提交本地数据的批量操作
+        Log.i(TAG,listsave.toString());
         LocalRepository.getInstance().saveBBills(listsave);
     }
 }
