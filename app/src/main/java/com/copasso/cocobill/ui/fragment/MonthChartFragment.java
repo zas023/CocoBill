@@ -160,10 +160,10 @@ public class MonthChartFragment extends BaseFragment
      * @param month
      */
     private void getChartData(int userid, String year, String month) {
-        if (userid==0){
-            Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (currentUser==null){
+//            Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
         //请求某年某月数据

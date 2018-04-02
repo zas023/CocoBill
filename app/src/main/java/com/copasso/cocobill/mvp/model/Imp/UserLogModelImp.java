@@ -49,7 +49,7 @@ public class UserLogModelImp implements UserLogModel {
         myUser.setPassword(password);
         myUser.setEmail(mail);
 
-        myUser.login(new SaveListener<MyUser>() {
+        myUser.signUp(new SaveListener<MyUser>() {
             @Override
             public void done(MyUser myUser, BmobException e) {
                 if(e==null)

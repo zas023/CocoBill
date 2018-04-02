@@ -114,10 +114,10 @@ public class MonthAccountFragment extends BaseFragment implements MonthAccountVi
      * @param month
      */
     private void getAcountData(final int userid, String year, String month) {
-        if (userid==0){
-            Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (currentUser==null){
+//            Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         dataYear.setText(setYear + " 年");
         dataMonth.setText(setMonth);
 

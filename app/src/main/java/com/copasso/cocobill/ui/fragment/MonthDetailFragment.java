@@ -192,10 +192,10 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
      * @param month
      */
     private void getBills(int userid, String year, String month) {
-        if (userid == 0) {
-            Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (userid == 0) {
+//            Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         dataYear.setText(year + " 年");
         dataMonth.setText(month);
         //请求数据前清空数据
@@ -251,9 +251,9 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.float_btn:  //添加
-                if (Constants.currentUserId == 0) {
-                    Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
-                } else {
+                if (currentUser==null)
+                    SnackbarUtils.show(mContext,"请先登录");
+                else{
                     Intent intent = new Intent(getContext(), BillAddActivity.class);
                     startActivityForResult(intent, 0);
                 }

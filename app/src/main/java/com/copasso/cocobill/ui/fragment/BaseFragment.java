@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.bmob.v3.BmobUser;
+import com.copasso.cocobill.model.bean.MyUser;
 
 /**
  * Created by zhouas666 on 16/8/11.
@@ -21,6 +23,8 @@ public abstract class BaseFragment extends Fragment {
     protected View mView;
     protected Activity mActivity;
     protected Context mContext;
+
+    protected MyUser currentUser;
     private Unbinder mUnBinder;
 
     @Override
@@ -29,6 +33,8 @@ public abstract class BaseFragment extends Fragment {
         mContext = context;
         // 设置 TAG
         TAG = this.getClass().getSimpleName();
+        //当前用户
+        currentUser= BmobUser.getCurrentUser(MyUser.class);
         super.onAttach(context);
     }
 
