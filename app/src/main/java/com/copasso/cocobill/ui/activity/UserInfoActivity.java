@@ -126,7 +126,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     @Override
     public void loadDataError(Throwable throwable) {
         ProgressUtils.dismiss();
-        SnackbarUtils.show(mContext, "修改失败");
+        SnackbarUtils.show(mContext, throwable.getMessage());
     }
 
     /**
