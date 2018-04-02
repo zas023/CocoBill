@@ -3,7 +3,7 @@ package com.copasso.cocobill.mvp.model.Imp;
 import com.copasso.cocobill.base.BaseObserver;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.MonthAccountBean;
-import com.copasso.cocobill.model.local.LocalRepository;
+import com.copasso.cocobill.model.repository.LocalRepository;
 import com.copasso.cocobill.mvp.model.MonthAccountModel;
 import com.copasso.cocobill.utils.BillUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;

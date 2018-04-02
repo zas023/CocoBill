@@ -1,4 +1,4 @@
-package com.copasso.cocobill.model.local;
+package com.copasso.cocobill.model.repository;
 
 import android.database.sqlite.SQLiteDatabase;
 import com.copasso.cocobill.MyApplication;

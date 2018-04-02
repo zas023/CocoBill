@@ -14,10 +14,9 @@ import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.ui.adapter.PayEditAdapter;
 import com.copasso.cocobill.model.bean.local.BPay;
-import com.copasso.cocobill.model.bean.remote.BPayBean;
-import com.copasso.cocobill.model.bean.remote.BSortBean;
 import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.mvp.presenter.Imp.NotePresenterImp;
 import com.copasso.cocobill.mvp.presenter.NotePresenter;
@@ -73,12 +72,12 @@ public class PayEditActivity extends BaseActivity implements NoteView{
     }
 
     @Override
-    public void loadDataSuccess(BSortBean tData) {
+    public void loadDataSuccess(BSort tData) {
 
     }
 
     @Override
-    public void loadDataSuccess(BPayBean tData) {
+    public void loadDataSuccess(BPay tData) {
         SharedPUtils.setUserNoteBean(mContext, (NoteBean) null);
         ProgressUtils.dismiss();
         initEventAndData();

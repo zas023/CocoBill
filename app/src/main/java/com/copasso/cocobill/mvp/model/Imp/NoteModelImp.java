@@ -1,13 +1,10 @@
 package com.copasso.cocobill.mvp.model.Imp;
 
-import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
 import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.local.BSort;
-import com.copasso.cocobill.model.bean.remote.BPayBean;
-import com.copasso.cocobill.model.bean.remote.BSortBean;
 import com.copasso.cocobill.model.bean.local.NoteBean;
-import com.copasso.cocobill.model.local.LocalRepository;
+import com.copasso.cocobill.model.repository.LocalRepository;
 import com.copasso.cocobill.mvp.model.NoteModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -90,8 +87,8 @@ public class NoteModelImp implements NoteModel{
     public interface NoteOnListener {
 
         void onSuccess(NoteBean bean);
-        void onSuccess(BSortBean bean);
-        void onSuccess(BPayBean bean);
+        void onSuccess(BSort bean);
+        void onSuccess(BPay bean);
 
         void onFailure(Throwable e);
     }

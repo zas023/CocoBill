@@ -1,20 +1,15 @@
 package com.copasso.cocobill.mvp.model.Imp;
 
-import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.BaseBean;
 import com.copasso.cocobill.model.bean.local.MonthDetailBean;
-import com.copasso.cocobill.model.local.LocalRepository;
+import com.copasso.cocobill.model.repository.LocalRepository;
 import com.copasso.cocobill.mvp.model.MonthDetailModel;
 import com.copasso.cocobill.utils.BillUtils;
-import com.copasso.cocobill.utils.DateUtils;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MonthDetailModelImp implements MonthDetailModel {

@@ -27,9 +27,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.MyUser;
-import com.copasso.cocobill.model.bean.remote.UserBean;
-import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.model.bean.remote.MyUser;
 import com.copasso.cocobill.mvp.presenter.Imp.UserInfoPresenterImp;
 import com.copasso.cocobill.mvp.presenter.UserInfoPresenter;
 import com.copasso.cocobill.utils.*;
@@ -37,10 +35,8 @@ import com.copasso.cocobill.utils.*;
 import android.net.Uri;
 import com.copasso.cocobill.mvp.view.UserInfoView;
 import com.copasso.cocobill.widget.CommonItemLayout;
-import okhttp3.*;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by zhouas666 on 2017/12/24.

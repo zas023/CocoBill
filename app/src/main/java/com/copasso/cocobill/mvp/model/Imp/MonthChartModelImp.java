@@ -1,11 +1,9 @@
 package com.copasso.cocobill.mvp.model.Imp;
 
-import android.util.Log;
 import com.copasso.cocobill.base.BaseObserver;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.MonthChartBean;
-import com.copasso.cocobill.model.bean.local.NoteBean;
-import com.copasso.cocobill.model.local.LocalRepository;
+import com.copasso.cocobill.model.repository.LocalRepository;
 import com.copasso.cocobill.mvp.model.MonthChartModel;
 import com.copasso.cocobill.utils.BillUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;

@@ -2,7 +2,7 @@ package com.copasso.cocobill.mvp.model.Imp;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
-import com.copasso.cocobill.model.bean.MyUser;
+import com.copasso.cocobill.model.bean.remote.MyUser;
 import com.copasso.cocobill.mvp.model.UserInfoModel;
 
 public class UserInfoModelImp implements UserInfoModel {

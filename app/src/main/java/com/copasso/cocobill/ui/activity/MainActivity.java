@@ -19,10 +19,11 @@ import android.widget.*;
 import cn.bmob.v3.BmobUser;
 import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
-import com.copasso.cocobill.model.bean.MyUser;
+import com.copasso.cocobill.model.bean.remote.MyUser;
 import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.model.bean.local.NoteBean;
-import com.copasso.cocobill.model.local.LocalRepository;
+import com.copasso.cocobill.model.repository.BmobRepository;
+import com.copasso.cocobill.model.repository.LocalRepository;
 import com.copasso.cocobill.ui.adapter.MainFragmentPagerAdapter;
 import com.copasso.cocobill.ui.fragment.MonthAccountFragment;
 import com.copasso.cocobill.ui.fragment.MonthChartFragment;
@@ -32,6 +33,7 @@ import com.copasso.cocobill.common.Constants;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.utils.SharedPUtils;
+import com.copasso.cocobill.utils.SnackbarUtils;
 import com.copasso.cocobill.utils.ThemeManager;
 import com.google.gson.Gson;
 
@@ -225,7 +227,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             viewPager.setCurrentItem(1);
         } else if (id == R.id.nav_total) {
             viewPager.setCurrentItem(2);
-        } else if (id == R.id.nav_setting) {   //设置
+        } else if (id == R.id.nav_syc) {   //同步账单
+            if(currentUser==null)
+                SnackbarUtils.show(mContext,"请先登陆");
+            else
+                BmobRepository.getInstance().sycBill(currentUser.getObjectId());
+        }  else if (id == R.id.nav_setting) {   //设置
             startActivity(new Intent(this,SettingActivity.class));
         } else if (id == R.id.nav_about) {     //关于
             startActivity(new Intent(MainActivity.this, AboutActivity.class));

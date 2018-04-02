@@ -20,7 +20,7 @@ import android.view.Window;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.copasso.cocobill.model.bean.MyUser;
+import com.copasso.cocobill.model.bean.remote.MyUser;
 import com.copasso.cocobill.utils.ActivityManagerUtils;
 import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.utils.ThemeManager;

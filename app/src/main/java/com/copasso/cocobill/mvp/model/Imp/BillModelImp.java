@@ -6,7 +6,7 @@ import com.copasso.cocobill.model.bean.BaseBean;
 import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.model.bean.local.NoteBean;
-import com.copasso.cocobill.model.local.LocalRepository;
+import com.copasso.cocobill.model.repository.LocalRepository;
 import com.copasso.cocobill.mvp.model.BillModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -69,15 +69,39 @@ public class BillModelImp implements BillModel{
 
     @Override
     public void add(BBill bBill) {
-        Long l=LocalRepository.getInstance().saveBBill(bBill);
-       if ( l!=null)
-           listener.onSuccess(new BaseBean());
+        LocalRepository.getInstance().saveBBill(bBill)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BBill>() {
+                    @Override
+                    protected void onSuccees(BBill bBill) throws Exception {
+                        listener.onSuccess(new BaseBean());
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
     }
 
     @Override
     public void update(BBill bBill) {
         LocalRepository.getInstance()
-                .updateBBill(bBill);
+                .updateBBill(bBill)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BBill>() {
+                    @Override
+                    protected void onSuccees(BBill bBill) throws Exception {
+                        listener.onSuccess(new BaseBean());
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
     }
 
     @Override

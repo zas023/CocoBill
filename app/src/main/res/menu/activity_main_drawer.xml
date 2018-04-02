@@ -19,12 +19,16 @@
     <item android:title="">
         <menu>
             <item
+                    android:id="@+id/nav_syc"
+                    android:icon="@mipmap/ic_drawer_share"
+                    android:title="同步"/>
+            <item
                     android:id="@+id/nav_setting"
                     android:icon="@mipmap/ic_drawer_settings"
                     android:title="设置"/>
             <item
                     android:id="@+id/nav_theme"
-                    android:icon="@mipmap/ic_drawer_share"
+                    android:icon="@mipmap/ic_color_lens_black_24dp"
                     android:title="主题"/>
             <item
                     android:id="@+id/nav_about"

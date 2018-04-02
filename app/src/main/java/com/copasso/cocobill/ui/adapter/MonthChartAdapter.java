@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.local.BBill;
-import com.copasso.cocobill.model.bean.remote.BBillBean;
 
 import java.util.List;
 /**

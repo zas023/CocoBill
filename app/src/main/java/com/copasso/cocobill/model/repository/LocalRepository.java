@@ -1,10 +1,8 @@
-package com.copasso.cocobill.model.local;
+package com.copasso.cocobill.model.repository;
 
-import android.util.Log;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.local.BSort;
-import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.model.gen.BBillDao;
 import com.copasso.cocobill.model.gen.BSortDao;
 import com.copasso.cocobill.model.gen.DaoSession;
@@ -42,8 +40,23 @@ public class LocalRepository {
     }
 
     /******************************save**************************************/
-    public Long saveBBill(BBill bill) {
-        return mSession.getBBillDao().insert(bill);
+    public Observable<BBill> saveBBill(final BBill bill) {
+        return Observable.create(new ObservableOnSubscribe<BBill>() {
+            @Override
+            public void subscribe(ObservableEmitter<BBill> e) throws Exception {
+                mSession.getBBillDao().insert(bill);
+                e.onNext(bill);
+                e.onComplete();
+            }
+        });
+    }
+
+    /**
+     * 批量添加账单
+     * @param bBills
+     */
+    public void saveBBills( List<BBill> bBills) {
+       mSession.getBBillDao().rx().insertInTx(bBills);
     }
 
     public Long saveBPay(BPay pay) {
@@ -76,11 +89,12 @@ public class LocalRepository {
 
     /******************************get**************************************/
     public BBill getBBillById(int id) {
-        List<BBill> queryList = mSession.getBBillDao().queryBuilder()
-                .where(BBillDao.Properties.Id.eq(id)).list();
-        if (null == queryList)
-            return null;
-        return queryList.get(0);
+        return mSession.getBBillDao().queryBuilder()
+                .where(BBillDao.Properties.Id.eq(id)).unique();
+    }
+
+    public List<BBill> getBBills() {
+        return mSession.getBBillDao().queryBuilder().list();
     }
 
     public Observable<List<BBill>> getBBillByUserId(int id) {
@@ -122,8 +136,16 @@ public class LocalRepository {
 
 
     /******************************update**************************************/
-    public Observable<BBill> updateBBill(BBill bill) {
-        return null;
+    public Observable<BBill> updateBBill(final BBill bill) {
+       
+        return Observable.create(new ObservableOnSubscribe<BBill>() {
+            @Override
+            public void subscribe(ObservableEmitter<BBill> e) throws Exception {
+                mSession.getBBillDao().update(bill);
+                e.onNext(bill);
+                e.onComplete();
+            }
+        });
     }
 
     /******************************delete**************************************/

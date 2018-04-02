@@ -1,18 +1,13 @@
-package com.copasso.cocobill.model.bean.local;
+package com.copasso.cocobill.model.bean.remote;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
+import cn.bmob.v3.BmobObject;
+import com.copasso.cocobill.model.bean.local.BBill;
 
 /**
- * 账单bean
+ * 服务器端账单bean
  */
-@Entity
-public class BBill{
+public class CoBill extends BmobObject{
 
-    @Id(autoincrement = true)
-    private Long id;  //本地id
-    private String rid;  //服务器端id
     private float cost;  //金额
     private String content;  //内容
     private String userid;  //用户id
@@ -24,14 +19,26 @@ public class BBill{
     private boolean income;  //收入支出
     private int version;  //版本
 
-    @Generated(hash = 124482664)
-    public BBill() {
+    public CoBill() {
+
     }
-    @Generated(hash = 1555200880)
-    public BBill(Long id, String rid, float cost, String content, String userid, String payName, String payImg,
-            String sortName, String sortImg, long crdate, boolean income, int version) {
-        this.id = id;
-        this.rid = rid;
+
+    public CoBill(BBill bBill){
+
+        this.cost = bBill.getCost();
+        this.content = bBill.getContent();
+        this.userid = bBill.getUserid();
+        this.payName = bBill.getPayName();
+        this.payImg = bBill.getPayImg();
+        this.sortName = bBill.getSortName();
+        this.sortImg = bBill.getSortImg();
+        this.crdate = bBill.getCrdate();
+        this.income = bBill.getIncome();
+        this.version = bBill.getVersion();
+    }
+
+    public CoBill(float cost, String content, String userid, String payName, String payImg,
+                  String sortName, String sortImg, long crdate, boolean income, int version) {
         this.cost = cost;
         this.content = content;
         this.userid = userid;
@@ -42,21 +49,6 @@ public class BBill{
         this.crdate = crdate;
         this.income = income;
         this.version = version;
-    }
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRid() {
-        return rid;
-    }
-
-    public void setRid(String rid) {
-        this.rid = rid;
     }
 
     public float getCost() {

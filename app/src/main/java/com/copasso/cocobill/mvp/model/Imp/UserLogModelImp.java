@@ -3,7 +3,7 @@ package com.copasso.cocobill.mvp.model.Imp;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
-import com.copasso.cocobill.model.bean.MyUser;
+import com.copasso.cocobill.model.bean.remote.MyUser;
 import com.copasso.cocobill.mvp.model.UserLogModel;
 
 public class UserLogModelImp implements UserLogModel {

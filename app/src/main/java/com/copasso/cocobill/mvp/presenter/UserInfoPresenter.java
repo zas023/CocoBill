@@ -1,7 +1,7 @@
 package com.copasso.cocobill.mvp.presenter;
 
 import com.copasso.cocobill.base.BasePresenter;
-import com.copasso.cocobill.model.bean.MyUser;
+import com.copasso.cocobill.model.bean.remote.MyUser;
 
 public abstract  class UserInfoPresenter extends BasePresenter {
 
