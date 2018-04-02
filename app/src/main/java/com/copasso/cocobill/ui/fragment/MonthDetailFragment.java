@@ -144,7 +144,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
                 Intent intent = new Intent(mContext, BillEditActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putLong("id", item.getId());
-                bundle.putInt("rid", item.getRid());
+                bundle.putString("rid", item.getRid());
                 bundle.putString("sortName", item.getSortName());
                 bundle.putString("payName", item.getPayName());
                 bundle.putString("content", item.getContent());

@@ -145,7 +145,7 @@ public class BillEditActivity extends BillAddActivity implements BillView {
         }
 
         ProgressUtils.show(mContext, "正在提交...");
-        presenter.add(new BBill(bundle.getLong("id"),bundle.getInt("rid"),
+        presenter.add(new BBill(bundle.getLong("id"),bundle.getString("rid"),
                 Float.valueOf(num + dotNum),remarkInput,currentUser.getObjectId(),
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(),

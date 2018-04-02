@@ -25,7 +25,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Rid = new Property(1, int.class, "rid", false, "RID");
+        public final static Property Rid = new Property(1, String.class, "rid", false, "RID");
         public final static Property Cost = new Property(2, float.class, "cost", false, "COST");
         public final static Property Content = new Property(3, String.class, "content", false, "CONTENT");
         public final static Property Userid = new Property(4, String.class, "userid", false, "USERID");
@@ -52,7 +52,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"BBILL\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"RID\" INTEGER NOT NULL ," + // 1: rid
+                "\"RID\" TEXT," + // 1: rid
                 "\"COST\" REAL NOT NULL ," + // 2: cost
                 "\"CONTENT\" TEXT," + // 3: content
                 "\"USERID\" TEXT," + // 4: userid
@@ -79,7 +79,11 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getRid());
+ 
+        String rid = entity.getRid();
+        if (rid != null) {
+            stmt.bindString(2, rid);
+        }
         stmt.bindDouble(3, entity.getCost());
  
         String content = entity.getContent();
@@ -124,7 +128,11 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getRid());
+ 
+        String rid = entity.getRid();
+        if (rid != null) {
+            stmt.bindString(2, rid);
+        }
         stmt.bindDouble(3, entity.getCost());
  
         String content = entity.getContent();
@@ -170,7 +178,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
     public BBill readEntity(Cursor cursor, int offset) {
         BBill entity = new BBill( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getInt(offset + 1), // rid
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // rid
             cursor.getFloat(offset + 2), // cost
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // content
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // userid
@@ -188,7 +196,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
     @Override
     public void readEntity(Cursor cursor, BBill entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setRid(cursor.getInt(offset + 1));
+        entity.setRid(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setCost(cursor.getFloat(offset + 2));
         entity.setContent(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setUserid(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));

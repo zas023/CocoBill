@@ -27,7 +27,7 @@ public class BBill{
     @Generated(hash = 124482664)
     public BBill() {
     }
-    @Generated(hash = 1555200880)
+    @Generated(hash = 634586034)
     public BBill(Long id, String rid, float cost, String content, String userid, String payName, String payImg,
             String sortName, String sortImg, long crdate, boolean income, int version) {
         this.id = id;
