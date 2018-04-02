@@ -1,5 +1,6 @@
 package com.copasso.cocobill.model.local;
 
+import android.util.Log;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.local.BSort;
@@ -126,8 +127,15 @@ public class LocalRepository {
     }
 
     /******************************delete**************************************/
-    public void deleteBBillById(Long id) {
+    public Observable<Long> deleteBBillById(Long id) {
         mSession.getBBillDao().deleteByKey(id);
+        return Observable.create(new ObservableOnSubscribe<Long>() {
+            @Override
+            public void subscribe(ObservableEmitter<Long> e) throws Exception {
+                e.onNext(new Long(0));
+                e.onComplete();
+            }
+        });
     }
 
     /******************************Rx**************************************/

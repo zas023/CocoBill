@@ -47,7 +47,20 @@ public class MonthDetailModelImp implements MonthDetailModel {
 
     @Override
     public void delete(Long id) {
-        LocalRepository.getInstance().deleteBBillById(id);
+        LocalRepository.getInstance().deleteBBillById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<Long>() {
+                    @Override
+                    protected void onSuccees(Long l) throws Exception {
+                        listener.onSuccess(new BaseBean());
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
     }
 
     @Override

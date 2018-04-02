@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.*;
 
 import cn.bmob.v3.BmobUser;
+import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.model.bean.local.BSort;
@@ -136,9 +137,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (currentUser != null) {
             drawerTvAccount.setText(currentUser.getUsername());
             drawerTvMail.setText(currentUser.getEmail());
-//            Glide.with(MainActivity.this)
-//                    .load(Constants.BASE_URL + Constants.IMAGE_USER + currentUser)
-//                    .into(drawerIv);
+            Glide.with(mContext).load(currentUser.getImage()).into(drawerIv);
         }else{
             drawerTvAccount.setText("账号");
             drawerTvMail.setText("点我登陆");

@@ -7,6 +7,10 @@ import com.copasso.cocobill.mvp.model.UserInfoModel;
 
 public class UserInfoModelImp implements UserInfoModel {
 
+    public static int UPDATE_TYPE_GENDER=1;
+    public static int UPDATE_TYPE_PHONE=2;
+    public static int UPDATE_TYPE_EMAIL=3;
+
     private UserInfoOnListener listener;
 
     public UserInfoModelImp(UserInfoOnListener listener) {

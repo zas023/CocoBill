@@ -23,7 +23,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
+import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.model.bean.remote.UserBean;
@@ -102,6 +104,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             //加载到布局中
             initData();
             //加载当前头像
+            Glide.with(mContext).load(currentUser.getImage()).into(iconIv);
         }
 
         presenter = new UserInfoPresenterImp(this);
@@ -210,14 +213,19 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case GENDER_MAN: // 男性
-                                    currentUser.setGender("男");
+                                    if(currentUser.getGender().equals("女")){
+                                        currentUser.setGender("男");
+                                        doUpdate();
+                                    }
                                     break;
                                 case GENDER_FEMALE: // 女性
-                                    currentUser.setGender("女");
+                                    if(currentUser.getGender().equals("男")){
+                                        currentUser.setGender("女");
+                                        doUpdate();
+                                    }
                                     break;
                             }
                             sexCL.setRightText(currentUser.getGender());
-                            doUpdate();
                         }
                     }).create();
         }
@@ -424,20 +432,26 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         // 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
         // 注意这里得到的图片已经是圆形图片了
         // bitmap是没有做个圆形处理的，但已经被裁剪了
-        String imagename = Constants.currentUserId + "_" + String.valueOf(System.currentTimeMillis());
+        String imagename = currentUser.getObjectId() + "_" + String.valueOf(System.currentTimeMillis());
         String imagePath = ImageUtils.savePhoto(bitmap, Environment
                 .getExternalStorageDirectory().getAbsolutePath(), imagename + ".png");
-        currentUser.setImage(imagename + ".png");
         if (imagePath != null) {
-            OkHttpClient mOkHttpClient = new OkHttpClient();
-
             final BmobFile bmobFile = new BmobFile(new File(imagePath));
             bmobFile.uploadblock(new UploadFileListener() {
                 @Override
                 public void done(BmobException e) {
                     if (e==null) {
-                        currentUser.setImage(bmobFile.getFileUrl());
-                        doUpdate();
+                        MyUser newUser=new MyUser();
+                        newUser.setImage(bmobFile.getFileUrl());
+                        newUser.update(currentUser.getObjectId(),new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e!=null)
+                                    Log.i(TAG,e.getMessage());
+                            }
+                        });
+                    }else{
+                        Log.i(TAG,e.getMessage());
                     }
                 }
             });
