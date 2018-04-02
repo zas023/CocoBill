@@ -21,8 +21,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.bumptech.glide.Glide;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UploadFileListener;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.model.bean.remote.UserBean;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.mvp.presenter.Imp.UserInfoPresenterImp;
@@ -99,15 +102,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             //加载到布局中
             initData();
             //加载当前头像
-            String imgPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + "/" + currentUser.getImage();
-            Log.i(TAG, imgPath);
-            File file = new File(imgPath);
-            if (file.exists()) {
-                //加载图片
-                Glide.with(this).load(file).into(iconIv);
-
-            }
         }
 
         presenter = new UserInfoPresenterImp(this);
@@ -117,16 +111,16 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
      * 将用户信息更新到布局中
      */
     private void initData() {
+
         usernameCL.setRightText(currentUser.getUsername());
         sexCL.setRightText(currentUser.getGender());
-        phoneCL.setRightText(currentUser.getPhone());
-        emailCL.setRightText(currentUser.getMail());
+        phoneCL.setRightText(currentUser.getMobilePhoneNumber());
+        emailCL.setRightText(currentUser.getEmail());
     }
 
     @Override
-    public void loadDataSuccess(UserBean tData) {
+    public void loadDataSuccess(MyUser tData) {
         ProgressUtils.dismiss();
-        SharedPUtils.setCurrentUser(mContext, currentUser);
     }
 
     @Override
@@ -144,8 +138,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
         ProgressUtils.show(UserInfoActivity.this, "正在修改...");
 
-        presenter.update(currentUser.getId(), currentUser.getUsername(), currentUser.getGender()
-                , currentUser.getPhone(), currentUser.getMail());
+        presenter.update(currentUser);
 
     }
 
@@ -243,12 +236,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
      * 显示更换电话对话框
      */
     public void showPhoneDialog() {
-        final EditText editText = new EditText(UserInfoActivity.this);
-        String phone = currentUser.getPhone();
+        final EditText editText = new EditText(mContext);
+        String phone = currentUser.getMobilePhoneNumber();
         if (phone != null) {
-            editText.setText(currentUser.getPhone());
+            editText.setText(phone);
             //将光标移至文字末尾
-            editText.setSelection(currentUser.getPhone().length());
+            editText.setSelection(phone.length());
         }
         if (phoneDialog == null) {
             phoneDialog = new AlertDialog.Builder(this)
@@ -262,7 +255,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 if (StringUtils.checkPhoneNumber(input)) {
-                                    currentUser.setPhone(input);
+                                    currentUser.setMobilePhoneNumber(input);
                                     phoneCL.setRightText(input);
                                     doUpdate();
                                 } else {
@@ -285,9 +278,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
      */
     public void showMailDialog() {
         final EditText emailEditText = new EditText(UserInfoActivity.this);
-        emailEditText.setText(currentUser.getMail());
+        emailEditText.setText(currentUser.getEmail());
         //将光标移至文字末尾
-        emailEditText.setSelection(currentUser.getMail().length());
+        emailEditText.setSelection(currentUser.getEmail().length());
         if (emailDialog == null) {
             emailDialog = new AlertDialog.Builder(this)
                     .setTitle("邮箱")
@@ -300,7 +293,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 if (StringUtils.checkEmail(input)) {
-                                    currentUser.setMail(input);
+                                    currentUser.setEmail(input);
                                     emailCL.setRightText(input);
                                     doUpdate();
                                 } else {
@@ -441,31 +434,17 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         String imagePath = ImageUtils.savePhoto(bitmap, Environment
                 .getExternalStorageDirectory().getAbsolutePath(), imagename + ".png");
         currentUser.setImage(imagename + ".png");
-        SharedPUtils.setCurrentUser(UserInfoActivity.this, currentUser);
         if (imagePath != null) {
             OkHttpClient mOkHttpClient = new OkHttpClient();
-            File file = new File(imagePath);
-            RequestBody requestBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("file", imagename + ".png",
-                            RequestBody.create(MediaType.parse("image/png"), file))
-                    .build();
 
-            Request request = new Request.Builder()
-                    .header("Authorization", "Client-ID " + "...")
-                    .url(Constants.BASE_URL + Constants.IMAGE_USER)
-                    .post(requestBody)
-                    .build();
-
-            mOkHttpClient.newCall(request).enqueue(new Callback() {
+            final BmobFile bmobFile = new BmobFile(new File(imagePath));
+            bmobFile.uploadblock(new UploadFileListener() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    doUpdate();
+                public void done(BmobException e) {
+                    if (e==null) {
+                        currentUser.setImage(bmobFile.getFileUrl());
+                        doUpdate();
+                    }
                 }
             });
         }

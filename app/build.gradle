@@ -21,6 +21,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // 解决Bmob和Rxjava冲突的问题
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 greendao{

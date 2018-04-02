@@ -28,7 +28,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         public final static Property Rid = new Property(1, int.class, "rid", false, "RID");
         public final static Property Cost = new Property(2, float.class, "cost", false, "COST");
         public final static Property Content = new Property(3, String.class, "content", false, "CONTENT");
-        public final static Property Userid = new Property(4, int.class, "userid", false, "USERID");
+        public final static Property Userid = new Property(4, String.class, "userid", false, "USERID");
         public final static Property PayName = new Property(5, String.class, "payName", false, "PAY_NAME");
         public final static Property PayImg = new Property(6, String.class, "payImg", false, "PAY_IMG");
         public final static Property SortName = new Property(7, String.class, "sortName", false, "SORT_NAME");
@@ -55,7 +55,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
                 "\"RID\" INTEGER NOT NULL ," + // 1: rid
                 "\"COST\" REAL NOT NULL ," + // 2: cost
                 "\"CONTENT\" TEXT," + // 3: content
-                "\"USERID\" INTEGER NOT NULL ," + // 4: userid
+                "\"USERID\" TEXT," + // 4: userid
                 "\"PAY_NAME\" TEXT," + // 5: payName
                 "\"PAY_IMG\" TEXT," + // 6: payImg
                 "\"SORT_NAME\" TEXT," + // 7: sortName
@@ -86,7 +86,11 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         if (content != null) {
             stmt.bindString(4, content);
         }
-        stmt.bindLong(5, entity.getUserid());
+ 
+        String userid = entity.getUserid();
+        if (userid != null) {
+            stmt.bindString(5, userid);
+        }
  
         String payName = entity.getPayName();
         if (payName != null) {
@@ -127,7 +131,11 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         if (content != null) {
             stmt.bindString(4, content);
         }
-        stmt.bindLong(5, entity.getUserid());
+ 
+        String userid = entity.getUserid();
+        if (userid != null) {
+            stmt.bindString(5, userid);
+        }
  
         String payName = entity.getPayName();
         if (payName != null) {
@@ -165,7 +173,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
             cursor.getInt(offset + 1), // rid
             cursor.getFloat(offset + 2), // cost
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // content
-            cursor.getInt(offset + 4), // userid
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // userid
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // payName
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // payImg
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // sortName
@@ -183,7 +191,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         entity.setRid(cursor.getInt(offset + 1));
         entity.setCost(cursor.getFloat(offset + 2));
         entity.setContent(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setUserid(cursor.getInt(offset + 4));
+        entity.setUserid(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setPayName(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setPayImg(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setSortName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));

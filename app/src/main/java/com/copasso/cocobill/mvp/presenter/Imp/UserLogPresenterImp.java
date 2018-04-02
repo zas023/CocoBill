@@ -1,6 +1,6 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.model.bean.remote.UserBean;
+import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.mvp.model.Imp.UserLogModelImp;
 import com.copasso.cocobill.mvp.model.UserLogModel;
 import com.copasso.cocobill.mvp.presenter.UserLogPresenter;
@@ -17,7 +17,7 @@ public class UserLogPresenterImp extends UserLogPresenter implements UserLogMode
     }
 
     @Override
-    public void onSuccess(UserBean user) {
+    public void onSuccess(MyUser user) {
         userLogView.loadDataSuccess(user);
     }
 

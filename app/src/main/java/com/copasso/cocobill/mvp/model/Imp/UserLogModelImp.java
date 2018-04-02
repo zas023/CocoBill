@@ -2,13 +2,9 @@ package com.copasso.cocobill.mvp.model.Imp;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
-import com.copasso.cocobill.api.RetrofitFactory;
-import com.copasso.cocobill.base.BaseObserver;
-import com.copasso.cocobill.model.bean.BmobUser;
-import com.copasso.cocobill.model.bean.remote.UserBean;
+import cn.bmob.v3.listener.SaveListener;
+import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.mvp.model.UserLogModel;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class UserLogModelImp implements UserLogModel {
 
@@ -20,46 +16,63 @@ public class UserLogModelImp implements UserLogModel {
 
     @Override
     public void login(String username, String password) {
-//        BmobUser.loginByAccount(username, password, new LogInListener<BmobUser>() {
-//            @Override
-//            public void done(BmobUser bmobUser, BmobException e) {
+        MyUser.loginByAccount(username, password, new LogInListener<MyUser>() {
+            @Override
+            public void done(MyUser myUser, BmobException e) {
+                if(e==null)
+                    listener.onSuccess(myUser);
+                else
+                    listener.onFailure(e);
+            }
+        });
+//        RetrofitFactory.getInstence().API()
+//                .login(username, password)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseObserver<UserBean>() {
+//                    @Override
+//                    protected void onSuccees(UserBean userBean) throws Exception {
+//                        listener.onSuccess(userBean);
+//                    }
 //
-//            }
-//        });
-        RetrofitFactory.getInstence().API()
-                .login(username, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<UserBean>() {
-                    @Override
-                    protected void onSuccees(UserBean userBean) throws Exception {
-                        listener.onSuccess(userBean);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
+//                    @Override
+//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+//                        listener.onFailure(e);
+//                    }
+//                });
     }
 
     @Override
     public void signup(String username, String password, String mail) {
-        RetrofitFactory.getInstence().API()
-                .signup(username, password, mail)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<UserBean>() {
-                    @Override
-                    protected void onSuccees(UserBean userBean) throws Exception {
-                        listener.onSuccess(userBean);
-                    }
+        MyUser myUser =new MyUser();
+        myUser.setUsername(username);
+        myUser.setPassword(password);
+        myUser.setEmail(mail);
 
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
+        myUser.login(new SaveListener<MyUser>() {
+            @Override
+            public void done(MyUser myUser, BmobException e) {
+                if(e==null)
+                    listener.onSuccess(myUser);
+                else
+                    listener.onFailure(e);
+            }
+        });
+//        RetrofitFactory.getInstence().API()
+//                .signup(username, password, mail)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseObserver<UserBean>() {
+//                    @Override
+//                    protected void onSuccees(UserBean userBean) throws Exception {
+//                        listener.onSuccess(userBean);
+//                    }
+//
+//                    @Override
+//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+//                        listener.onFailure(e);
+//                    }
+//                });
     }
 
     @Override
@@ -72,7 +85,7 @@ public class UserLogModelImp implements UserLogModel {
      */
     public interface UserLogOnListener {
 
-        void onSuccess(UserBean user);
+        void onSuccess(MyUser user);
 
         void onFailure(Throwable e);
     }

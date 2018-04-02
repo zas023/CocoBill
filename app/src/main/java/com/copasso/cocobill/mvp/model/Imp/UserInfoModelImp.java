@@ -1,7 +1,12 @@
 package com.copasso.cocobill.mvp.model.Imp;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import com.copasso.cocobill.api.RetrofitFactory;
 import com.copasso.cocobill.base.BaseObserver;
+import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.model.bean.remote.UserBean;
 import com.copasso.cocobill.mvp.model.UserInfoModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,22 +21,16 @@ public class UserInfoModelImp implements UserInfoModel {
     }
 
     @Override
-    public void update(int id, String username, String gengder, String phone, String mail) {
-        RetrofitFactory.getInstence().API()
-                .updateUser(id, username, gengder, phone, mail)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<UserBean>() {
-                    @Override
-                    protected void onSuccees(UserBean userBean) throws Exception {
-                        listener.onSuccess(userBean);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        listener.onFailure(e);
-                    }
-                });
+    public void update(final MyUser user) {
+        user.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e==null)
+                    listener.onSuccess(user);
+                else
+                    listener.onFailure(e);
+            }
+        });
     }
 
     @Override
@@ -44,7 +43,7 @@ public class UserInfoModelImp implements UserInfoModel {
      */
     public interface UserInfoOnListener {
 
-        void onSuccess(UserBean user);
+        void onSuccess(MyUser user);
 
         void onFailure(Throwable e);
     }

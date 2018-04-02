@@ -1,6 +1,6 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
-import com.copasso.cocobill.model.bean.remote.UserBean;
+import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.mvp.model.Imp.UserInfoModelImp;
 import com.copasso.cocobill.mvp.model.UserInfoModel;
 import com.copasso.cocobill.mvp.presenter.UserInfoPresenter;
@@ -17,7 +17,7 @@ public class UserInfoPresenterImp extends UserInfoPresenter implements UserInfoM
     }
 
     @Override
-    public void onSuccess(UserBean user) {
+    public void onSuccess(MyUser user) {
         view.loadDataSuccess(user);
     }
 
@@ -27,7 +27,7 @@ public class UserInfoPresenterImp extends UserInfoPresenter implements UserInfoM
     }
 
     @Override
-    public void update(int id, String username, String gengder, String phone, String mail) {
-        model.update(id,username,gengder,phone,mail);
+    public void update(MyUser user) {
+        model.update(user);
     }
 }

@@ -1,8 +1,10 @@
 package com.copasso.cocobill.mvp.model;
 
+import com.copasso.cocobill.model.bean.MyUser;
+
 public interface UserInfoModel {
 
-    void update(int id, String username, String gengder, String phone, String mail);
+    void update(MyUser user);
 
     void onUnsubscribe();
 }

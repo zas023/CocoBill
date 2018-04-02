@@ -2,6 +2,7 @@ package com.copasso.cocobill;
 
 import android.app.Application;
 import android.content.Context;
+import cn.bmob.v3.Bmob;
 
 public class MyApplication extends Application {
 
@@ -21,5 +22,8 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         context = getApplicationContext();
+
+        //第一：默认初始化
+        Bmob.initialize(this, "941f4add6503358048b02b83fcb605f6");
     }
 }

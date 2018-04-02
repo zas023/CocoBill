@@ -1,11 +1,7 @@
 package com.copasso.cocobill.ui.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -20,9 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
+import cn.bmob.v3.BmobUser;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.model.bean.local.BSort;
 import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.model.local.LocalRepository;
@@ -34,12 +30,10 @@ import com.copasso.cocobill.common.Constants;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.copasso.cocobill.utils.ImageUtils;
 import com.copasso.cocobill.utils.SharedPUtils;
 import com.copasso.cocobill.utils.ThemeManager;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -137,51 +131,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 设置DrawerHeader的用户信息
      */
     public void setDrawerHeaderAccount() {
+        currentUser= BmobUser.getCurrentUser(MyUser.class);
         //获取当前用户
-        currentUser = SharedPUtils.getCurrentUser(this);
         if (currentUser != null) {
             drawerTvAccount.setText(currentUser.getUsername());
-            drawerTvMail.setText(currentUser.getMail());
-            String imgPath = Environment
-                    .getExternalStorageDirectory().getAbsolutePath()+"/"+currentUser.getImage();
-            File file = new File(imgPath);
-            //判断头像文件是否存在
-            if (file.exists()) {
-                //加载本地图片
-                Glide.with(this).load(file).into(drawerIv);
-            } else {
-                //加载网络图片到本地
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Bitmap bitmap = null;
-                        try {
-                            bitmap = Glide.with(MainActivity.this)
-                                    .load(Constants.BASE_URL + Constants.IMAGE_USER + currentUser.getImage())
-                                    .asBitmap()
-                                    .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                                    .get();
-                            if (bitmap != null) {
-                                drawerIv.setImageBitmap(bitmap);
-                                Log.i(TAG,"SD可写："+Environment.getExternalStorageDirectory().canWrite()+
-                                        "SD可读："+Environment.getExternalStorageDirectory().canRead());
-                                String imgPath=ImageUtils.savePhoto(bitmap, Environment
-                                        .getExternalStorageDirectory().getAbsolutePath(), currentUser.getImage());
-
-                                Log.i(TAG,imgPath);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
-            Constants.currentUserId = currentUser.getId();
+            drawerTvMail.setText(currentUser.getEmail());
+//            Glide.with(MainActivity.this)
+//                    .load(Constants.BASE_URL + Constants.IMAGE_USER + currentUser)
+//                    .into(drawerIv);
         }else{
             drawerTvAccount.setText("账号");
             drawerTvMail.setText("点我登陆");
             drawerIv.setImageResource(R.mipmap.ic_def_icon);
-            Constants.currentUserId=0;
         }
     }
 
@@ -278,10 +239,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            //清除登陆信息
-                            SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                            if (sp != null)
-                                sp.edit().clear().commit();
+                            MyUser.logOut();
                             //刷新账户数据
                             setDrawerHeaderAccount();
                         }

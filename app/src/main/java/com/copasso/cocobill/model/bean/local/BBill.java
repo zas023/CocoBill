@@ -15,7 +15,7 @@ public class BBill{
     private int rid;  //服务器端id
     private float cost;  //金额
     private String content;  //内容
-    private int userid;  //用户id
+    private String userid;  //用户id
     private String payName;  //支付方式
     private String payImg;  //
     private String sortName;  //账单分类
@@ -27,8 +27,8 @@ public class BBill{
     @Generated(hash = 124482664)
     public BBill() {
     }
-    @Generated(hash = 712763217)
-    public BBill(Long id, int rid, float cost, String content, int userid, String payName, String payImg,
+    @Generated(hash = 1555200880)
+    public BBill(Long id, int rid, float cost, String content, String userid, String payName, String payImg,
             String sortName, String sortImg, long crdate, boolean income, int version) {
         this.id = id;
         this.rid = rid;
@@ -75,11 +75,11 @@ public class BBill{
         this.content = content;
     }
 
-    public int getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 

@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.*;
@@ -125,7 +127,7 @@ public class SettingActivity extends BaseActivity {
                                         Toast.LENGTH_SHORT).show();
                             }else if(input.equals(input1)){
                                 //修改密码
-                                changePw();
+                                changePw(input);
                             } else {
                                 Toast.makeText(mContext,
                                         "两次输入不一致", Toast.LENGTH_LONG).show();
@@ -164,29 +166,20 @@ public class SettingActivity extends BaseActivity {
     /**
      * 更新用户密码
      */
-    public void changePw() {
+    public void changePw(String password) {
         if (currentUser == null)
             return;
 
         ProgressUtils.show(mContext, "正在修改...");
-        Map<String, String> params = new HashMap<>();
-        params.put("username", currentUser.getUsername());
-        params.put("password", currentUser.getPassword());
-        params.put("code", "000000");
-        OkHttpUtils.getInstance().get(Constants.BASE_URL + Constants.USER_CHANGEPW, params,
-                new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        ProgressUtils.dismiss();
-                        Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        ProgressUtils.dismiss();
-                        SharedPUtils.setCurrentUser(mContext, currentUser);
-                    }
-                });
+        currentUser.setPassword(password);
+        currentUser.save(new SaveListener() {
+            @Override
+            public void done(Object o, BmobException e) {
+                ProgressUtils.dismiss();
+                if (e==null)
+                    Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

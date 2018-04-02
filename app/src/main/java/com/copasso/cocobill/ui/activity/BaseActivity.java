@@ -20,10 +20,9 @@ import android.view.Window;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.copasso.cocobill.model.bean.remote.UserBean;
+import com.copasso.cocobill.model.bean.MyUser;
 import com.copasso.cocobill.utils.ActivityManagerUtils;
 import com.copasso.cocobill.utils.OkHttpUtils;
-import com.copasso.cocobill.utils.SharedPUtils;
 import com.copasso.cocobill.utils.ThemeManager;
 
 
@@ -31,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Activity mContext;
     //当前用户
-    protected UserBean currentUser;
+    protected MyUser currentUser;
     private Unbinder mUnBinder;
 
     // 要申请的权限
@@ -39,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private AlertDialog dialog;
 
     protected static String TAG;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +57,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         mUnBinder = ButterKnife.bind(this);
 
         //获取当前账户信息
-        currentUser = SharedPUtils.getCurrentUser(this);
+//        currentUser = SharedPUtils.getCurrentUser(this);
+        currentUser= MyUser.getCurrentUser(MyUser.class);
 
         // 版本判断。当手机系统大于 23 时，才有必要去判断权限是否获取
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
