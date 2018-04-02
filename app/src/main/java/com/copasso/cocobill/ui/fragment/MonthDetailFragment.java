@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.local.BBill;
@@ -213,7 +214,6 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
      */
     @Override
     public void loadDataSuccess(MonthDetailBean tData) {
-        Log.i(TAG,tData.getDaylist().toString());
         tOutcome.setText(tData.getT_outcome());
         tIncome.setText(tData.getT_income());
         list = tData.getDaylist();
@@ -251,7 +251,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.float_btn:  //添加
-                if (currentUser==null)
+                if (BmobUser.getCurrentUser()==null)
                     SnackbarUtils.show(mContext,"请先登录");
                 else{
                     Intent intent = new Intent(getContext(), BillAddActivity.class);

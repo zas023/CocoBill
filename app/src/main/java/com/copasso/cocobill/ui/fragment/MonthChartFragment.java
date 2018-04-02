@@ -213,7 +213,7 @@ public class MonthChartFragment extends BaseFragment
         if (tMoneyBeanList != null && tMoneyBeanList.size() > 0) {
             layoutTypedata.setVisibility(View.VISIBLE);
             for (int i = 0; i < tMoneyBeanList.size(); i++) {
-                float scale =tMoneyBeanList.get(i).getMoney()/ totalMoney;
+                float scale =tMoneyBeanList.get(i).getMoney() / totalMoney;
                 float value = (scale < 0.06f) ? 0.06f : scale;
                 entries.add(new PieEntry(value, PieChartUtils.getDrawable(tMoneyBeanList.get(i).getSortImg())));
                 colors.add(Color.parseColor(tMoneyBeanList.get(i).getBack_color()));

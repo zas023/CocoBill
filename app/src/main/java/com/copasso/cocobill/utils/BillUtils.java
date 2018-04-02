@@ -1,5 +1,6 @@
 package com.copasso.cocobill.utils;
 
+import android.util.Log;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.MonthAccountBean;
 import com.copasso.cocobill.model.bean.local.MonthChartBean;
@@ -98,21 +99,25 @@ public class BillUtils {
             if (bBill.isIncome()) {
                 if (mapIn.containsKey(sort)) {
                     listBill = mapIn.get(sort);
-                    moneyIn.put(sort, moneyIn.get(sort) + bBill.getCost());
                 } else {
                     listBill = new ArrayList<>();
-                    moneyIn.put(sort, bBill.getCost());
                 }
+                if(moneyIn.containsKey(sort))
+                    moneyIn.put(sort, moneyIn.get(sort) + bBill.getCost());
+                else
+                    moneyIn.put(sort, bBill.getCost());
                 listBill.add(bBill);
                 mapIn.put(sort, listBill);
             } else {
                 if (mapOut.containsKey(sort)) {
                     listBill = mapOut.get(sort);
-                    moneyOut.put(sort, moneyOut.get(sort) + bBill.getCost());
                 } else {
                     listBill = new ArrayList<>();
-                    moneyOut.put(sort, bBill.getCost());
                 }
+                if (moneyOut.containsKey(sort))
+                    moneyOut.put(sort, moneyOut.get(sort) + bBill.getCost());
+                else
+                    moneyOut.put(sort, bBill.getCost());
                 listBill.add(bBill);
                 mapOut.put(sort, listBill);
             }

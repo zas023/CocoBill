@@ -95,7 +95,6 @@ public class LocalRepository {
         Date endDate = DateUtils.addMonth(date, 1);
         QueryBuilder<BBill> queryBuilder = mSession.getBBillDao()
                 .queryBuilder()
-                .where(BBillDao.Properties.Userid.eq(id))
                 .where(BBillDao.Properties.Crdate.between(DateUtils.getMillis(date), DateUtils.getMillis(endDate)))
                 .orderDesc(BBillDao.Properties.Crdate);
         return queryListToRx(queryBuilder);
