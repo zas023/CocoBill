@@ -150,7 +150,7 @@ public class BillEditActivity extends BillAddActivity implements BillView {
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
                 noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(),
                 lastBean.getSortName(),lastBean.getSortImg(),
-                DateUtils.getMillis(crDate),!isOutcome,0));
+                DateUtils.getMillis(crDate),!isOutcome,bundle.getInt("version")+1));
     }
 
 

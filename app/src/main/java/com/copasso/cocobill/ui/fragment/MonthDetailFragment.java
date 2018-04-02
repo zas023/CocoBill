@@ -154,6 +154,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
                 bundle.putDouble("cost", item.getCost());
                 bundle.putLong("date", item.getCrdate());
                 bundle.putBoolean("income", item.isIncome());
+                bundle.putInt("version", item.getVersion());
                 intent.putExtra("bundle", bundle);
                 startActivityForResult(intent, 0);
             }
