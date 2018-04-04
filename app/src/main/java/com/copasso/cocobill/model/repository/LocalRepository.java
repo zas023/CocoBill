@@ -136,6 +136,11 @@ public class LocalRepository {
 
 
     /******************************update**************************************/
+
+    public void updateBBillByBmob(BBill bill) {
+        mSession.getBBillDao().update(bill);
+    }
+
     public Observable<BBill> updateBBill(final BBill bill) {
        
         return Observable.create(new ObservableOnSubscribe<BBill>() {
