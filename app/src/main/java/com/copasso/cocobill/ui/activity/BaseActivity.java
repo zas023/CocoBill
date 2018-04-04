@@ -24,6 +24,7 @@ import com.copasso.cocobill.model.bean.remote.MyUser;
 import com.copasso.cocobill.utils.ActivityManagerUtils;
 import com.copasso.cocobill.utils.OkHttpUtils;
 import com.copasso.cocobill.utils.ThemeManager;
+import org.greenrobot.eventbus.EventBus;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -54,10 +55,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         // 设置主题色，，，一定要在setView之前
         ThemeManager.getInstance().init(this);
         setContentView(getLayoutInflater().inflate(getLayout(), null, true));
+        //注册 ButterKnife
         mUnBinder = ButterKnife.bind(this);
-
         //获取当前账户信息
-//        currentUser = SharedPUtils.getCurrentUser(this);
         currentUser= MyUser.getCurrentUser(MyUser.class);
 
         // 版本判断。当手机系统大于 23 时，才有必要去判断权限是否获取
@@ -185,7 +185,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        OkHttpUtils.getInstance().cancel(this);
         mUnBinder.unbind();
         ActivityManagerUtils.mActivities.remove(this);
     }

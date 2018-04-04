@@ -11,7 +11,9 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.remote.CoBill;
+import com.copasso.cocobill.model.event.SyncEvent;
 import com.copasso.cocobill.utils.BillUtils;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,7 +134,7 @@ public class BmobRepository {
     /**
      * 同步账单
      */
-    public void syncBill(String userid, final SyncListener listener) {
+    public void syncBill(String userid) {
 
         BmobQuery<CoBill> query = new BmobQuery<>();
         query.addWhereEqualTo("userid", userid);
@@ -203,11 +205,11 @@ public class BmobRepository {
                     //向本地数据库提交的批量操作
                     LocalRepository.getInstance().saveBBills(listsave);
                     LocalRepository.getInstance().deleteBills(listdelete);
-
-                    listener.onSuccess();
+                    // 发送同步成功事件
+                    EventBus.getDefault().post(new SyncEvent(100));
                 }
                 else
-                    listener.onFail(e);
+                    EventBus.getDefault().post(new SyncEvent(200));
             }
         });
     }

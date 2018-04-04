@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.bmob.v3.BmobUser;
 import com.copasso.cocobill.model.bean.remote.MyUser;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by zhouas666 on 16/8/11.
@@ -56,8 +57,10 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mUnBinder.unbind();
+        beforeDestroy();
     }
 
     protected abstract int getLayoutId();
     protected abstract void initEventAndData();
+    protected abstract void beforeDestroy();
 }

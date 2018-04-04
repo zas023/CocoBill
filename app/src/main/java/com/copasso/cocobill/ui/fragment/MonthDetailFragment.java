@@ -14,6 +14,7 @@ import cn.bmob.v3.BmobUser;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.local.BBill;
+import com.copasso.cocobill.model.event.SyncEvent;
 import com.copasso.cocobill.ui.activity.BillAddActivity;
 import com.copasso.cocobill.ui.activity.BillEditActivity;
 import com.copasso.cocobill.ui.adapter.MonthDetailAdapter;
@@ -33,6 +34,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.copasso.cocobill.utils.SnackbarUtils;
 import com.copasso.cocobill.mvp.view.MonthDetailView;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
@@ -67,12 +71,17 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
     private StickyHeaderGridLayoutManager mLayoutManager;
     private MonthDetailAdapter adapter;
     private List<MonthDetailBean.DaylistBean> list;
-    private MonthDetailBean data;
 
     int part, index;
 
     private String setYear = DateUtils.getCurYear(FORMAT_Y);
     private String setMonth = DateUtils.getCurMonth(FORMAT_M);
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(SyncEvent event) {
+        if (event.getState()==100)
+            getBills(Constants.currentUserId, setYear, setMonth);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -81,6 +90,8 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
 
     @Override
     protected void initEventAndData() {
+        //注册 EventBus
+        EventBus.getDefault().register(this);
 
         initView();
 
@@ -97,44 +108,15 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
         rvList.setLayoutManager(mLayoutManager);
         adapter = new MonthDetailAdapter(mContext, list);
         rvList.setAdapter(adapter);
-        //list的滑动监听
-//        rvList.setOnTouchListener(new View.OnTouchListener() {
-//            private float lastX;
-//            private float lastY;
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        lastX = event.getX();
-//                        lastY = event.getY();
-//                        return false;
-//                    case MotionEvent.ACTION_MOVE:
-//                        float x = event.getX();
-//                        float y = event.getY();
-//                        boolean isUp = lastY - y > 2;
-//                        //一次down，只变化一次，防止一次滑动时抖动下，造成某一个的向下时,y比lastY小
-//                        if (isUp) {
-//                            floatBtn.setVisibility(View.GONE);
-//                        } else {
-//                            floatBtn.setVisibility(View.VISIBLE);
-//                        }
-//                        break;
-//
-//                    default:
-//                        break;
-//                }
-//                return false;
-//            }
-//
-//        });
 
         //adapter的侧滑选项事件监听
         adapter.setOnStickyHeaderClickListener(new MonthDetailAdapter.OnStickyHeaderClickListener() {
             @Override
-            public void OnDeleteClick(Long id, int section, int offset) {
-
-                presenter.deleteBill(id);
+            public void OnDeleteClick(BBill item, int section, int offset) {
+                item.setVersion(-1);
+                //将删除的账单版本号设置为负，而非直接删除
+                //便于同步删除服务器数据
+                presenter.updateBill(item);
                 part = section;
                 index = offset;
             }
@@ -191,10 +173,7 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
      * @param month
      */
     private void getBills(int userid, String year, String month) {
-//        if (userid == 0) {
-//            Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+
         dataYear.setText(year + " 年");
         dataMonth.setText(month);
         //请求数据前清空数据
@@ -282,6 +261,11 @@ public class MonthDetailFragment extends BaseFragment implements MonthDetailView
 //                        .isDialog(true)//是否显示为对话框样式
                 .build()
                 .show();
+    }
+
+    @Override
+    protected void beforeDestroy() {
+        EventBus.getDefault().unregister(this);
     }
 
     /**

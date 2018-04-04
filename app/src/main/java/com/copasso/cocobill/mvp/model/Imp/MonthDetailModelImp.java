@@ -58,6 +58,29 @@ public class MonthDetailModelImp implements MonthDetailModel {
                 });
     }
 
+    /**
+     * 伪删除操作
+     * @param bBill
+     */
+    @Override
+    public void update(BBill bBill) {
+        LocalRepository.getInstance()
+                .updateBBill(bBill)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BBill>() {
+                    @Override
+                    protected void onSuccees(BBill bBill) throws Exception {
+                        listener.onSuccess(new BaseBean());
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        listener.onFailure(e);
+                    }
+                });
+    }
+
     @Override
     public void onUnsubscribe() {
 

@@ -111,6 +111,7 @@ public class LocalRepository {
         QueryBuilder<BBill> queryBuilder = mSession.getBBillDao()
                 .queryBuilder()
                 .where(BBillDao.Properties.Crdate.between(DateUtils.getMillis(date), DateUtils.getMillis(endDate)))
+                .where(BBillDao.Properties.Version.ge(0))
                 .orderDesc(BBillDao.Properties.Crdate);
         return queryListToRx(queryBuilder);
     }

@@ -72,6 +72,8 @@ dependencies {
     // greenDao
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'org.greenrobot:greendao-generator:3.2.2'
+    // eventbus
+    compile 'org.greenrobot:eventbus:3.0.0'
     // bmob
     compile 'cn.bmob.android:bmob-sdk:3.5.5'
 

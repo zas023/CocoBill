@@ -1,6 +1,7 @@
 package com.copasso.cocobill.mvp.presenter.Imp;
 
 import com.copasso.cocobill.model.bean.BaseBean;
+import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.MonthDetailBean;
 import com.copasso.cocobill.mvp.model.Imp.MonthDetailModelImp;
 import com.copasso.cocobill.mvp.model.MonthDetailModel;
@@ -45,6 +46,11 @@ public class MonthDetailPresenterImp extends MonthDetailPresenter implements Mon
     @Override
     public void deleteBill(Long id) {
         monthDetailModel.delete(id);
+    }
+
+    @Override
+    public void updateBill(BBill bBill) {
+        monthDetailModel.update(bBill);
     }
 
 }

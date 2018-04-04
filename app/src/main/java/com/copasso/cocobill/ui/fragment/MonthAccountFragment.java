@@ -11,6 +11,7 @@ import android.widget.Toast;
 import butterknife.OnClick;
 import com.bigkoo.pickerview.TimePickerView;
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.model.event.SyncEvent;
 import com.copasso.cocobill.ui.adapter.AccountCardAdapter;
 import com.copasso.cocobill.model.bean.local.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
@@ -25,6 +26,9 @@ import java.util.List;
 import butterknife.BindView;
 import com.copasso.cocobill.utils.SnackbarUtils;
 import com.copasso.cocobill.mvp.view.MonthAccountView;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
@@ -59,6 +63,11 @@ public class MonthAccountFragment extends BaseFragment implements MonthAccountVi
     private String setYear = DateUtils.getCurYear(FORMAT_Y);
     private String setMonth = DateUtils.getCurMonth(FORMAT_M);
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(SyncEvent event) {
+        if (event.getState()==100)
+            getAcountData(Constants.currentUserId, setYear, setMonth);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -68,6 +77,8 @@ public class MonthAccountFragment extends BaseFragment implements MonthAccountVi
 
     @Override
     protected void initEventAndData() {
+        //注册 EventBus
+        EventBus.getDefault().register(this);
 
         initView();
 
@@ -160,5 +171,10 @@ public class MonthAccountFragment extends BaseFragment implements MonthAccountVi
 
                 break;
         }
+    }
+
+    @Override
+    protected void beforeDestroy() {
+        EventBus.getDefault().unregister(this);
     }
 }

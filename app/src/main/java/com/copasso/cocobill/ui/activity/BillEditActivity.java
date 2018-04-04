@@ -6,6 +6,7 @@ import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.mvp.presenter.Imp.BillPresenterImp;
 import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.mvp.view.BillView;
@@ -88,7 +89,14 @@ public class BillEditActivity extends BillAddActivity implements BillView {
                     return e;
             }
         }
-        return isOutcome? noteBean.getOutSortlis().get(0):noteBean.getInSortlis().get(0);
+        return null;
+    }
+
+    @Override
+    public void loadDataSuccess(NoteBean tData) {
+        noteBean=tData;
+        //成功后加载布局
+        setTitleStatus();
     }
 
     /**
@@ -109,7 +117,7 @@ public class BillEditActivity extends BillAddActivity implements BillView {
     /**
      * 设置状态
      */
-    public void setTitleStatus() {
+    protected void setTitleStatus() {
 
         //设置类型
         setTitle();

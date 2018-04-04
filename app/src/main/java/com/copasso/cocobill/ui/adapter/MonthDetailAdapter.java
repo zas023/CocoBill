@@ -114,8 +114,8 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                onStickyHeaderClickListener.OnDeleteClick(
-                                        mDatas.get(section).getList().get(offset).getId(), section, offset);
+                                onStickyHeaderClickListener
+                                        .OnDeleteClick(mDatas.get(section).getList().get(offset), section, offset);
                             }
                         })
                         .show();
@@ -173,7 +173,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
      * 自定义编辑、删除接口
      */
     public interface OnStickyHeaderClickListener {
-        void OnDeleteClick(Long id, int section, int offset);
+        void OnDeleteClick(BBill item, int section, int offset);
         void OnEditClick(BBill item, int section, int offset);
     }
 

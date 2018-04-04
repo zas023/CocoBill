@@ -30,6 +30,20 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
         mFragmentsTitles.add(fragmentTitle);
     }
 
+    /**
+     * 更新
+     * @param index
+     * @param fragment
+     * @param fragmentTitle
+     */
+    public void updateFragment(int index,Fragment fragment, String fragmentTitle) {
+        mFragments.remove(index);
+        mFragments.add(index,fragment);
+        mFragmentsTitles.add(fragmentTitle);
+
+        notifyDataSetChanged();
+    }
+
     @Override
     public Fragment getItem(int position) {
         //得到对应position的Fragment

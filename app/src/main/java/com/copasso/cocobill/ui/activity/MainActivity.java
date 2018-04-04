@@ -232,18 +232,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if(currentUser==null)
                 SnackbarUtils.show(mContext,"请先登陆");
             else
-                BmobRepository.getInstance()
-                        .syncBill(currentUser.getObjectId(), new BmobRepository.SyncListener() {
-                            @Override
-                            public void onSuccess() {
-                                ToastUtils.show(mContext,"同步成功");
-                            }
-
-                            @Override
-                            public void onFail(Throwable e) {
-                                ToastUtils.show(mContext,"同步失败");
-                            }
-                        });
+                BmobRepository.getInstance().syncBill(currentUser.getObjectId());
         }  else if (id == R.id.nav_setting) {   //设置
             startActivity(new Intent(this,SettingActivity.class));
         } else if (id == R.id.nav_about) {     //关于

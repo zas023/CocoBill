@@ -1,5 +1,7 @@
 package com.copasso.cocobill.mvp.model;
 
+import com.copasso.cocobill.model.bean.local.BBill;
+
 public interface MonthDetailModel {
 
     /**
@@ -11,6 +13,8 @@ public interface MonthDetailModel {
      * 删除账单
      */
     void delete(Long id);
+
+    void update(BBill bBill);
 
     void onUnsubscribe();
 }
