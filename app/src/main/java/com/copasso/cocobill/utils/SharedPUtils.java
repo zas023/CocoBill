@@ -14,7 +14,6 @@ public class SharedPUtils {
     public final static String USER_SETTING = "userSetting";
 
 
-
     /**
      * 获取当前用户账单分类信息
      */

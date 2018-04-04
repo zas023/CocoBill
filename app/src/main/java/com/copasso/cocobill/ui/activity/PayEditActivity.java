@@ -60,7 +60,6 @@ public class PayEditActivity extends BaseActivity implements NoteView{
 
         presenter=new NotePresenterImp(this);
 
-        noteBean = SharedPUtils.getUserNoteBean(this);
         //本地获取失败后
         if (noteBean == null) {
             //同步获取分类、支付方式信息

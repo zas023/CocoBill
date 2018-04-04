@@ -87,6 +87,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
 
     @Override
     public void loadDataSuccess(NoteBean tData) {
+        noteBean=tData;
         //成功后加载布局
         setTitleStatus();
         //保存数据
@@ -149,12 +150,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 //侧滑事件
-//                if (mDatas.get(viewHolder.getAdapterPosition()).getUid()>0){
-//                    showDeteteDialog(viewHolder.getAdapterPosition());
-//                }else {
-//                    Toast.makeText(SortEditActivity.this,"系统分类，不可删除",Toast.LENGTH_SHORT).show();
-//                    sortEditAdapter.notifyDataSetChanged();
-//                }
+                showDeteteDialog(viewHolder.getAdapterPosition());
             }
 
             @Override
@@ -220,6 +216,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
                             SnackbarUtils.show(mContext, "内容不能为空！");
                         } else {
                             ProgressUtils.show(mContext);
+//                            BSort sort=new BSort(null,input, "sort_tianjiade.png",0, !isOutcome);
 //                            presenter.addSort(currentUser.getId(), input, "sort_tianjiade.png", !isOutcome);
                         }
                     }
@@ -230,7 +227,7 @@ public class SortEditActivity extends BaseActivity implements NoteView{
 
 
     /**
-     * 显示备注内容输入框
+     * 删除提示对话框
      */
     public void showDeteteDialog(final int index) {
         //弹出输入框
@@ -243,7 +240,12 @@ public class SortEditActivity extends BaseActivity implements NoteView{
                         saveEdit();
                     }
                 })
-                .setNegativeButton("取消", null)
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sortEditAdapter.notifyDataSetChanged();
+                    }
+                })
                 .show();
     }
 
