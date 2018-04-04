@@ -35,6 +35,7 @@ import butterknife.OnClick;
 import com.copasso.cocobill.utils.SharedPUtils;
 import com.copasso.cocobill.utils.SnackbarUtils;
 import com.copasso.cocobill.utils.ThemeManager;
+import com.copasso.cocobill.utils.ToastUtils;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -227,11 +228,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             viewPager.setCurrentItem(1);
         } else if (id == R.id.nav_total) {
             viewPager.setCurrentItem(2);
-        } else if (id == R.id.nav_syc) {   //同步账单
+        } else if (id == R.id.nav_sync) {   //同步账单
             if(currentUser==null)
                 SnackbarUtils.show(mContext,"请先登陆");
             else
-                BmobRepository.getInstance().sycBill(currentUser.getObjectId());
+                BmobRepository.getInstance()
+                        .syncBill(currentUser.getObjectId(), new BmobRepository.SyncListener() {
+                            @Override
+                            public void onSuccess() {
+                                ToastUtils.show(mContext,"同步成功");
+                            }
+
+                            @Override
+                            public void onFail(Throwable e) {
+                                ToastUtils.show(mContext,"同步失败");
+                            }
+                        });
         }  else if (id == R.id.nav_setting) {   //设置
             startActivity(new Intent(this,SettingActivity.class));
         } else if (id == R.id.nav_about) {     //关于

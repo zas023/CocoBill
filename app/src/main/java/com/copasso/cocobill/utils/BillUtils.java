@@ -5,6 +5,7 @@ import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.MonthAccountBean;
 import com.copasso.cocobill.model.bean.local.MonthChartBean;
 import com.copasso.cocobill.model.bean.local.MonthDetailBean;
+import com.copasso.cocobill.model.bean.remote.CoBill;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -219,5 +220,23 @@ public class BillUtils {
         bean.setTotalOut(t_outcome);
         bean.setList(payTypeListBeans);
         return bean;
+    }
+
+
+    public static BBill toBBill(CoBill coBill){
+        BBill bBill = new BBill();
+        bBill.setRid(coBill.getObjectId());
+        bBill.setVersion(coBill.getVersion());
+        bBill.setIncome(coBill.getIncome());
+        bBill.setCrdate(coBill.getCrdate());
+        bBill.setSortImg(coBill.getSortImg());
+        bBill.setSortName(coBill.getSortName());
+        bBill.setPayImg(coBill.getPayImg());
+        bBill.setPayName(coBill.getPayName());
+        bBill.setUserid(coBill.getUserid());
+        bBill.setContent(coBill.getContent());
+        bBill.setCost(coBill.getCost());
+
+        return bBill;
     }
 }

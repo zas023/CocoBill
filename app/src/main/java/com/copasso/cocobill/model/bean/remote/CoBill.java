@@ -6,7 +6,7 @@ import com.copasso.cocobill.model.bean.local.BBill;
 /**
  * 服务器端账单bean
  */
-public class CoBill extends BmobObject{
+public class CoBill extends BmobObject {
 
     private float cost;  //金额
     private String content;  //内容
@@ -23,8 +23,7 @@ public class CoBill extends BmobObject{
 
     }
 
-    public CoBill(BBill bBill){
-
+    public CoBill(BBill bBill) {
         this.cost = bBill.getCost();
         this.content = bBill.getContent();
         this.userid = bBill.getUserid();
@@ -35,6 +34,9 @@ public class CoBill extends BmobObject{
         this.crdate = bBill.getCrdate();
         this.income = bBill.getIncome();
         this.version = bBill.getVersion();
+        //不要忘记设置服务器ObjectId
+        if (bBill.getRid() != null)
+            setObjectId(bBill.getRid());
     }
 
     public CoBill(float cost, String content, String userid, String payName, String payImg,
@@ -130,6 +132,7 @@ public class CoBill extends BmobObject{
     public void setVersion(int version) {
         this.version = version;
     }
+
     public boolean getIncome() {
         return this.income;
     }

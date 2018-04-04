@@ -56,7 +56,7 @@ public class LocalRepository {
      * @param bBills
      */
     public void saveBBills( List<BBill> bBills) {
-       mSession.getBBillDao().rx().insertInTx(bBills);
+       mSession.getBBillDao().insertInTx(bBills);
     }
 
     public Long saveBPay(BPay pay) {
@@ -154,6 +154,11 @@ public class LocalRepository {
     }
 
     /******************************delete**************************************/
+
+    public void deleteBills(List<BBill> bBills){
+        mSession.getBBillDao().deleteInTx(bBills);
+    }
+
     public Observable<Long> deleteBBillById(Long id) {
         mSession.getBBillDao().deleteByKey(id);
         return Observable.create(new ObservableOnSubscribe<Long>() {

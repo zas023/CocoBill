@@ -19,7 +19,7 @@
     <item android:title="">
         <menu>
             <item
-                    android:id="@+id/nav_syc"
+                    android:id="@+id/nav_sync"
                     android:icon="@mipmap/ic_drawer_share"
                     android:title="同步"/>
             <item

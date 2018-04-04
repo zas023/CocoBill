@@ -11,6 +11,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.remote.CoBill;
+import com.copasso.cocobill.utils.BillUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,31 +38,6 @@ public class BmobRepository {
         return sInstance;
     }
 
-    /**
-     * 通过用户获取账单
-     *
-     * @param id
-     * @return
-     */
-    public List<CoBill> getBillByUserId(String id) {
-        final List<CoBill> list = new ArrayList<>();
-        BmobQuery<CoBill> query = new BmobQuery<>();
-        query.addWhereEqualTo("userid", id);
-        //返回50条数据，如果不加上这条语句，默认返回10条数据
-        query.setLimit(500);
-        //执行查询方法
-        query.findObjects(new FindListener<CoBill>() {
-            @Override
-            public void done(List<CoBill> object, BmobException e) {
-                if (e == null) {
-                    list.addAll(object);
-                } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                }
-            }
-        });
-        return list;
-    }
     /**********************批量操作***************************/
     /**
      * 批量上传账单
@@ -156,78 +132,93 @@ public class BmobRepository {
     /**
      * 同步账单
      */
-    public void sycBill(String userid) {
-        List<BBill> bBills = LocalRepository.getInstance().getBBills();
-        List<CoBill> coBills = BmobRepository.getInstance().getBillByUserId(userid);
-        //需要上传的账单
-        List<BmobObject> listUpload = new ArrayList<>();
-        List<BBill> listBBillUpdate = new ArrayList<>();
-        //需要更新的账单
-        List<BmobObject> listUpdate = new ArrayList<>();
-        //需要删除的账单
-        List<BmobObject> listDelete = new ArrayList<>();
+    public void syncBill(String userid, final SyncListener listener) {
 
-        HashMap<String, BBill> bMap = new HashMap<>();
-        HashMap<String, CoBill> cMap = new HashMap<>();
-
-        //服务器账单==》键值对
-        for (CoBill coBill : coBills) {
-            cMap.put(coBill.getObjectId(), coBill);
-        }
-
-        for (BBill bBill : bBills) {
-            if (bBill.getRid() == null) {
-                //服务器端id为空，则表示为上传
-                listUpload.add(new CoBill(bBill));
-                //以便账单成功上传后更新本地数据
-                listBBillUpdate.add(bBill);
-            } else
-                bMap.put(bBill.getRid(), bBill);
-        }
-
-        List<BBill> listsave = new ArrayList<>();
-        List<BBill> listdelete = new ArrayList<>();
-        for (Map.Entry<String, BBill> entry : bMap.entrySet()) {
-            String rid = entry.getKey();
-            if (cMap.containsKey(rid)) {
-                if (entry.getValue().getVersion() < 0) {
+        BmobQuery<CoBill> query = new BmobQuery<>();
+        query.addWhereEqualTo("userid", userid);
+        //返回50条数据，如果不加上这条语句，默认返回10条数据
+        query.setLimit(500);
+        //执行查询方法
+        query.findObjects(new FindListener<CoBill>() {
+            @Override
+            public void done(List<CoBill> object, BmobException e) {
+                if (e == null) {
+                    List<BBill> bBills = LocalRepository.getInstance().getBBills();
+                    //需要上传的账单
+                    List<BmobObject> listUpload = new ArrayList<>();
+                    List<BBill> listBBillUpdate = new ArrayList<>();
+                    //需要更新的账单
+                    List<BmobObject> listUpdate = new ArrayList<>();
                     //需要删除的账单
-                    listDelete.add(new CoBill(entry.getValue()));
-                    listdelete.add(entry.getValue());
-                } else {
-                    //服务器端数据过期
-                    if (cMap.get(rid).getVersion() < entry.getValue().getVersion()) {
-                        listUpdate.add(new CoBill(entry.getValue()));
-                    }
-                }
-                cMap.remove(rid);
-            }
-        }
-        //提交服务器数据的批量操作
-        saveBills(listUpload,listBBillUpdate);
-        updateBills(listUpdate);
-        deleteBills(listDelete);
+                    List<BmobObject> listDelete = new ArrayList<>();
 
-        //CoBill==》BBill
-        for (Map.Entry<String, CoBill> entry : cMap.entrySet()) {
-            BBill bBill = new BBill();
-            CoBill coBill = entry.getValue();
-            bBill.setRid(coBill.getObjectId());
-            bBill.setVersion(coBill.getVersion());
-            bBill.setIncome(coBill.getIncome());
-            bBill.setCrdate(coBill.getCrdate());
-            bBill.setSortImg(coBill.getSortImg());
-            bBill.setSortName(coBill.getSortName());
-            bBill.setPayImg(coBill.getPayImg());
-            bBill.setPayName(coBill.getPayName());
-            bBill.setUserid(userid);
-            bBill.setContent(coBill.getContent());
-            bBill.setCost(coBill.getCost());
-            //需要保存到本地的账单
-            listsave.add(bBill);
-        }
-        //提交本地数据的批量操作
-        Log.i(TAG, listsave.toString());
-        LocalRepository.getInstance().saveBBills(listsave);
+                    HashMap<String, BBill> bMap = new HashMap<>();
+
+
+                    for (BBill bBill : bBills) {
+                        if (bBill.getRid() == null) {
+                            //服务器端id为空，则表示为上传
+                            listUpload.add(new CoBill(bBill));
+                            //以便账单成功上传后更新本地数据
+                            listBBillUpdate.add(bBill);
+                        } else
+                            bMap.put(bBill.getRid(), bBill);
+                    }
+
+                    HashMap<String, CoBill> cMap = new HashMap<>();
+                    //服务器账单==》键值对
+                    for (CoBill coBill : object) {
+                        cMap.put(coBill.getObjectId(), coBill);
+                    }
+
+                    List<BBill> listsave = new ArrayList<>();
+                    List<BBill> listdelete = new ArrayList<>();
+                    for (Map.Entry<String, BBill> entry : bMap.entrySet()) {
+                        String rid = entry.getKey();
+                        BBill bBill=entry.getValue();
+                        if (cMap.containsKey(rid)) {
+                            if (bBill.getVersion() < 0) {
+                                //需要删除的账单
+                                listDelete.add(new CoBill(bBill));
+                                listdelete.add(bBill);
+                            } else {
+                                //服务器端数据过期
+                                if (bBill.getVersion()>cMap.get(rid).getVersion()) {
+                                    listUpdate.add(new CoBill(bBill));
+                                }
+                            }
+                            cMap.remove(rid);
+                        }
+                    }
+                    //提交服务器数据的批量操作
+                    if(!listUpload.isEmpty()) saveBills(listUpload,listBBillUpdate);
+                    if(!listUpdate.isEmpty()) updateBills(listUpdate);
+                    if(!listDelete.isEmpty()) deleteBills(listDelete);
+
+                    //CoBill==》BBill
+                    for (Map.Entry<String, CoBill> entry : cMap.entrySet()) {
+                        //需要保存到本地的账单
+                        listsave.add(BillUtils.toBBill(entry.getValue()));
+                    }
+                    //向本地数据库提交的批量操作
+                    LocalRepository.getInstance().saveBBills(listsave);
+                    LocalRepository.getInstance().deleteBills(listdelete);
+
+                    listener.onSuccess();
+                }
+                else
+                    listener.onFail(e);
+            }
+        });
     }
+
+    /**
+     * 同步回调消息
+     */
+    public interface SyncListener {
+        void onSuccess();
+
+        void onFail(Throwable e);
+    }
+
 }
