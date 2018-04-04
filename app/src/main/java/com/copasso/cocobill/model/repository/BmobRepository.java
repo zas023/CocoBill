@@ -1,7 +1,5 @@
 package com.copasso.cocobill.model.repository;
 
-import android.util.Log;
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -61,8 +59,6 @@ public class BmobRepository {
                         }
                     }
 
-                } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
@@ -81,8 +77,6 @@ public class BmobRepository {
             public void done(List<BatchResult> o, BmobException e) {
                 if (e == null) {
 
-                } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
@@ -101,30 +95,6 @@ public class BmobRepository {
             public void done(List<BatchResult> o, BmobException e) {
                 if (e == null) {
 
-                } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                }
-            }
-        });
-    }
-
-    /**
-     * 批量更新账单
-     */
-    public void commitBills(List<BmobObject> listUpload, List<BmobObject> listUpdate, List<BmobObject> listDelete) {
-
-        BmobBatch batch = new BmobBatch();
-        batch.insertBatch(listUpload);
-        batch.updateBatch(listUpdate);
-        batch.deleteBatch(listDelete);
-        batch.doBatch(new QueryListListener<BatchResult>() {
-
-            @Override
-            public void done(List<BatchResult> o, BmobException e) {
-                if (e == null) {
-
-                } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
@@ -212,15 +182,6 @@ public class BmobRepository {
                     EventBus.getDefault().post(new SyncEvent(200));
             }
         });
-    }
-
-    /**
-     * 同步回调消息
-     */
-    public interface SyncListener {
-        void onSuccess();
-
-        void onFail(Throwable e);
     }
 
 }
