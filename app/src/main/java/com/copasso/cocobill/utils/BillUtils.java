@@ -222,7 +222,11 @@ public class BillUtils {
         return bean;
     }
 
-
+    /**
+     * CoBill=>BBill
+     * @param coBill
+     * @return
+     */
     public static BBill toBBill(CoBill coBill){
         BBill bBill = new BBill();
         bBill.setRid(coBill.getObjectId());
