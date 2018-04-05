@@ -1,5 +1,5 @@
 # CocoBill
-:closed_book:一个数据存储使用的 Bmob、架构采用 MVP 的记账本 APP
+:closed_book:一个数据存储使用的Bmob,采用MVP架构的Android记账本APP
 
 在我们生活中经常不知道钱花在什么地方，但是我们自己又不是很想写在记账本上进行管理,因为关于记账，我们每个人都有自己的需求，虽然市面上有许多优秀的记账app,所以对于自己来说，开发一个属于自己的软件来记账是个非常有趣的事情，但一直因为时间安排的原因未能实现。 
 所以趁着本学期程序实践的机会，顺便做一个项目，后台采用ssm框架，本人小白，如果有不足的地方，希望看到的大神给予指点建议，不胜感激！
@@ -34,7 +34,6 @@ v0.3.1: 2017.12.28
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-12-18-721_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-12-25-810_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-12-33-936_com.copasso.co.png" />
-<img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-12-41-466_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-13-09-779_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-13-16-119_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2017-12-30-18-16-39-866_com.copasso.co.png" />
