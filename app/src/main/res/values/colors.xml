@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--少女红-->
-    <color name="colorPrimary">#FF5050</color>
-    <color name="colorPrimaryDark">#FF5050</color>
-    <color name="colorAccent">#FF5050</color>
+    <!--原谅绿-->
+    <color name="colorPrimary">#00BA91</color>
+    <color name="colorPrimaryDark">#00BA91</color>
+    <color name="colorAccent">#00BA91</color>
 
     <!--酷炫黑-->
     <color name="colorPrimaryDarkBlack">#010001</color>
     <color name="colorPrimaryBlack">#010001</color>
     <color name="colorAccentBlack">#010001</color>
 
-    <!--原谅绿-->
-    <color name="colorPrimaryDarkGreen">#00BA91</color>
-    <color name="colorPrimaryGreen">#00BA91</color>
-    <color name="colorAccentGreen">#00BA91</color>
+    <!--少女红-->
+    <color name="colorPrimaryDarkGreen">#FF5050</color>
+    <color name="colorPrimaryGreen">#FF5050</color>
+    <color name="colorAccentGreen">#FF5050</color>
 
     <!--胖次蓝-->
     <color name="colorPrimaryDarkBlue">#4E77FF</color>
