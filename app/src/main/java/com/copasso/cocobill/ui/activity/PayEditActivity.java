@@ -84,6 +84,7 @@ public class PayEditActivity extends BaseActivity implements NoteView{
 
     @Override
     public void loadDataSuccess(NoteBean tData) {
+        noteBean=tData;
         //成功后加载布局
         setTitleStatus();
         //保存数据
@@ -100,7 +101,6 @@ public class PayEditActivity extends BaseActivity implements NoteView{
      * 设置状态
      */
     private void setTitleStatus() {
-
         mDatas=noteBean.getPayinfo();
         initView();
     }
@@ -189,10 +189,10 @@ public class PayEditActivity extends BaseActivity implements NoteView{
         layout.setOrientation(LinearLayout.VERTICAL);
         final EditText editText = new EditText(mContext);
         editText.setHint("名称");
-        final EditText editText1 = new EditText(mContext);
-        editText1.setHint("备注");
+//        final EditText editText1 = new EditText(mContext);
+//        editText1.setHint("备注");
         layout.addView(editText);
-        layout.addView(editText1);
+//        layout.addView(editText1);
         //弹出输入框
         alertDialog = new AlertDialog.Builder(this)
                 .setTitle("支付方式")
@@ -203,8 +203,11 @@ public class PayEditActivity extends BaseActivity implements NoteView{
                         if (input.equals("")) {
                             SnackbarUtils.show(mContext, "内容不能为空！");
                         } else {
-                            ProgressUtils.show(mContext);
+//                            ProgressUtils.show(mContext);
 //                            presenter.addPay(currentUser.getId(),input,"card_bank.png",editText1.getText().toString());
+                            BPay pay=new BPay(null,input,"card_bank.png",0,0);
+                            mDatas.add(pay);
+                            presenter.addPay(pay);
                         }
                     }
                 })

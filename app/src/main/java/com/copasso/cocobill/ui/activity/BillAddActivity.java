@@ -150,8 +150,15 @@ public class BillAddActivity extends BaseActivity implements BillView{
      * 初始化分类数据
      */
     protected void initSortView() {
-        //获取本地分类、支付方式信息
-        presenter.getNote();
+        noteBean= SharedPUtils.getUserNoteBean(this);
+        //本地获取失败后
+        if (noteBean==null){
+            //同步获取分类、支付方式信息
+            presenter.getNote();
+        }else {
+            //成功后加载布局
+            setTitleStatus();
+        }
     }
 
     /**

@@ -25,5 +25,10 @@ public abstract  class NotePresenter extends BasePresenter {
     /**
      * 删除账单分类
      */
-    public abstract void delete(int id);
+    public abstract void deleteSort(Long id);
+
+    /**
+     * 删除账单支出方式
+     */
+    public abstract void deletePay(Long id);
 }

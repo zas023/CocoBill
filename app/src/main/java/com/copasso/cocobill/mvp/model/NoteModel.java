@@ -11,5 +11,9 @@ public interface NoteModel {
 
     void addPay(BPay bPay);
 
+    void deleteSort(Long id);
+
+    void deletePay(Long id);
+
     void onUnsubscribe();
 }

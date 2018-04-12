@@ -36,14 +36,10 @@ public class PayEditAdapter extends RecyclerView.Adapter<PayEditAdapter.MyItemVi
 
     @Override
     public void onBindViewHolder(MyItemViewHolder holder, int position) {
-//        if (mData.get(position).getPayNum() == null) {
-//            holder.item_name.setText(mData.get(position).getPayName());
-//        }else {
-//            holder.item_name.setText(mData.get(position).getPayName() + ":" + mData.get(position).getPayNum());
-//        }
+        holder.item_name.setText(mData.get(position).getPayName());
         Glide.with(mContext).load(Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg())
                 .into(holder.item_img);
-        Log.i("adapter",Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg());
+//        Log.i("adapter",Constants.BASE_URL + Constants.IMAGE_PAY + mData.get(position).getPayImg());
     }
 
     @Override

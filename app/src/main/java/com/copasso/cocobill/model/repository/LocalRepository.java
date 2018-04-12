@@ -138,10 +138,19 @@ public class LocalRepository {
 
     /******************************update**************************************/
 
+    /**
+     * 更新账单（用于同步）
+     * @param bill
+     */
     public void updateBBillByBmob(BBill bill) {
         mSession.getBBillDao().update(bill);
     }
 
+    /**
+     * 更新账单
+     * @param bill
+     * @return
+     */
     public Observable<BBill> updateBBill(final BBill bill) {
        
         return Observable.create(new ObservableOnSubscribe<BBill>() {
@@ -155,7 +164,26 @@ public class LocalRepository {
     }
 
     /******************************delete**************************************/
+    /**
+     * 删除账单分类
+     * @param id
+     */
+    public void deleteBSortById(Long id){
+        mSession.getBSortDao().deleteByKey(id);
+    }
 
+    /**
+     * 删除账单支出方式
+     * @param id
+     */
+    public void deleteBPayById(Long id){
+        mSession.getBPayDao().deleteByKey(id);
+    }
+
+    /**
+     * 批量删除账单（便于账单同步）
+     * @param bBills
+     */
     public void deleteBills(List<BBill> bBills){
         mSession.getBBillDao().deleteInTx(bBills);
     }

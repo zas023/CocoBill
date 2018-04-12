@@ -215,9 +215,12 @@ public class SortEditActivity extends BaseActivity implements NoteView{
                         if (input.equals("")) {
                             SnackbarUtils.show(mContext, "内容不能为空！");
                         } else {
-                            ProgressUtils.show(mContext);
-//                            BSort sort=new BSort(null,input, "sort_tianjiade.png",0, !isOutcome);
+//                            ProgressUtils.show(mContext);
 //                            presenter.addSort(currentUser.getId(), input, "sort_tianjiade.png", !isOutcome);
+                            BSort sort=new BSort(null,input, "sort_tianjiade.png",0, !isOutcome);
+                            presenter.addSort(sort);
+                            mDatas.add(sort);
+                            saveEdit();
                         }
                     }
                 })

@@ -68,12 +68,22 @@ public class NoteModelImp implements NoteModel{
 
     @Override
     public void addSort(BSort bSort) {
-
+        LocalRepository.getInstance().saveBSort(bSort);
     }
 
     @Override
     public void addPay(BPay bPay) {
+        LocalRepository.getInstance().saveBPay(bPay);
+    }
 
+    @Override
+    public void deleteSort(Long id) {
+        LocalRepository.getInstance().deleteBSortById(id);
+    }
+
+    @Override
+    public void deletePay(Long id) {
+        LocalRepository.getInstance().deleteBPayById(id);
     }
 
     @Override
