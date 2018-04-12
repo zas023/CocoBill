@@ -118,8 +118,6 @@ public class SettingActivity extends BaseActivity {
                         String input = editText.getText().toString();
                         if (input.equals("")) {
                             SnackbarUtils.show(mContext, "内容不能为空！");
-                        } else if (StringUtils.checkEmail(input)){
-                            SnackbarUtils.show(mContext, "请输入正确的邮箱！");
                         }else{
                             //找回密码
                             BmobUser.resetPasswordByEmail(input, new UpdateListener() {

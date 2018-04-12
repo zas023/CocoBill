@@ -19,10 +19,10 @@
 
     <!--about activity-->
     <string name="about">关于CocoBill记账本</string>
-    <string name="about_introduce">简洁、便捷、纯粹记账\n
-        ------CocoBill是啥------\n
-        嗯~没错我就是个记账APP，功能不花哨主打实用，算账本来就是头疼事还整那些花里胡哨的功能干啥呢？所以我们这款记账APP就是简洁！实用！！！\n
-        ------CocoBill主要功能------\n
+    <string name="about_introduce">简洁、便捷、纯粹记账\n\n
+        ------CocoBill是啥------\n\n
+        嗯~没错我就是个记账APP，功能不花哨主打实用，算账本来就是头疼事还整那些花里胡哨的功能干啥呢？所以我们这款记账APP就是简洁！实用！！！\n\n
+        ------CocoBill主要功能------\n\n
         - 支持多账户记账\n
         - 时间轴记账单，账单一目了然\n
         - 支持账单数据导出，方便各个场景使用\n
@@ -35,7 +35,7 @@
         -------------------\n
         <a href='https://github.com/zas023/CocoBill'>https://github.com/zas023/CocoBill</a>
         \n-------------------\n
-        欢迎大家fork
+        欢迎大家star和fork
     </string>
 
     <!--other-->
