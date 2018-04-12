@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.common.Constants;
 import com.copasso.cocobill.utils.*;
@@ -172,12 +173,12 @@ public class SettingActivity extends BaseActivity {
 
         ProgressUtils.show(mContext, "正在修改...");
         currentUser.setPassword(password);
-        currentUser.save(new SaveListener() {
+        currentUser.update(new UpdateListener() {
             @Override
-            public void done(Object o, BmobException e) {
+            public void done(BmobException e) {
                 ProgressUtils.dismiss();
-                if (e==null)
-                    Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
+                if (e!=null)
+                    ToastUtils.show(mContext,"修改失败"+e.getMessage());
             }
         });
     }
