@@ -151,7 +151,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     public void onViewClicked(final View view) {
         switch (view.getId()) {
             case R.id.rlt_update_icon:  //头像
-                showIconDialog();
+//                showIconDialog();
+                Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                openAlbumIntent.setType("image/*");
+                startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
                 break;
             case R.id.cil_username:  //用户名
                 SnackbarUtils.show(mContext, "江湖人行不更名，坐不改姓！");
@@ -181,8 +184,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case CHOOSE_PICTURE: // 选择本地照片
-                                    Intent openAlbumIntent = new Intent(
-                                            Intent.ACTION_GET_CONTENT);
+                                    Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
                                     openAlbumIntent.setType("image/*");
                                     startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
                                     break;

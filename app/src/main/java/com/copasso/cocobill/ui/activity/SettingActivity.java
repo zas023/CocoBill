@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -85,7 +86,8 @@ public class SettingActivity extends BaseActivity {
                 showChangeDialog();
                 break;
             case R.id.cil_forget:  //忘记密码
-                startActivity(new Intent(this,ForgetPasswordActivity.class));
+//                startActivity(new Intent(this,ForgetPasswordActivity.class));
+                showForgetPwDialog();
                 break;
             case R.id.cil_store:  //缓存
                 showCacheDialog();
@@ -99,6 +101,42 @@ public class SettingActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    /**
+     * 显示忘记密码对话框
+     */
+    public void showForgetPwDialog() {
+        final EditText editText = new EditText(mContext);
+        editText.setHint("请输入注册邮箱");
+        //弹出输入框
+        new AlertDialog.Builder(this)
+                .setTitle("忘记密码")
+                .setView(editText)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String input = editText.getText().toString();
+                        if (input.equals("")) {
+                            SnackbarUtils.show(mContext, "内容不能为空！");
+                        } else if (StringUtils.checkEmail(input)){
+                            SnackbarUtils.show(mContext, "请输入正确的邮箱！");
+                        }else{
+                            //找回密码
+                            BmobUser.resetPasswordByEmail(input, new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if(e==null){
+                                        ToastUtils.show(mContext,"重置密码请求成功，请到邮箱进行密码重置操作");
+                                    }else{
+                                        ToastUtils.show(mContext,"失败:" + e.getMessage());
+                                    }
+                                }
+                            });
+                        }
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .show();
     }
 
     /**
