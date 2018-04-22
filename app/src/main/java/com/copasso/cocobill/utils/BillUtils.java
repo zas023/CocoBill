@@ -34,43 +34,54 @@ public class BillUtils {
                 t_income += bBill.getCost();
             else
                 t_outcome += bBill.getCost();
+
             //判断后一个账单是否于前者为同一天
-            if (preDay.equals(DateUtils.getDay(bBill.getCrdate()))) {
+            if (i == 0 || preDay.equals(DateUtils.getDay(bBill.getCrdate()))) {
+
                 if (bBill.isIncome())
                     income += bBill.getCost();
                 else
                     outcome += bBill.getCost();
                 beanList.add(bBill);
-                if ((i + 1) == list.size()) {
-                    //局部变量防止引用冲突
-                    List<BBill> tmpList = new ArrayList<>();
-                    tmpList.addAll(beanList);
 
-                    MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
-                    tmpDay.setList(tmpList);
-                    tmpDay.setMoney("支出：" + outcome + " 收入：" + income);
-                    tmpDay.setTime(DateUtils.getDay(bBill.getCrdate()));
-                    daylist.add(tmpDay);
-                }
+                if (i==0)
+                    preDay = DateUtils.getDay(bBill.getCrdate());
             } else {
-                if (i != 0) {
-                    //局部变量防止引用冲突
-                    List<BBill> tmpList = new ArrayList<>();
-                    tmpList.addAll(beanList);
+                //局部变量防止引用冲突
+                List<BBill> tmpList = new ArrayList<>();
+                tmpList.addAll(beanList);
+                MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
+                tmpDay.setList(tmpList);
+                tmpDay.setMoney("支出：" + outcome + " 收入：" + income);
+                tmpDay.setTime(preDay);
+                daylist.add(tmpDay);
 
-                    MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
-                    tmpDay.setList(tmpList);
-                    tmpDay.setMoney("支出：" + outcome + " 收入：" + income);
-                    tmpDay.setTime(preDay);
-                    daylist.add(tmpDay);
-                    //清空前一天的数据
-                    beanList.clear();
-                    income = 0;
-                    outcome = 0;
-                }
+                //清空前一天的数据
+                beanList.clear();
+                income = 0;
+                outcome = 0;
                 beanList.add(bBill);
                 preDay = DateUtils.getDay(bBill.getCrdate());
+
+                //判断是否是最后一个
+                if ((i + 1) == list.size()){
+                    if (bBill.isIncome())
+                        income += bBill.getCost();
+                    else
+                        outcome += bBill.getCost();
+                }
             }
+        }
+
+        if (beanList.size() > 0) {
+            //局部变量防止引用冲突
+            List<BBill> tmpList = new ArrayList<>();
+            tmpList.addAll(beanList);
+            MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
+            tmpDay.setList(tmpList);
+            tmpDay.setMoney("支出：" + outcome + " 收入：" + income);
+            tmpDay.setTime(DateUtils.getDay(beanList.get(0).getCrdate()));
+            daylist.add(tmpDay);
         }
 
         bean.setT_income(String.valueOf(t_income));
@@ -103,7 +114,7 @@ public class BillUtils {
                 } else {
                     listBill = new ArrayList<>();
                 }
-                if(moneyIn.containsKey(sort))
+                if (moneyIn.containsKey(sort))
                     moneyIn.put(sort, moneyIn.get(sort) + bBill.getCost());
                 else
                     moneyIn.put(sort, bBill.getCost());
@@ -224,10 +235,11 @@ public class BillUtils {
 
     /**
      * CoBill=>BBill
+     *
      * @param coBill
      * @return
      */
-    public static BBill toBBill(CoBill coBill){
+    public static BBill toBBill(CoBill coBill) {
         BBill bBill = new BBill();
         bBill.setRid(coBill.getObjectId());
         bBill.setVersion(coBill.getVersion());
