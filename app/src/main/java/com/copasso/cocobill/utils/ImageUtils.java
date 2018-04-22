@@ -196,6 +196,12 @@ public class ImageUtils {
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_tianjiade);
         else if(imgUrl.equals("sort_tianjia.png"))
             drawable = MyApplication.application.getResources().getDrawable(R.mipmap.sort_tianjia);
+        else if(imgUrl.equals("card_cash.png"))
+            drawable = MyApplication.application.getResources().getDrawable(R.mipmap.card_cash);
+        else if(imgUrl.equals("card_account.png"))
+            drawable = MyApplication.application.getResources().getDrawable(R.mipmap.card_account);
+        else if(imgUrl.equals("card_account.png"))
+            drawable = MyApplication.application.getResources().getDrawable(R.mipmap.card_account);
         else
             drawable=null;
 

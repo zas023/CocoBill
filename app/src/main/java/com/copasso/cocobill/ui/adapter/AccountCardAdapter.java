@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.local.MonthAccountBean;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.utils.ImageUtils;
 
 import java.util.List;
 
@@ -67,17 +68,7 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
         holder.money_out.setText("-"+mDatas.get(position).getOutcome());
         holder.money_in.setText("+"+mDatas.get(position).getIncome());
         holder.title.setText(mDatas.get(position).getPayName());
-        Glide.with(mContext)
-                .load(Constants.BASE_URL+Constants.IMAGE_PAY + mDatas.get(position).getPayImg())
-                .into(holder.img);
-
-//        if(mDatas.get(position).getbPay().getUid()>0){
-//            //自定义支付方式
-//            holder.code.setVisibility(View.VISIBLE);
-//            holder.code.setText(mDatas.get(position).getbPay().getPayNum());
-//        }else{
-//            holder.code.setVisibility(View.GONE);
-//        }
+        holder.img.setImageDrawable(ImageUtils.getDrawable(mDatas.get(position).getPayImg()));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
