@@ -60,16 +60,14 @@ public class BillUtils {
                 beanList.clear();
                 income = 0;
                 outcome = 0;
+
+                //添加数据
+                if (bBill.isIncome())
+                    income += bBill.getCost();
+                else
+                    outcome += bBill.getCost();
                 beanList.add(bBill);
                 preDay = DateUtils.getDay(bBill.getCrdate());
-
-                //判断是否是最后一个
-                if ((i + 1) == list.size()){
-                    if (bBill.isIncome())
-                        income += bBill.getCost();
-                    else
-                        outcome += bBill.getCost();
-                }
             }
         }
 
