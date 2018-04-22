@@ -17,6 +17,11 @@ import java.util.Map;
  */
 public class BillUtils {
 
+    /**
+     * 账单按天分类
+     * @param list
+     * @return
+     */
     public static MonthDetailBean packageDetailList(List<BBill> list) {
         MonthDetailBean bean = new MonthDetailBean();
         float t_income = 0;
@@ -88,6 +93,11 @@ public class BillUtils {
         return bean;
     }
 
+    /**
+     * 账单按类型分类
+     * @param list
+     * @return
+     */
     public static MonthChartBean packageChartList(List<BBill> list) {
         MonthChartBean bean = new MonthChartBean();
         float t_income = 0;
@@ -162,7 +172,13 @@ public class BillUtils {
         return bean;
     }
 
+    /**
+     * 账单按支付方式分类
+     * @param list
+     * @return
+     */
     public static MonthAccountBean packageAccountList(List<BBill> list) {
+
         MonthAccountBean bean = new MonthAccountBean();
         float t_income = 0;
         float t_outcome = 0;
@@ -177,31 +193,24 @@ public class BillUtils {
             else t_outcome += bBill.getCost();
 
             String pay = bBill.getPayName();
+
+            if (mapAccount.containsKey(pay)) {
+                List<BBill> bBills = mapAccount.get(pay);
+                bBills.add(bBill);
+                mapAccount.put(pay, bBills);
+            } else {
+                List<BBill> bBills = new ArrayList<>();
+                bBills.add(bBill);
+                mapAccount.put(pay, bBills);
+            }
+
             if (bBill.isIncome()) {
-                if (mapAccount.containsKey(pay)) {
-                    List<BBill> bBills = mapAccount.get(pay);
-                    bBills.add(bBill);
-                    mapAccount.put(pay, bBills);
-                } else {
-                    List<BBill> bBills = new ArrayList<>();
-                    bBills.add(bBill);
-                    mapAccount.put(pay, bBills);
-                }
                 if (mapMoneyIn.containsKey(pay)) {
                     mapMoneyIn.put(pay, mapMoneyIn.get(pay) + bBill.getCost());
                 } else {
                     mapMoneyIn.put(pay, bBill.getCost());
                 }
             } else {
-                if (mapAccount.containsKey(pay)) {
-                    List<BBill> bBills = mapAccount.get(pay);
-                    bBills.add(bBill);
-                    mapAccount.put(pay, bBills);
-                } else {
-                    List<BBill> bBills = new ArrayList<>();
-                    bBills.add(bBill);
-                    mapAccount.put(pay, bBills);
-                }
                 if (mapMoneyOut.containsKey(pay)) {
                     mapMoneyOut.put(pay, mapMoneyOut.get(pay) + bBill.getCost());
                 } else {
@@ -214,13 +223,12 @@ public class BillUtils {
         for (Map.Entry<String, List<BBill>> entry : mapAccount.entrySet()) {
             MonthAccountBean.PayTypeListBean payTypeListBean = new MonthAccountBean.PayTypeListBean();
             payTypeListBean.setBills(entry.getValue());
-            payTypeListBean.setOutcome(mapMoneyOut.get(entry.getKey()));
             //先判断当前支付方式是否有输入或支出
             //因为有可能只有支出或收入
             if (mapMoneyIn.containsKey(entry.getKey()))
                 payTypeListBean.setIncome(mapMoneyIn.get(entry.getKey()));
             if (mapMoneyOut.containsKey(entry.getKey()))
-                payTypeListBean.setPayImg(entry.getValue().get(0).getPayImg());
+                payTypeListBean.setOutcome(mapMoneyOut.get(entry.getKey()));
             payTypeListBean.setPayName(entry.getValue().get(0).getPayName());
             payTypeListBeans.add(payTypeListBean);
         }
