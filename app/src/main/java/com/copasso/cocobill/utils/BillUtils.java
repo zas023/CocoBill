@@ -229,6 +229,7 @@ public class BillUtils {
                 payTypeListBean.setIncome(mapMoneyIn.get(entry.getKey()));
             if (mapMoneyOut.containsKey(entry.getKey()))
                 payTypeListBean.setOutcome(mapMoneyOut.get(entry.getKey()));
+            payTypeListBean.setPayImg(entry.getValue().get(0).getPayImg());
             payTypeListBean.setPayName(entry.getValue().get(0).getPayName());
             payTypeListBeans.add(payTypeListBean);
         }
