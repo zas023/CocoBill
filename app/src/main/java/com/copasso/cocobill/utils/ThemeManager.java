@@ -11,7 +11,7 @@ import com.copasso.cocobill.common.Constants;
  */
 public class ThemeManager {
 
-    private String[] mThemes = {"少女红", "酷炫黑", "原谅绿", "胖次蓝", "基佬紫", "活力橙", "大地棕"};
+    private String[] mThemes = {"原谅绿", "酷炫黑", "少女红", "胖次蓝", "基佬紫", "活力橙", "大地棕"};
 
     private static ThemeManager instance;
 
