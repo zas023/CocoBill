@@ -16,7 +16,7 @@
         <item name="colorAccent">@color/colorAccentBlack</item>
     </style>
 
-    <!--原谅绿-->
+    <!--少女红-->
     <style name="AppTheme.Green">
         <item name="colorPrimary">@color/colorPrimaryGreen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkGreen</item>
