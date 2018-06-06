@@ -6,7 +6,7 @@
 
 博客地址：http://blog.csdn.net/adminpd/article/details/78942212
 
-关于后台：数据库使用的是bmob后端云，如果没用过，请先到https://www.bmob.cn/?invite_code=@qcg注册，很好上手的，很适合个人开发者及小公司。
+关于后台：数据库使用的是bmob后端云，如果没用过，请先到 https://www.bmob.cn/?invite_code=@qcg 注册，很好上手的，很适合个人开发者及小公司。
 整体项目（源码及数据库结构）我发布在 https://www.bmob.cn/shop/det/448 上，购买后可以一键迁移我的数据库结构到你的账号里。创建bmob账号选择免费版的就完全够用，除非你用户量过10万了。
 
 ### 下载资源
