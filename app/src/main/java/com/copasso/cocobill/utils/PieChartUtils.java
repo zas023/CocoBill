@@ -57,9 +57,6 @@ public class PieChartUtils {
     }
 
 
-
-
-
     /**
      * 设置饼状图数据
      * @param mChart
@@ -90,7 +87,6 @@ public class PieChartUtils {
         setStartAngle(mChart);
         setAnimate(mChart);
     }
-
 
 
     /**

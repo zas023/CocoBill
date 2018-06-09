@@ -251,6 +251,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             LocalRepository.getInstance().deleteAllBills();
                             //刷新账户数据
                             setDrawerHeaderAccount();
+                            initEventAndData();
                         }
                     })
                     .show();

@@ -245,6 +245,8 @@ public class MonthChartFragment extends BaseFragment
      * @param index
      */
     private void setNoteData(int index, float value) {
+        if (null==tMoneyBeanList||tMoneyBeanList.size()==0)
+            return;
         sort_image = tMoneyBeanList.get(index).getSortImg();
         sort_name = tMoneyBeanList.get(index).getSortName();
         back_color = tMoneyBeanList.get(index).getBack_color();
