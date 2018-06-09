@@ -188,6 +188,13 @@ public class LocalRepository {
         mSession.getBBillDao().deleteInTx(bBills);
     }
 
+    /**
+     * 删除本地所有账单
+     */
+    public void deleteAllBills(){
+        deleteBills(getBBills());
+    }
+
     public Observable<Long> deleteBBillById(Long id) {
         mSession.getBBillDao().deleteByKey(id);
         return Observable.create(new ObservableOnSubscribe<Long>() {

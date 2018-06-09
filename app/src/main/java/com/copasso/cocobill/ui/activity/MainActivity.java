@@ -247,6 +247,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             MyUser.logOut();
+                            //清除本地数据
+                            LocalRepository.getInstance().deleteAllBills();
                             //刷新账户数据
                             setDrawerHeaderAccount();
                         }
