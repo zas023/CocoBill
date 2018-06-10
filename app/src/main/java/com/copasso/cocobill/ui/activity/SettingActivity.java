@@ -2,6 +2,7 @@ package com.copasso.cocobill.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.common.Constants;
+import com.copasso.cocobill.model.repository.LocalRepository;
 import com.copasso.cocobill.utils.*;
 import com.copasso.cocobill.widget.CommonItemLayout;
 import okhttp3.Call;
@@ -46,6 +48,8 @@ public class SettingActivity extends BaseActivity {
     CommonItemLayout sortCL;
     @BindView(R.id.cil_pay)
     CommonItemLayout payCL;
+    @BindView(R.id.cil_export)
+    CommonItemLayout exportCL;
 
     private AlertDialog pwDialog;
     private AlertDialog cacheDialog;
@@ -79,7 +83,8 @@ public class SettingActivity extends BaseActivity {
      * 监听点击事件
      * @param view
      */
-    @OnClick({R.id.cil_forget,R.id.cil_change,R.id.cil_store, R.id.cil_sort,R.id.cil_pay})
+    @OnClick({R.id.cil_forget,R.id.cil_change,R.id.cil_store,
+            R.id.cil_sort,R.id.cil_pay,R.id.cil_export})
     public void onViewClicked(final View view) {
         switch (view.getId()) {
             case R.id.cil_change:  //修改密码
@@ -97,6 +102,13 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.cil_pay:  //支付方式管理
                 startActivity(new Intent(this,PayEditActivity.class));
+                break;
+            case R.id.cil_export:
+                if (ExcelUtils.export(LocalRepository.getInstance().getBBills(),
+                        Environment.getExternalStorageDirectory().getAbsolutePath()+"/cocoBill.xls"))
+                    SnackbarUtils.show(this,"导出成功");
+                else
+                    SnackbarUtils.show(this,"导出失败");
                 break;
             default:
                 break;
