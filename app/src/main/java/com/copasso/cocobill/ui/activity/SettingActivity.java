@@ -104,9 +104,9 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(this,PayEditActivity.class));
                 break;
             case R.id.cil_export:
-                if (ExcelUtils.export(LocalRepository.getInstance().getBBills(),
-                        Environment.getExternalStorageDirectory().getAbsolutePath()+"/cocoBill.xls"))
-                    SnackbarUtils.show(this,"导出成功");
+                String filename=Environment.getExternalStorageDirectory().getAbsolutePath()+"/cocoBill.xls";
+                if (ExcelUtils.export(LocalRepository.getInstance().getBBills(), filename))
+                    SnackbarUtils.show(this,"导出成功,文件目录："+filename);
                 else
                     SnackbarUtils.show(this,"导出失败");
                 break;
