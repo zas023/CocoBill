@@ -76,6 +76,8 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     // bmob
     compile 'cn.bmob.android:bmob-sdk:3.5.5'
+    // poi
+    compile 'org.apache.poi:poi:3.17'
 
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
