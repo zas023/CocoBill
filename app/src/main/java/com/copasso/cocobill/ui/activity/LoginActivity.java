@@ -151,12 +151,8 @@ public class LoginActivity extends BaseActivity implements UserLogView {
     public void loadDataSuccess(MyUser tData) {
         ProgressUtils.dismiss();
         if (isLogin) {
-            if (tData.getEmailVerified()) {
-                setResult(RESULT_OK, new Intent());
-                finish();
-            } else {
-                SnackbarUtils.show(mContext, "请先登陆邮箱激活账号");
-            }
+            setResult(RESULT_OK, new Intent());
+            finish();
         }else {
             SnackbarUtils.show(mContext, "注册成功，请先登陆邮箱验证后登陆");
         }
