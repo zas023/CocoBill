@@ -154,7 +154,7 @@ public class LoginActivity extends BaseActivity implements UserLogView {
             setResult(RESULT_OK, new Intent());
             finish();
         }else {
-            SnackbarUtils.show(mContext, "注册成功，请先登陆邮箱验证后登陆");
+            SnackbarUtils.show(mContext, "注册成功");
         }
 
     }
