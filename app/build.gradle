@@ -12,7 +12,7 @@ android {
         //兼容Android6.0系统所需
         useLibrary 'org.apache.http.legacy'
         versionCode 1
-        versionName "2.0"
+        versionName "2.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
