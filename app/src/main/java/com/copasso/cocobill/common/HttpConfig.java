@@ -1,9 +1,11 @@
 package com.copasso.cocobill.common;
 
 /**
- * Created by zhouas666 on 2018/1/19.\
+ * Created by zhouas666 on 2018/1/19.
  * 关于网络的配置
  */
+
+@Deprecated
 public class HttpConfig {
     public static int HTTP_TIME=30000;
     //网络请求
