@@ -1,7 +1,6 @@
 package com.copasso.cocobill.model.bean.local;
 
 import com.copasso.cocobill.model.bean.BaseBean;
-import com.copasso.cocobill.utils.StringUtils;
 
 import java.util.List;
 

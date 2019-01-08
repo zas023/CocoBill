@@ -7,13 +7,15 @@ import com.copasso.cocobill.model.gen.BBillDao;
 import com.copasso.cocobill.model.gen.BSortDao;
 import com.copasso.cocobill.model.gen.DaoSession;
 import com.copasso.cocobill.utils.DateUtils;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 public class LocalRepository {
 

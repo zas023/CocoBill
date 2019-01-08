@@ -24,7 +24,7 @@ public class BPay {
 
     @Generated(hash = 572465971)
     public BPay(Long id, String payName, String payImg, float income,
-            float outcome) {
+                float outcome) {
         this.id = id;
         this.payName = payName;
         this.payImg = payImg;

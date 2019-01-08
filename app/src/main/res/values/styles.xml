@@ -169,7 +169,7 @@
     <style name="AboutPage.Header"/>
 
     <style name="AboutPage.Header.ToolbarTitleExpanded"
-           parent="@android:style/TextAppearance">
+        parent="@android:style/TextAppearance">
         <item name="android:textColor">#00000000</item>
     </style>
 
@@ -199,7 +199,7 @@
     </style>
 
     <style name="Toolbar.TextAppearance"
-           parent="@android:style/TextAppearance">
+        parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/textWhite</item>
         <item name="android:textSize">@dimen/text20</item>
     </style>

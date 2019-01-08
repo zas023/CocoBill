@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">CocoBill</string>
 
-
     <!-- main activity -->
     <string name="first_title">明细</string>
     <string name="second_title">记一笔</string>
@@ -77,3 +76,4 @@
     <string name="load_sign">正在注册中&#8230;</string>
 
 </resources>
+

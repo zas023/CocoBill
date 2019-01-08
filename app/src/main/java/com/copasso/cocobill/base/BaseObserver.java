@@ -2,13 +2,15 @@ package com.copasso.cocobill.base;
 
 import android.accounts.NetworkErrorException;
 import android.content.Context;
+
 import com.copasso.cocobill.model.bean.BaseBean;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeoutException;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by zhouas666 on 2018/1/19.

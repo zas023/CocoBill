@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
+
 import com.copasso.cocobill.MyApplication;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by zhouas666 on 2017/12/24.

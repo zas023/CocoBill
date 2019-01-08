@@ -1,5 +1,17 @@
 package com.copasso.cocobill.model.repository;
 
+import com.copasso.cocobill.model.bean.local.BBill;
+import com.copasso.cocobill.model.bean.remote.CoBill;
+import com.copasso.cocobill.model.event.SyncEvent;
+import com.copasso.cocobill.utils.BillUtils;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -7,16 +19,6 @@ import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
-import com.copasso.cocobill.model.bean.local.BBill;
-import com.copasso.cocobill.model.bean.remote.CoBill;
-import com.copasso.cocobill.model.event.SyncEvent;
-import com.copasso.cocobill.utils.BillUtils;
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class BmobRepository {
 

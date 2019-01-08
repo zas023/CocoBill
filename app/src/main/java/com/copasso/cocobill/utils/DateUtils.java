@@ -1,8 +1,6 @@
 package com.copasso.cocobill.utils;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +8,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * 日期时间工具类

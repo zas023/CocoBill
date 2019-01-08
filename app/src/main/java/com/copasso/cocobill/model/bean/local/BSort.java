@@ -23,7 +23,7 @@ public class BSort{
 
     @Generated(hash = 1031921844)
     public BSort(Long id, String sortName, String sortImg, float cost,
-            Boolean income) {
+                 Boolean income) {
         this.id = id;
         this.sortName = sortName;
         this.sortImg = sortImg;

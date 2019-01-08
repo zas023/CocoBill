@@ -1,7 +1,8 @@
 package com.copasso.cocobill.model.bean.remote;
 
-import cn.bmob.v3.BmobObject;
 import com.copasso.cocobill.model.bean.local.BBill;
+
+import cn.bmob.v3.BmobObject;
 
 /**
  * 服务器端账单bean
