@@ -16,7 +16,12 @@ import com.copasso.cocobill.utils.ProgressUtils;
 import com.copasso.cocobill.utils.SnackbarUtils;
 import com.copasso.cocobill.utils.StringUtils;
 import com.copasso.cocobill.widget.OwlView;
-
+/**
+ * Created by Zhouas666 on 2019-01-10
+ * Github: https://github.com/zas023
+ * <p>
+ * 用户登录、注册activity
+ */
 public class LandActivity extends BaseMVPActivity<LandContract.Presenter>
         implements LandContract.View, View.OnFocusChangeListener, View.OnClickListener {
 
@@ -34,7 +39,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter>
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_land;
+        return R.layout.activity_user_land;
     }
 
     @Override

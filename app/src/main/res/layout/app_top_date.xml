@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="@color/white"
+    android:background="?attr/colorPrimary"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-            android:id="@+id/top_ll_out"
+        android:id="@+id/top_ll_out"
         android:layout_weight="1.5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="本月支出(元)"
-            android:textColor="@color/text_black6"
+            android:text="当月支出(元)"
+            android:textColor="@color/textWhite"
             android:textSize="13sp"
             android:singleLine="true"/>
         <TextView
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.00"
-            android:textColor="@color/text_black6"
+            android:textColor="@color/textWhite"
             android:textSize="20sp"
             android:singleLine="true"/>
 
@@ -40,12 +41,13 @@
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="本月收入(元)"
-            android:textColor="@color/text_black6"
+            android:text="当月收入(元)"
+            android:textColor="@color/textWhite"
             android:textSize="13sp"
             android:singleLine="true"/>
         <TextView
@@ -54,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.00"
-            android:textColor="@color/text_black6"
+            android:textColor="@color/textWhite"
             android:textSize="20sp"
             android:singleLine="true"/>
 
@@ -71,12 +73,13 @@
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="结余(元)"
-            android:textColor="@color/text_black6"
+            android:textColor="@color/textWhite"
             android:textSize="15sp"
             android:singleLine="true"/>
         <TextView
@@ -85,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.00"
-            android:textColor="@color/text_black6"
+            android:textColor="@color/textWhite"
             android:textSize="20sp"
             android:singleLine="true"/>
 

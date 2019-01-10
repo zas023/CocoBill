@@ -18,7 +18,7 @@ public interface MonthListContract extends BaseContract {
 
     interface Presenter extends BaseContract.BasePresenter<View> {
 
-        void getMonthList(int id, String year, String month);
+        void getMonthList(String id, String year, String month);
 
         void deleteBill(Long id);
 

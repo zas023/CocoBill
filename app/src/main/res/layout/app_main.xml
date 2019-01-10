@@ -16,6 +16,8 @@
 
         <include layout="@layout/app_toolbar"/>
 
+        <include layout="@layout/app_top_date"/>
+
         <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tablayout"
                 android:layout_width="match_parent"

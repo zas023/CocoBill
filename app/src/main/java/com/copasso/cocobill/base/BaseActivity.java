@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.copasso.cocobill.R;
+import com.copasso.cocobill.utils.ThemeManager;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -84,15 +85,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void processLogic() {
     }
 
+    protected void beforeDestroy() {
+    }
+
     /*************************lifecycle*****************************************************/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 设置 Activity 屏幕方向
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 隐藏 ActionBar
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // 设置主题色，，，一定要在setView之前
+        ThemeManager.getInstance().init(this);
+
         setContentView(getLayoutId());
         mActivity = this;
         mContext = this;
@@ -119,6 +127,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        beforeDestroy();
         if (mDisposable != null) {
             mDisposable.dispose();
         }

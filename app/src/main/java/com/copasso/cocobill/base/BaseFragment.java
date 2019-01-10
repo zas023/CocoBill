@@ -69,6 +69,10 @@ public abstract class BaseFragment extends Fragment {
     protected void initWidget(Bundle savedInstanceState){
     }
 
+    protected void beforeDestroy(){
+
+    }
+
     /******************************lifecycle area*****************************************/
     @Nullable
     @Override
@@ -91,7 +95,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
+        beforeDestroy();
         if (mDisposable != null){
             mDisposable.clear();
         }

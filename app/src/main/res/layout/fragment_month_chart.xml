@@ -1,0 +1,246 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:scrollbars="none">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:paddingBottom="10dp">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_centerInParent="true"
+                        android:background="@mipmap/tally_pie_center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="30dp">
+
+                        <!--再嵌套了一层，padding="20dp"，是为了避免点击区域覆盖饼状图的区域-->
+                        <LinearLayout
+                            android:id="@+id/layout_center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/center_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="总支出"
+                                android:textColor="@color/text_black6"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/center_money"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="0.00"
+                                android:textColor="@color/text_black3"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:id="@+id/center_img"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:src="@mipmap/tallybook_input" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layout_typedata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/item_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:paddingLeft="12dp">
+
+
+                        <RelativeLayout
+                            android:id="@+id/layout_circle"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_centerVertical="true">
+
+                            <com.copasso.cocobill.widget.CircleImageView
+                                android:id="@+id/circle_bg"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:src="#F28B3D" />
+
+                            <ImageView
+                                android:id="@+id/circle_img"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/tallybook_other" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="11dp"
+                            android:layout_toRightOf="@+id/layout_circle"
+                            android:text="商城消费"
+                            android:textColor="@color/text_black3"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dp"
+                            android:drawableRight="@mipmap/arrow_right"
+                            android:drawablePadding="5dp"
+                            android:text="0.00"
+                            android:textColor="@color/text_black3"
+                            android:textSize="13sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#DCDCDC"></View>
+
+                    <TextView
+                        android:id="@+id/rank_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/white"
+                        android:gravity="bottom"
+                        android:paddingLeft="12dp"
+                        android:paddingBottom="3dp"
+                        android:text="商城消费排行榜"
+                        android:textColor="@color/text_black6"
+                        android:textSize="13sp" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+
+                    <RelativeLayout
+                        android:id="@+id/item_other"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/white"
+                        android:paddingLeft="12dp">
+
+
+                        <RelativeLayout
+                            android:id="@+id/layout_other"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_centerVertical="true">
+
+                            <com.copasso.cocobill.widget.CircleImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:src="#AAAAAA" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/tallybook_other" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="11dp"
+                            android:layout_toRightOf="@+id/layout_other"
+                            android:text="其他"
+                            android:textColor="@color/text_black3"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="不计入收入"
+                            android:textColor="@color/text_black3"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/other_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dp"
+                            android:drawableRight="@mipmap/arrow_right"
+                            android:drawablePadding="5dp"
+                            android:text="0.00"
+                            android:textColor="@color/text_black3"
+                            android:textSize="13sp" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

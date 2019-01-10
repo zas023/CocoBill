@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/app_toolbar"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            tools:targetApi="lollipop">
+
+
+        <com.copasso.cocobill.widget.CommonItemLayout
+                android:id="@+id/cil_change"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="修改密码"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+
+        <com.copasso.cocobill.widget.CommonItemLayout
+                android:id="@+id/cil_forget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="忘记密码"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            tools:targetApi="lollipop">
+
+        <com.copasso.cocobill.widget.CommonItemLayout
+                android:id="@+id/cil_store"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="清除缓存"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightText="0.00 byte"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            tools:targetApi="lollipop">
+
+
+        <com.copasso.cocobill.widget.CommonItemLayout
+                android:id="@+id/cil_sort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="账单分类"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+
+        <com.copasso.cocobill.widget.CommonItemLayout
+                android:id="@+id/cil_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="支付方式"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            tools:targetApi="lollipop">
+
+
+        <com.copasso.cocobill.widget.CommonItemLayout
+                android:id="@+id/cil_export"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cil_leftText="导出账单"
+                app:cil_leftTextColor="@color/textBrown"
+                app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+</LinearLayout>

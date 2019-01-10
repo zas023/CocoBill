@@ -31,12 +31,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.LandActivity"></activity>
+        <activity
+            android:name=".ui.activity.LandActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.BillAddActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.UserInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SettingActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.copasso.cocobill.BmobContentProvider">
         </provider>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

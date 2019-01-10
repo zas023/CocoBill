@@ -46,6 +46,15 @@ dependencies {
     //Dialogs
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
+    //PickerView
+    implementation 'com.contrarywind:Android-PickerView:4.1.6'
+
+    //About
+    implementation 'me.drakeet.support:about:2.2.0'
+
+    //Multitype
+    implementation 'me.drakeet.multitype:multitype-ktx:3.5.0'
+
     //Greendao
     implementation 'org.greenrobot:greendao:3.2.2'
 

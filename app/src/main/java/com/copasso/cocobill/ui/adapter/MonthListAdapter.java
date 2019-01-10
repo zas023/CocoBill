@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -92,7 +91,7 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
     public void onBindItemViewHolder(ItemViewHolder viewHolder, final int section, final int position) {
         final MyItemViewHolder holder = (MyItemViewHolder) viewHolder;
 
-        BBill bBill=mDatas.get(section).getList().get(position);
+        BBill bBill = mDatas.get(section).getList().get(position);
         holder.item_title.setText(bBill.getSortName());
         holder.item_img.setImageDrawable(ImageUtils.getDrawable(bBill.getSortImg()));
         if (bBill.isIncome()) {
@@ -137,7 +136,7 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
             public void onClick(View view) {
                 new MaterialDialog.Builder(mContext)
                         .title(bBill.getSortName())
-                        .content("\t\t"+Math.abs(bBill.getCost()) + "元\n\t\t"+bBill.getContent())
+                        .content("\t\t" + Math.abs(bBill.getCost()) + "元\n\t\t" + bBill.getContent())
                         .positiveText("朕知道了")
                         .icon(ImageUtils.getDrawable(bBill.getSortImg()))
                         .limitIconToDefaultSize()
@@ -151,6 +150,7 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
      */
     public interface OnStickyHeaderClickListener {
         void OnDeleteClick(BBill item, int section, int offset);
+
         void OnEditClick(BBill item, int section, int offset);
     }
 
