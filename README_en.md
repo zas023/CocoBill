@@ -1,6 +1,7 @@
 # CocoBill
 English Version | [中文版](https://github.com/zas023/CocoBill/blob/master/README.md)
-:closed_book:A lightweight billing tool.
+
+:closed_book:A lightweight billing tool
 
 In our daily life, We often don't know where money is spent on. But we are not really like to write it down on our account book to manage it.
 When it comes to book-keeping, each of us has his own needs. It is must be an interesting thing, from my perspective, to develop an application for himself.
