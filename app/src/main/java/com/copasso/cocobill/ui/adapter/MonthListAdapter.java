@@ -1,7 +1,6 @@
 package com.copasso.cocobill.ui.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.copasso.cocobill.R;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.MonthListBean;
+import com.copasso.cocobill.utils.DateUtils;
 import com.copasso.cocobill.utils.ImageUtils;
 import com.copasso.cocobill.widget.SwipeMenuView;
 import com.copasso.cocobill.widget.stickyheader.StickyHeaderGridAdapter;
@@ -21,6 +21,9 @@ import com.copasso.cocobill.widget.stickyheader.StickyHeaderGridAdapter;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+
+import static com.copasso.cocobill.utils.DateUtils.FORMAT_HMS_CN;
+import static com.copasso.cocobill.utils.DateUtils.FORMAT_YMD_CN;
 
 /**
  * 悬浮头部项
@@ -101,47 +104,36 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
         }
 
         //监听侧滑删除事件
-        holder.item_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int section = getAdapterPositionSection(holder.getAdapterPosition());
-                final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
+        holder.item_delete.setOnClickListener(v -> {
+            final int section1 = getAdapterPositionSection(holder.getAdapterPosition());
+            final int offset1 = getItemSectionOffset(section1, holder.getAdapterPosition());
 
-//                确认删除
-                new AlertDialog.Builder(mContext).setTitle("是否删除此条记录")
-                        .setNegativeButton("取消", null)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                onStickyHeaderClickListener
-                                        .OnDeleteClick(mDatas.get(section).getList().get(offset), section, offset);
-                            }
-                        })
-                        .show();
-            }
+            new AlertDialog.Builder(mContext).setTitle("是否删除此条记录")
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        onStickyHeaderClickListener
+                                .OnDeleteClick(mDatas.get(section1).getList().get(offset1), section1, offset1);
+                    })
+                    .show();
         });
         //监听侧滑编辑事件
-        holder.item_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int section = getAdapterPositionSection(holder.getAdapterPosition());
-                final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
-                onStickyHeaderClickListener.OnEditClick(
-                        mDatas.get(section).getList().get(offset), section, offset);
-            }
+        holder.item_edit.setOnClickListener(v -> {
+            final int section1 = getAdapterPositionSection(holder.getAdapterPosition());
+            final int offset1 = getItemSectionOffset(section1, holder.getAdapterPosition());
+            onStickyHeaderClickListener.OnEditClick(
+                    mDatas.get(section1).getList().get(offset1), section1, offset1);
         });
         //监听单击显示详情事件
-        holder.item_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialDialog.Builder(mContext)
-                        .title(bBill.getSortName())
-                        .content("\t\t" + Math.abs(bBill.getCost()) + "元\n\t\t" + bBill.getContent())
-                        .positiveText("朕知道了")
-                        .icon(ImageUtils.getDrawable(bBill.getSortImg()))
-                        .limitIconToDefaultSize()
-                        .show();
-            }
+        holder.item_layout.setOnClickListener(v -> {
+            new MaterialDialog.Builder(mContext)
+                    .title(bBill.getSortName())
+                    .content("\t\t" + Math.abs(bBill.getCost()) + "元\n\t\t" + bBill.getContent()
+                            +"\n\n\t\t"+DateUtils.long2Str(bBill.getCrdate(), FORMAT_YMD_CN)
+                            +"\n\t\t"+DateUtils.long2Str(bBill.getCrdate(), FORMAT_HMS_CN))
+                    .positiveText("朕知道了")
+                    .icon(ImageUtils.getDrawable(bBill.getSortImg()))
+                    .limitIconToDefaultSize()
+                    .show();
         });
     }
 
@@ -160,8 +152,8 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
 
         MyHeaderViewHolder(View itemView) {
             super(itemView);
-            header_date = (TextView) itemView.findViewById(R.id.header_date);
-            header_money = (TextView) itemView.findViewById(R.id.header_money);
+            header_date = itemView.findViewById(R.id.header_date);
+            header_money = itemView.findViewById(R.id.header_money);
         }
     }
 
@@ -176,13 +168,13 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
 
         MyItemViewHolder(View itemView) {
             super(itemView);
-            item_title = (TextView) itemView.findViewById(R.id.item_title);
-            item_money = (TextView) itemView.findViewById(R.id.item_money);
-            item_delete = (Button) itemView.findViewById(R.id.item_delete);
-            item_edit = (Button) itemView.findViewById(R.id.item_edit);
-            item_img = (ImageView) itemView.findViewById(R.id.item_img);
-            item_layout = (RelativeLayout) itemView.findViewById(R.id.item_layout);
-            mSwipeMenuView = (SwipeMenuView) itemView.findViewById(R.id.swipe_menu);
+            item_title = itemView.findViewById(R.id.item_title);
+            item_money = itemView.findViewById(R.id.item_money);
+            item_delete = itemView.findViewById(R.id.item_delete);
+            item_edit = itemView.findViewById(R.id.item_edit);
+            item_img = itemView.findViewById(R.id.item_img);
+            item_layout = itemView.findViewById(R.id.item_layout);
+            mSwipeMenuView = itemView.findViewById(R.id.swipe_menu);
         }
     }
 }

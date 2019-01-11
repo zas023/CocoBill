@@ -134,7 +134,7 @@ public class MonthChartFragment extends BaseMVPFragment<MonthChartContract.Prese
 
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MultiTypeAdapter();
-        adapter.register(BBill.class, new MonthChartBillViewBinder());
+        adapter.register(BBill.class, new MonthChartBillViewBinder(mContext));
         rvList.setAdapter(adapter);
 
     }

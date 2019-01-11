@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:paddingLeft="12dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="12dp"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:id="@+id/root"
+    android:layout_height="50dp">
 
     <TextView
         android:id="@+id/rank"
