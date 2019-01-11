@@ -1,4 +1,7 @@
 # CocoBill
+
+[English Version](#cocobill) | 中文版
+
 :closed_book:一个数据存储使用的Bmob,采用MVP架构的Android记账本APP
 
 在我们生活中经常不知道钱花在什么地方，但是我们自己又不是很想写在记账本上进行管理,因为关于记账，我们每个人都有自己的需求，虽然市面上有许多优秀的记账app,所以对于自己来说，开发一个属于自己的软件来记账是个非常有趣的事情，但一直因为时间安排的原因未能实现。 
@@ -81,3 +84,7 @@ v0.3.1: 2017.12.28
 - Greendao: https://github.com/greenrobot/greenDAO
 - Eventbus: https://github.com/greenrobot/eventbus
 - Bmob: https://bmob.cn
+
+# CocoBill
+
+English Version | [中文版](#CocoBill)
