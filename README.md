@@ -1,5 +1,4 @@
 # CocoBill
-
 [English Version](https://github.com/zas023/CocoBill/blob/master/README_en.md) | 中文版
 
 :closed_book:一个数据存储使用的Bmob,采用MVP架构的Android记账本APP
@@ -13,7 +12,7 @@ PS：最近很多人问我有关后台的问题，后台数据服务使用的是
 
 整体项目（源码及数据库结构）我发布在 https://www.bmob.cn/shop/detail/448 上，购买后可以一键迁移我的数据库结构到你的账号里。创建bmob账号选择免费版的就完全够用，除非你用户量过10万了。
 
-### 下载资源
+## 下载资源
 
 发布在以下平台：
 
@@ -21,7 +20,7 @@ PS：最近很多人问我有关后台的问题，后台数据服务使用的是
 | ---- | ---- |
 | 酷安 | <a href='https://www.coolapk.com/apk/174308'><img alt='去酷安下载' src='https://ws4.sinaimg.cn/large/006tNc79ly1fsphx16ybdj30go06st8q.jpg' height="60"/></a> |
 
-### 版本日志
+## 版本日志
 
 v2:后台使用Bmob后端云
 
@@ -42,7 +41,7 @@ v0.3.1: 2017.12.28
 - 添加账单分类管理；
 - 添加侧滑删除编辑；
 
-### 程序效果
+## 程序效果
 <p>
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2019-01-11-15-51-35-185_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2019-01-11-15-51-44-801_com.copasso.co.png" />
@@ -58,7 +57,7 @@ v0.3.1: 2017.12.28
 ##### 注：本程序素材来源网络，如有影响你的权益，请及时联系本人
 
 
-### TODO
+## TODO
 - [x] 帐薄总支出、收入显示。
 - [x] 账目数据增加编辑功能。
 - [x] 账目数据增加归类功能。
@@ -70,7 +69,7 @@ v0.3.1: 2017.12.28
 - [ ] 应用瘦身。
 - [ ] 密码锁功能。
 
-### Thanks to
+## Thanks
 - butterknife: https://github.com/JakeWharton/butterknife
 - glide: https://github.com/bumptech/glide
 - okhttp: https://github.com/square/okhttp
