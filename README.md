@@ -11,13 +11,23 @@ PS：最近很多人问我有关后台的问题，后台数据服务使用的是
 整体项目（源码及数据库结构）我发布在 https://www.bmob.cn/shop/detail/448 上，购买后可以一键迁移我的数据库结构到你的账号里。创建bmob账号选择免费版的就完全够用，除非你用户量过10万了。
 
 ### 下载资源
-应用下载地址(酷安)：https://www.coolapk.com/apk/174308
+
+发布在以下平台：
+
+| 平台 | 下载地址 |
+| ---- | ---- |
+| 酷安 | <a href='https://www.coolapk.com/apk/174308'><img alt='去酷安下载' src='https://ws4.sinaimg.cn/large/006tNc79ly1fsphx16ybdj30go06st8q.jpg' height="60"/>
+</a> |
 
 ### 版本日志
 
 v2:后台使用Bmob后端云
 
 v1:后台地址(采用ssm框架)：https://github.com/zas023/ssmBillBook
+
+v0.5.1: 2019.1.11
+- 更新依赖；
+- 重构项目，优化结构；
 
 v0.4.1: 2018.03.31
 - 添加本地账单；
