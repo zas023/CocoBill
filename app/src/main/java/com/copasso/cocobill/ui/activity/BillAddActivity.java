@@ -43,6 +43,7 @@ import static com.copasso.cocobill.utils.DateUtils.FORMAT_D;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_M;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_Y;
 import static com.copasso.cocobill.utils.DateUtils.FORMAT_YMD;
+
 /**
  * Created by Zhouas666 on 2019-01-10
  * Github: https://github.com/zas023
@@ -241,6 +242,24 @@ public class BillAddActivity extends BaseMVPActivity<BillContract.Presenter>
     }
 
     /**
+     * 监听Activity返回结果
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 0:
+                    mPresenter.getBillNote();
+                    break;
+            }
+        }
+    }
+
+    /**
      * 显示支付方式选择器
      */
     public void showPayinfoSelector() {
@@ -323,15 +342,15 @@ public class BillAddActivity extends BaseMVPActivity<BillContract.Presenter>
 
         ProgressUtils.show(mContext, "正在提交...");
         BBill bBill;
-        if (isEdit){
-            bBill=new BBill(bundle.getLong("id"),bundle.getString("rid"),
-                    Float.valueOf(num + dotNum),remarkInput,MyApplication.getCurrentUserId(),
+        if (isEdit) {
+            bBill = new BBill(bundle.getLong("id"), bundle.getString("rid"),
+                    Float.valueOf(num + dotNum), remarkInput, MyApplication.getCurrentUserId(),
                     noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
                     noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(),
-                    lastBean.getSortName(),lastBean.getSortImg(),
-                    DateUtils.getMillis(crDate),!isOutcome,bundle.getInt("version")+1);
+                    lastBean.getSortName(), lastBean.getSortImg(),
+                    DateUtils.getMillis(crDate), !isOutcome, bundle.getInt("version") + 1);
             mPresenter.updateBill(bBill);
-        }else {
+        } else {
             bBill = new BBill(null, null, Float.valueOf(num + dotNum), remarkInput,
                     MyApplication.getCurrentUserId(),
                     noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
@@ -442,14 +461,14 @@ public class BillAddActivity extends BaseMVPActivity<BillContract.Presenter>
         List<BSort> tempData = new ArrayList<>();
         tempData.addAll(mDatas);
         //末尾加上添加选项
-        tempData.add(new BSort(null, "添加", "sort_tianjia.png", 0, null));
+        tempData.add(new BSort(null, "添加", "sort_tianjia.png", 0, 0, null));
         if (tempData.size() % 15 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(tempData.size() * 1.0 / 15);
         for (int i = 0; i < page; i++) {
             tempList = new ArrayList<>();
             View view = inflater.inflate(R.layout.item_tb_type_page, null);
-            RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
+            RecyclerView recycle = view.findViewById(R.id.pager_type_recycle);
             if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 15; j++) {
                     tempList.add(tempData.get(i * 15 + j));
@@ -468,9 +487,9 @@ public class BillAddActivity extends BaseMVPActivity<BillContract.Presenter>
                     index = index + viewpagerItem.getCurrentItem() * 15;
                     if (index == mDatas.size()) {
                         //修改分类
-//                        Intent intent = new Intent(BillAddActivity.this, SortEditActivity.class);
-//                        intent.putExtra("type", isOutcome);
-//                        startActivityForResult(intent, 0);
+                        Intent intent = new Intent(mContext, BillSortActivity.class);
+                        intent.putExtra("type", isOutcome);
+                        startActivityForResult(intent, 0);
                     } else {
                         //选择分类
                         lastBean = mDatas.get(index);

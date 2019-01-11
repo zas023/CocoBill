@@ -253,7 +253,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void exitUser(){
         new MaterialDialog.Builder(mContext)
-                .title("清除缓存")
+                .title("确认退出")
+                .content("退出后将清空所有数据")
                 .positiveText("确定")
                 .onPositive((dialog, which) -> {
                     GlideCacheUtil.getInstance().clearImageDiskCache(mContext);

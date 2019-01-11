@@ -46,6 +46,9 @@
         <activity
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.BillSortActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"

@@ -27,8 +27,9 @@ public class BSortDao extends AbstractDao<BSort, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property SortName = new Property(1, String.class, "sortName", false, "SORT_NAME");
         public final static Property SortImg = new Property(2, String.class, "sortImg", false, "SORT_IMG");
-        public final static Property Cost = new Property(3, float.class, "cost", false, "COST");
-        public final static Property Income = new Property(4, Boolean.class, "income", false, "INCOME");
+        public final static Property Priority = new Property(3, int.class, "priority", false, "PRIORITY");
+        public final static Property Cost = new Property(4, float.class, "cost", false, "COST");
+        public final static Property Income = new Property(5, Boolean.class, "income", false, "INCOME");
     }
 
 
@@ -47,8 +48,9 @@ public class BSortDao extends AbstractDao<BSort, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"SORT_NAME\" TEXT," + // 1: sortName
                 "\"SORT_IMG\" TEXT," + // 2: sortImg
-                "\"COST\" REAL NOT NULL ," + // 3: cost
-                "\"INCOME\" INTEGER);"); // 4: income
+                "\"PRIORITY\" INTEGER NOT NULL ," + // 3: priority
+                "\"COST\" REAL NOT NULL ," + // 4: cost
+                "\"INCOME\" INTEGER);"); // 5: income
     }
 
     /** Drops the underlying database table. */
@@ -75,11 +77,12 @@ public class BSortDao extends AbstractDao<BSort, Long> {
         if (sortImg != null) {
             stmt.bindString(3, sortImg);
         }
-        stmt.bindDouble(4, entity.getCost());
+        stmt.bindLong(4, entity.getPriority());
+        stmt.bindDouble(5, entity.getCost());
  
         Boolean income = entity.getIncome();
         if (income != null) {
-            stmt.bindLong(5, income ? 1L: 0L);
+            stmt.bindLong(6, income ? 1L: 0L);
         }
     }
 
@@ -101,11 +104,12 @@ public class BSortDao extends AbstractDao<BSort, Long> {
         if (sortImg != null) {
             stmt.bindString(3, sortImg);
         }
-        stmt.bindDouble(4, entity.getCost());
+        stmt.bindLong(4, entity.getPriority());
+        stmt.bindDouble(5, entity.getCost());
  
         Boolean income = entity.getIncome();
         if (income != null) {
-            stmt.bindLong(5, income ? 1L: 0L);
+            stmt.bindLong(6, income ? 1L: 0L);
         }
     }
 
@@ -120,8 +124,9 @@ public class BSortDao extends AbstractDao<BSort, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // sortName
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // sortImg
-            cursor.getFloat(offset + 3), // cost
-            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0 // income
+            cursor.getInt(offset + 3), // priority
+            cursor.getFloat(offset + 4), // cost
+            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0 // income
         );
         return entity;
     }
@@ -131,8 +136,9 @@ public class BSortDao extends AbstractDao<BSort, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setSortName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setSortImg(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setCost(cursor.getFloat(offset + 3));
-        entity.setIncome(cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0);
+        entity.setPriority(cursor.getInt(offset + 3));
+        entity.setCost(cursor.getFloat(offset + 4));
+        entity.setIncome(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
      }
     
     @Override

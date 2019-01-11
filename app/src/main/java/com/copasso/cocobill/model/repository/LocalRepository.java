@@ -143,9 +143,9 @@ public class LocalRepository {
         NoteBean note = new NoteBean();
         note.setPayinfo(mSession.getBPayDao().queryBuilder().list());
         note.setInSortlis(mSession.getBSortDao().queryBuilder()
-                .where(BSortDao.Properties.Income.eq(true)).list());
+                .where(BSortDao.Properties.Income.eq(true)).orderAsc(BSortDao.Properties.Priority).list());
         note.setOutSortlis(mSession.getBSortDao().queryBuilder()
-                .where(BSortDao.Properties.Income.eq(false)).list());
+                .where(BSortDao.Properties.Income.eq(false)).orderAsc(BSortDao.Properties.Priority).list());
         return note;
     }
 
@@ -177,6 +177,15 @@ public class LocalRepository {
                 e.onComplete();
             }
         });
+    }
+
+    /**
+     * 批量更新账单分类
+     *
+     * @param items
+     */
+    public void updateBSoers(List<BSort> items){
+        mSession.getBSortDao().updateInTx(items);
     }
 
     /******************************delete**************************************/

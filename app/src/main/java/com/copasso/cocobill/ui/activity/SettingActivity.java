@@ -106,7 +106,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 showCacheDialog();
                 break;
             case R.id.cil_sort:  //账单分类管理
-//                startActivity(new Intent(this,SortEditActivity.class));
+                startActivity(new Intent(mContext,BillSortActivity.class));
                 break;
             case R.id.cil_pay:  //支付方式管理
 //                startActivity(new Intent(this,PayEditActivity.class));
@@ -159,7 +159,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void showChangeDialog() {
 
         new MaterialDialog.Builder(mContext)
-                .title("清除缓存")
+                .title("修改密码")
                 .customView(R.layout.dialog_change_password, false)
                 .positiveText("确定")
                 .onPositive((dialog, which) -> {

@@ -70,13 +70,13 @@ public class MonthListAdapter extends StickyHeaderGridAdapter {
 
     @Override
     public HeaderViewHolder onCreateHeaderViewHolder(ViewGroup parent, int headerType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_header, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_monthlist_header, parent, false);
         return new MyHeaderViewHolder(view);
     }
 
     @Override
     public ItemViewHolder onCreateItemViewHolder(ViewGroup parent, int itemType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_item, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_monthlist_item, parent, false);
         return new MyItemViewHolder(view);
     }
 
