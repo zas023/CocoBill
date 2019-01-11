@@ -25,6 +25,8 @@ v2:后台使用Bmob后端云
 
 v1:后台地址(采用ssm框架)：https://github.com/zas023/ssmBillBook
 
+----------------------------------------------------------------
+
 v0.5.1: 2019.1.11
 - 更新依赖；
 - 重构项目，优化结构；
@@ -41,7 +43,7 @@ v0.3.1: 2017.12.28
 - 添加账单分类管理；
 - 添加侧滑删除编辑；
 
-### 程序效果如下
+### 程序效果
 <p>
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2019-01-11-15-51-35-185_com.copasso.co.png" />
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2019-01-11-15-51-44-801_com.copasso.co.png" />
@@ -69,10 +71,14 @@ v0.3.1: 2017.12.28
 - [ ] 密码锁功能。
 
 ### Thanks to
- 1. butterknife: https://github.com/JakeWharton/butterknife
- 2. glide: https://github.com/bumptech/glide
- 3. okhttp: https://github.com/square/okhttp
- 4. MPAndroidChart: https://github.com/PhilJay/MPAndroidChart
- 5. Android-PickerView: https://github.com/Bigkoo/Android-PickerView
- 6. AwesomeSplash: https://github.com/ViksaaSkool/AwesomeSplash
-
+- butterknife: https://github.com/JakeWharton/butterknife
+- glide: https://github.com/bumptech/glide
+- okhttp: https://github.com/square/okhttp
+- MPAndroidChart: https://github.com/PhilJay/MPAndroidChart
+- Android-PickerView: https://github.com/Bigkoo/Android-PickerView
+- Material-dialogs: https://github.com/afollestad/material-dialogs
+- About: https://github.com/drakeet/about-page
+- Multitype: https://github.com/drakeet/MultiType
+- Greendao: https://github.com/greenrobot/greenDAO
+- Eventbus: https://github.com/greenrobot/eventbus
+- Bmob: https://bmob.cn
