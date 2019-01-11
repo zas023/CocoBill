@@ -1,6 +1,6 @@
 # CocoBill
 
-[English Version](#cocobill) | 中文版
+[English Version](https://github.com/zas023/CocoBill/blob/master/README_en.md) | 中文版
 
 :closed_book:一个数据存储使用的Bmob,采用MVP架构的Android记账本APP
 
@@ -37,8 +37,6 @@ v0.4.1: 2018.03.31
 - 实现账单同步；
 
 v0.3.1: 2017.12.28
-- 修复用户无法注册；
-- 修复修改账单无效；
 - 添加上传头像功能；
 - 添加修改主题功能；
 - 添加账单分类管理；
@@ -84,7 +82,3 @@ v0.3.1: 2017.12.28
 - Greendao: https://github.com/greenrobot/greenDAO
 - Eventbus: https://github.com/greenrobot/eventbus
 - Bmob: https://bmob.cn
-
-# CocoBill
-
-English Version | [中文版](#CocoBill)

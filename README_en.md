@@ -1,4 +1,5 @@
 # CocoBill
+English Version | [中文版](https://github.com/zas023/CocoBill/blob/master/README.md)
 :closed_book:A lightweight billing tool.
 
 In our daily life, We often don't know where money is spent on. But we are not really like to write it down on our account book to manage it.
@@ -52,7 +53,7 @@ v0.3.1: 2017.12.28
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2019-01-11-15-54-08-048_com.copasso.co.png" />
 </p>
 
-### Notice: Those material of this program. If affects your rights and interests, please let me know in time.
+##### Notice: Those material of this program. If affects your rights and interests, please let me know in time.
 
 
 ## Thanks
