@@ -11,13 +11,13 @@ CocoBill is a billing tool, there are no unnecessary permissions, no advertiseme
 My blog：http://blog.csdn.net/adminpd/article/details/78942212
 
 PS: Recently, many people have asked me about the data service. I used the server provided by Bmob. If you haven't heard of it, you can click there:https://www.bmob.cn/?invite_code=@qcg
-or google it. It's easy to use and free for personal developers and small companies. The whole project is released on https://www.bmob.cn/shop/detail/448, and you wil find it in your account after purchasing. Of course you can use the previous versions to use your own data service.
+or google it. It's easy to use and free for personal developers and small companies. The whole project is released on https://www.bmob.cn/shop/detail/448, and you will find it in your account after purchasing. Of course you can use the previous versions to use your own data service.
 
 ## Download
 
 released on the following platforms:
 
-| platform | Url |
+| platform | Link |
 | ---- | ---- |
 | Coolapk | <a href='https://www.coolapk.com/apk/174308'><img alt='download form coolapk' src='https://ws4.sinaimg.cn/large/006tNc79ly1fsphx16ybdj30go06st8q.jpg' height="60"/></a> |
 
@@ -25,7 +25,7 @@ released on the following platforms:
 
 v2: data service: [Bmob](https://www.bmob.cn/?invite_code=@qcg)
 
-v1: data service： https://github.com/zas023/ssmBillBook
+v1: data service：https://github.com/zas023/ssmBillBook
 
 
 v0.5.1: 2019.01.11
@@ -54,7 +54,7 @@ v0.3.1: 2017.12.28
 <img width="32%" src="https://github.com/zas023/CocoBill/blob/master/imgs/Screenshot_2019-01-11-15-54-08-048_com.copasso.co.png" />
 </p>
 
-##### Notice: Those material of this program. If affects your rights and interests, please let me know in time.
+##### Notice: Those material of this program from internet. If affects your rights and interests, please let me know in time.
 
 
 ## Thanks
