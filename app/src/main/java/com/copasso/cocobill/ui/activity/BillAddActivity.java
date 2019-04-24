@@ -112,7 +112,8 @@ public class BillAddActivity extends BaseMVPActivity<BillContract.Presenter>
 
         //设置日期选择器初始日期
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
-        mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M));
+        //日历选择器的月份以0开始
+        mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M))-1;
         mDay = Integer.parseInt(DateUtils.getCurDay(FORMAT_D));
         //设置当前 日期
         days = DateUtils.getCurDateStr("yyyy-MM-dd");

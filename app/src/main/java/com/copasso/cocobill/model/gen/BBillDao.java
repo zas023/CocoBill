@@ -1,5 +1,6 @@
 package com.copasso.cocobill.model.gen;
 
+import java.util.List;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
@@ -8,6 +9,8 @@ import org.greenrobot.greendao.Property;
 import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import com.copasso.cocobill.model.bean.local.BBill;
 
@@ -38,6 +41,7 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         public final static Property Version = new Property(11, int.class, "version", false, "VERSION");
     }
 
+    private Query<BBill> bTheme_BBillsQuery;
 
     public BBillDao(DaoConfig config) {
         super(config);
@@ -234,4 +238,18 @@ public class BBillDao extends AbstractDao<BBill, Long> {
         return true;
     }
     
+    /** Internal query to resolve the "bBills" to-many relationship of BTheme. */
+    public List<BBill> _queryBTheme_BBills(Long id) {
+        synchronized (this) {
+            if (bTheme_BBillsQuery == null) {
+                QueryBuilder<BBill> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.Id.eq(null));
+                bTheme_BBillsQuery = queryBuilder.build();
+            }
+        }
+        Query<BBill> query = bTheme_BBillsQuery.forCurrentThread();
+        query.setParameter(0, id);
+        return query.list();
+    }
+
 }
