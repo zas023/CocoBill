@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_micro">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item_iv_icon"
+        android:layout_width="@dimen/image_category"
+        android:layout_height="@dimen/image_category"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/spacing_micro"
+        tools:src="@mipmap/ic_classify_eat"/>
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/item_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/textColorLabel"
+        android:textSize="@dimen/text_small"
+        tools:text="用餐"/>
+</LinearLayout>
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/parallax"
+        android:layout_width="match_parent"
+        android:layout_height="540dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bg_default"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/tvMonthExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_micro"
+        android:text="本月支出"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal"
+        app:layout_constraintBottom_toTopOf="@id/tv_info_outcome"
+        app:layout_constraintStart_toStartOf="@id/tv_info_outcome" />
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/tv_info_outcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:padding="@dimen/padding_micro"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_input"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_info_income_label"
+        app:layout_constraintStart_toStartOf="@id/tv_info_income_label"
+        tools:text="￥ 500" />
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/tv_info_income_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:padding="@dimen/padding_micro"
+        android:text="本月收入"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="本月收入" />
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/tv_info_income"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_xlarge"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:padding="@dimen/padding_micro"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_info_income_label"
+        tools:text="￥ 1000" />
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/tv_info_balance_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:padding="@dimen/padding_micro"
+        android:text="本月结余"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_info_balance"
+        tools:text="结余" />
+
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/tv_info_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_xlarge"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:padding="@dimen/padding_micro"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="￥ 500" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

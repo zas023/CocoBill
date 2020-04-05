@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 第一个静态shortcut -->
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_add"
+        android:shortcutId="action_add"
+        android:shortcutLongLabel="@string/action_add"
+        android:shortcutShortLabel="@string/action_add">
+        <!--
+            一个shortcut，当有多个intents与之相关联时，在用户启动该shortcut时，最先呈现给用户的是
+            <intent>...</intent>集合中最后一个intent操作事件。
+            即这里创建了一个intent的回退栈，最后一个才是被快捷方式打开的那个。
+        -->
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.thmub.app.billkeeper.ui.activity.MainActivity"
+            android:targetPackage="com.thmub.app.billkeeper" />
+
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.thmub.app.billkeeper.ui.activity.RecordEditActivity"
+            android:targetPackage="com.thmub.app.billkeeper" />
+
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_statistic"
+        android:shortcutId="action_statistic"
+        android:shortcutLongLabel="@string/action_statistic"
+        android:shortcutShortLabel="@string/action_statistic">
+
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.thmub.app.billkeeper.ui.activity.MainActivity"
+            android:targetPackage="com.thmub.app.billkeeper" />
+
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.thmub.app.billkeeper.ui.activity.StatisticActivity"
+            android:targetPackage="com.thmub.app.billkeeper" />
+
+    </shortcut>
+
+</shortcuts>

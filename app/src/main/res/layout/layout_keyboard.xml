@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edit_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="end"
+            android:hint="@string/keyboard_hint"
+            android:inputType="number"
+            android:padding="@dimen/padding_micro"
+            android:singleLine="true"
+            android:textColor="@color/md_black_1000"
+            android:textColorHint="@color/md_grey_400"
+            android:textSize="@dimen/text_input" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <!-- 数字 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    tools:ignore="NestedWeights">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_1"
+                        style="@style/text_view_input_num"
+                        android:text="1"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_2"
+                        style="@style/text_view_input_num"
+                        android:text="2"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_3"
+                        style="@style/text_view_input_num"
+                        android:text="3"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_4"
+                        style="@style/text_view_input_num"
+                        android:text="4"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_5"
+                        style="@style/text_view_input_num"
+                        android:text="5"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_6"
+                        style="@style/text_view_input_num"
+                        android:text="6"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_7"
+                        style="@style/text_view_input_num"
+                        android:text="7"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_8"
+                        style="@style/text_view_input_num"
+                        android:text="8"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_9"
+                        style="@style/text_view_input_num"
+                        android:text="9"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_point"
+                        style="@style/text_view_input_num"
+                        android:text="."
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_0"
+                        style="@style/text_view_input_num"
+                        android:text="0"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:id="@+id/keyboard_delete"
+                        style="@style/text_view_input_num"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_input_delete" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 操作 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/keyboard_num_sub"
+                    style="@style/text_view_input_op"
+                    android:text="-"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/keyboard_num_add"
+                    style="@style/text_view_input_op"
+                    android:text="+"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/keyboard_confirm"
+                    style="@style/text_view_input_confirm"
+                    android:text="@string/keyboard_confirm" />
+
+            </LinearLayout>
+        </LinearLayout>
+</LinearLayout>

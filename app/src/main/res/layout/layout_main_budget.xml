@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_normal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.thmub.app.billkeeper.widget.CirclePercentView
+            android:id="@+id/cp_progress"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/margin_normal"
+            app:circleBgColor="@color/md_grey_200"
+            app:circleIsGradient="false"
+            app:circleProgressColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.thmub.app.billkeeper.widget.MTextView
+            android:id="@+id/tv_remain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5000"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@id/tv_remain_label"
+            app:layout_constraintEnd_toEndOf="@id/cp_progress"
+            app:layout_constraintStart_toStartOf="@id/cp_progress"
+            app:layout_constraintTop_toTopOf="@id/cp_progress"
+            tools:text="500" />
+
+        <com.thmub.app.billkeeper.widget.MTextView
+            android:id="@+id/tv_remain_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_micro"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:text="剩余"
+            android:textColor="@color/textColorLabel"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="@id/cp_progress"
+            app:layout_constraintEnd_toEndOf="@id/cp_progress"
+            app:layout_constraintStart_toStartOf="@id/cp_progress"
+            app:layout_constraintTop_toBottomOf="@id/tv_remain"
+            tools:text="剩余" />
+
+        <com.thmub.app.billkeeper.widget.MTextView
+            android:id="@+id/tv_average_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_micro"
+            android:text="日均剩余"
+            android:textColor="@color/textColorLabel"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintBottom_toTopOf="@id/tv_average"
+            app:layout_constraintEnd_toStartOf="@id/tv_budget_date_label"
+            app:layout_constraintStart_toEndOf="@id/cp_progress"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="日均剩余" />
+
+        <com.thmub.app.billkeeper.widget.MTextView
+            android:id="@+id/tv_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_micro"
+            android:text="500"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_budget_date"
+            app:layout_constraintStart_toEndOf="@id/cp_progress"
+            app:layout_constraintTop_toBottomOf="@id/tv_average_label"
+            tools:text="500" />
+
+        <com.thmub.app.billkeeper.widget.MTextView
+            android:id="@+id/tv_budget_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_micro"
+            android:text="距结算日"
+            android:textColor="@color/textColorLabel"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintBottom_toTopOf="@id/tv_budget_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_average_label"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="距结算日" />
+
+        <com.thmub.app.billkeeper.widget.MTextView
+            android:id="@+id/tv_budget_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_micro"
+            android:text="3天"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_average"
+            app:layout_constraintTop_toBottomOf="@id/tv_budget_date_label"
+            tools:text="3天" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+

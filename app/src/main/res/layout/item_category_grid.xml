@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.thmub.app.billkeeper.constant.CategoryRes" />
+
+        <variable
+            name="category"
+            type="com.thmub.app.billkeeper.bean.entity.Category" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_item_selector"
+        android:padding="@dimen/spacing_micro">
+
+        <FrameLayout
+            android:id="@+id/item_iv_fl"
+            android:layout_width="@dimen/image_category"
+            android:layout_height="@dimen/image_category"
+            android:layout_gravity="center_horizontal"
+            android:background="@{category.isSelected()?(category.getType==0?@drawable/bg_category_circle_outcome:@drawable/bg_category_circle_income):@drawable/bg_category_circle_normal}"
+            tools:background="@drawable/bg_category_circle_outcome">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/item_iv_icon"
+                imageSrc="@{CategoryRes.resId(category.getIconRes())}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/spacing_micro"
+                android:tint="@{category.isSelected()?@color/icColorSelected:@color/icColorNormal}"
+                tools:srcCompat="@drawable/ic_category_house" />
+        </FrameLayout>
+
+        <com.thmub.app.billkeeper.widget.MTextView
+            android:id="@+id/item_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@{category.getName}"
+            android:textColor="@color/textColorLabel"
+            android:textSize="@dimen/text_small"
+            tools:text="测试" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.RecordDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/menu_record_detail"
+                app:navigationIcon="@drawable/ic_icon_back" />
+        </FrameLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/app_bar"
+            android:layout_marginLeft="@dimen/margin_xlarge"
+            android:layout_marginTop="-50dp"
+            android:layout_marginRight="@dimen/margin_xlarge"
+            app:cardCornerRadius="@dimen/radius_large">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_item_selector"
+                android:clickable="true"
+                android:paddingTop="@dimen/padding_normal">
+
+                <FrameLayout
+                    android:id="@+id/iv_category_bg"
+                    android:layout_width="@dimen/image_category"
+                    android:layout_height="@dimen/image_category"
+                    android:layout_gravity="center_vertical"
+                    android:padding="@dimen/padding_micro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@drawable/bg_category_circle_income">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/spacing_micro"
+                        tools:srcCompat="@drawable/ic_category_card" />
+                </FrameLayout>
+
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_category_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_micro"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_category_bg"
+                    tools:text="用餐" />
+
+
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_label_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_micro"
+                    android:text="记账金额"
+                    android:textColor="@color/textColorLabel"
+                    android:textSize="@dimen/text_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_category_name"
+                    tools:text="记账金额" />
+
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_micro"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_money"
+                    tools:text="¥ 50" />
+
+                <!-- 账单类型 -->
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_label_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xlarge"
+                    android:padding="@dimen/padding_micro"
+                    android:text="类型"
+                    android:textColor="@color/textColorLabel"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_money"
+                    tools:text="类型" />
+
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_xlarge"
+                    android:padding="@dimen/padding_micro"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_money"
+                    tools:text="支出" />
+
+                <!-- 账单日期 -->
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_label_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xlarge"
+                    android:padding="@dimen/padding_micro"
+                    android:text="日期"
+                    android:textColor="@color/textColorLabel"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_type"
+                    tools:text="日期" />
+
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_xlarge"
+                    android:padding="@dimen/padding_micro"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_type"
+                    tools:text="2020-03-20 15:55" />
+
+                <!-- 账单备注 -->
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_label_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xlarge"
+                    android:padding="@dimen/padding_micro"
+                    android:text="备注"
+                    android:textColor="@color/textColorLabel"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_date"
+                    tools:text="备注" />
+
+                <com.thmub.app.billkeeper.widget.MTextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_xlarge"
+                    android:padding="@dimen/padding_micro"
+                    android:text="无"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_date"
+                    tools:text="无" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/padding_normal"
+                    app:layout_constraintTop_toBottomOf="@id/tv_comment" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <com.thmub.app.billkeeper.widget.MTextView
+        android:id="@+id/tv_modify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_normal"
+        android:background="@drawable/bg_accent_btn_round"
+        android:elevation="@dimen/elevation_common"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/btn_modify"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

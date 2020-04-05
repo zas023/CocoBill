@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_icon_search"
+        android:title="搜索"
+        android:contentDescription="搜索"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_statistic"
+        android:icon="@drawable/ic_icon_statistics"
+        android:title="统计"
+        android:contentDescription="统计"
+        app:showAsAction="always" />
+</menu>

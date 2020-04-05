@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="pieChartColors">
+        <item>@color/chartOutcomeColor1</item>
+        <item>@color/chartOutcomeColor2</item>
+        <item>@color/chartOutcomeColor3</item>
+        <item>@color/chartOutcomeColor4</item>
+        <item>@color/chartOutcomeColor5</item>
+        <item>@color/chartOutcomeColor6</item>
+        <item>@color/chartOutcomeColor7</item>
+        <item>@color/chartOutcomeColor8</item>
+        <item>@color/chartOutcomeColor9</item>
+    </integer-array>
+</resources>
