@@ -1,39 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
 
-    <declare-styleable name="CircleImageView">
-        <attr name="border_width" format="dimension"/>
-        <attr name="border_color" format="color"/>
+    <!-- TabLayout -->
+    <declare-styleable name="MTabLayout">
+        <attr name="mTabIndicatorWidth" format="dimension" />
+        <attr name="mTabIndicatorHeight" format="dimension" />
+        <attr name="mTabIndicatorColor" format="color" />
+        <attr name="mTabPadding" format="dimension" />
+        <attr name="mTabPaddingStart" format="dimension" />
+        <attr name="mTabPaddingTop" format="dimension" />
+        <attr name="mTabPaddingEnd" format="dimension" />
+        <attr name="mTabPaddingBottom" format="dimension" />
+        <attr name="mTabTextColor" format="color" />
+        <attr name="mTabSelectedTextColor" format="color" />
+        <attr name="mTabTextSize" format="dimension" />
+        <attr name="mTabSelectedTextSize" format="dimension" />
+        <attr name="mTabMinWidth" format="dimension" />
+        <attr name="mTabMaxWidth" format="dimension" />
+        <attr name="mTabBackground" format="reference" />
+        <attr name="mTabContentStart" format="dimension" />
+        <attr name="mTabTextBoldOnSelect" format="boolean" />
+        <attr name="mTabMode">
+            <enum name="scrollable" value="0" />
+            <enum name="fixed" value="1" />
+        </attr>
+        <attr name="mTabGravity">
+            <enum name="fill" value="0" />
+            <enum name="center" value="1" />
+        </attr>
     </declare-styleable>
 
-
-    <declare-styleable name="SwipeMenuView">
-        <attr name="swipeEnable" format="boolean"/>
-        <attr name="ios" format="boolean"/>
-        <attr name="leftSwipe" format="boolean"/>
+    <declare-styleable name="MTabItem">
+        <attr name="android:text" />
+        <attr name="android:icon" />
+        <attr name="android:layout" />
     </declare-styleable>
 
-    <!--验证码按钮-->
-    <declare-styleable name="VerifyCodeButton">
-        <!--默认 Button 背景-->
-        <attr name="android:background"/>
-        <!--点击获取验证码后 Button 背景-->
-        <attr name="vcb_clickAfterBackground" format="reference"/>
-        <!--倒计时时间，单位为秒-->
-        <attr name="vcb_countdownTime" format="integer"/>
-        <!--倒计时后的提示文字，如：重新获取-->
-        <attr name="vcb_afterCountdownText" format="string"/>
+    <!-- processor -->
+    <declare-styleable name="CirclePercentView">
+        <!--圆弧背景色-->
+        <attr name="circleBgColor" format="color" />
+        <!--圆弧进度条颜色-->
+        <attr name="circleProgressColor" format="color" />
+        <!--圆弧宽度-->
+        <attr name="circleRadius" format="dimension" />
+        <!--渐变开始颜色-->
+        <attr name="circleStartColor" format="color" />
+        <!--渐变结束颜色-->
+        <attr name="circleEndColor" format="color" />
+        <!--是否渐变-->
+        <attr name="circleIsGradient" format="boolean" />
     </declare-styleable>
-
-
-    <!--通用 Item-->
-    <declare-styleable name="CommonItemLayout">
-        <attr name="cil_leftText" format="string"/>
-        <attr name="cil_leftImage" format="reference"/>
-        <attr name="cil_leftTextColor" format="color"/>
-        <attr name="cil_rightText" format="string"/>
-        <attr name="cil_rightTextColor" format="color"/>
-        <attr name="cil_rightImage" format="reference"/>
-    </declare-styleable>
-
 </resources>

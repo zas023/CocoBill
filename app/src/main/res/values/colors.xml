@@ -1,89 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#008577</color>-->
-    <!--<color name="colorPrimaryDark">#00574B</color>-->
-    <!--<color name="colorAccent">#D81B60</color>-->
-    <!--原谅绿-->
-    <color name="colorPrimary">#00BA91</color>
-    <color name="colorPrimaryDark">#00BA91</color>
-    <color name="colorAccent">#00BA91</color>
-
-    <!--酷炫黑-->
-    <color name="colorPrimaryDarkBlack">#010001</color>
-    <color name="colorPrimaryBlack">#010001</color>
-    <color name="colorAccentBlack">#010001</color>
-
-    <!--少女红-->
-    <color name="colorPrimaryDarkGreen">#FF5050</color>
-    <color name="colorPrimaryGreen">#FF5050</color>
-    <color name="colorAccentGreen">#FF5050</color>
-
-    <!--胖次蓝-->
-    <color name="colorPrimaryDarkBlue">#4E77FF</color>
-    <color name="colorPrimaryBlue">#4E77FF</color>
-    <color name="colorAccentBlue">#4E77FF</color>
-
-    <!--基佬紫-->
-    <color name="colorPrimaryDarkPurple">#A33DF9</color>
-    <color name="colorPrimaryPurple">#A33DF9</color>
-    <color name="colorAccentPurple">#A33DF9</color>
-
-    <!--活力橙-->
-    <color name="colorPrimaryDarkOrange">#FF9150</color>
-    <color name="colorPrimaryOrange">#FF9150</color>
-    <color name="colorAccentOrange">#FF9150</color>
-
-    <!--大地棕-->
-    <color name="colorPrimaryDarkBrown">#88564D</color>
-    <color name="colorPrimaryBrown">#88564D</color>
-    <color name="colorAccentBrown">#88564D</color>
-
-    <color name="background">#f7f7f7</color>
+    <!-- 系统色 -->
+    <color name="colorPrimary">#33aaff</color>
+    <color name="colorPrimaryDark">#2299ee</color>
+    <color name="colorPrimaryOverlay">#cc0094ff</color>
+    <color name="colorAccent">#FF4081</color>
+<!--    <color name="colorPrimary">#008577</color>-->
+<!--    <color name="colorPrimaryDark">#00574B</color>-->
+<!--    <color name="colorAccent">#D81B60</color>-->
     <color name="transparent">#00000000</color>
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="text_black3">#333333</color>
-    <color name="text_black6">#666666</color>
-    <color name="text_black9">#999999</color>
-    <color name="text_red">#FF5050</color>
+    <color name="background">@color/white</color>
+    <color name="colorRipple">#1f000000</color>
 
-    <color name="red">#ff0000</color>
+    <!-- Common -->
+    <color name="white">@color/md_white_1000</color>
+    <color name="divider">#dcdcdc</color>
+    <color name="divider_light">@color/md_grey_100</color>
+    <color name="colorHint">#66000000</color>
 
-    <color name="green">#008000</color> <!-- 绿色 -->
-    <color name="darkgreen">#006400</color> <!-- 暗绿色 -->
+    <!-- Button -->
+    <color name="btnPressed">@color/colorRipple</color>
+    <color name="btnDisabled">#99aaaaaa</color>
 
-    <!--aboutActivity字体颜色-->
-    <color name="material_grey_100">#fff5f5f5</color>
-    <color name="material_grey_300">#ffe0e0e0</color>
-    <color name="material_grey_50">#fffafafa</color>
-    <color name="material_grey_600">#ff757575</color>
-    <color name="material_grey_800">#ff424242</color>
-    <color name="material_grey_850">#ff303030</color>
-    <color name="material_grey_900">#ff212121</color>
+    <!-- Tag -->
+    <color name="tagStateNormal">@color/btnDisabled</color>
+    <color name="tagStateSelected">@color/colorPrimary</color>
 
-    <color name="colorDivide">#F9F9F9</color>
-    <color name="colorTabSelect">#FFE0AA</color>
-    <color name="colorMainDateBg">#F7F7F7</color>
-    <color name="colorControlNormal">#CCCCCC</color>
-    <!--页面默认背景色-->
-    <color name="colorBackground">#F9F9F9</color>
-    <!--文字颜色-->
-    <color name="textWhite">#FFFFFF</color>
-    <color name="textBlack">#333333</color>
-    <color name="textBrown">#6A4A57</color>
-    <color name="textPink">#FE88A8</color>
-    <color name="textMaple">#977F8A</color>
-    <color name="textLightBlue">#96D6EF</color>
-    <color name="textRed">#ED5543</color>
-    <color name="textGrayish">#999999</color>
-    <color name="textGray">#666666</color>
+    <!-- Text -->
+    <color name="textColorPrimary">#ff3e3e3e</color>
+    <color name="textColorSecondary">#ff666666</color>
+    <color name="textColorThird">#ff9b9b9b</color>
+    <color name="textColorLabel">@color/colorHint</color>
+    <color name="textColorWarning">#F44336</color>
 
-    <color name="gray">#999999</color>
-    <color name="grayish">#EFEFEF</color>
+    <!-- Category -->
+    <color name="icBgNormal">#08000000</color>
+    <color name="icBgOutcome">#f2615e</color>
+    <color name="icBgIncome">#60b9ff</color>
+    <color name="icColorSelected">@color/white</color>
+    <color name="icColorNormal">@color/md_grey_400</color>
 
-    <!--tab layout 文字颜色-->
-    <color name="tabNormalTextColor">#8CFFFFFF</color>
-    <color name="tabSelectedTextColor">#FFFFFF</color>
-    <color name="tabIndicatorColor">#FFFFFF</color>
+    <color name="icCategoryIncomeNormal">#3f000000</color>
+    <color name="icCategoryIncomeSelected">#ffffff</color>
+    <color name="bgCategoryIncomeNormal">#08000000</color>
+
+    <color name="icCategoryExpenseNormal">#3f000000</color>
+    <color name="icCategoryExpenseSelected">#ffffff</color>
+    <color name="bgCategoryExpenseNormal">#08000000</color>
+
+    <!-- Chart -->
+    <color name="chartGridLine">#efefef</color>
+
+    <!-- 饼状图颜色 -->
+    <color name="chartOutcomeColor1">#E65100</color>
+    <color name="chartOutcomeColor2">#EF6C00</color>
+    <color name="chartOutcomeColor3">#F57C00</color>
+    <color name="chartOutcomeColor4">#FB8C00</color>
+    <color name="chartOutcomeColor5">#FF9800</color>
+    <color name="chartOutcomeColor6">#FFA726</color>
+    <color name="chartOutcomeColor7">#FFB74D</color>
+    <color name="chartOutcomeColor8">#FFCC80</color>
+    <color name="chartOutcomeColor9">#FFE0B2</color>
+
+    <color name="chartIncomeColor1">#1B5E20</color>
+    <color name="chartIncomeColor2">#2E7D32</color>
+    <color name="chartIncomeColor3">#388E3C</color>
+    <color name="chartIncomeColor4">#43A047</color>
+    <color name="chartIncomeColor5">#4CAF50</color>
+    <color name="chartIncomeColor6">#66BB6A</color>
+    <color name="chartIncomeColor7">#81C784</color>
+    <color name="chartIncomeColor8">#A5D6A7</color>
+    <color name="chartIncomeColor9">#C8E6C9</color>
+
+    <!-- circle processor -->
+    <color name="cpBgColor">#cfcfcf</color>
+    <color name="cpProgressColor">#ffc032</color>
+    <color name="cpStartColor">#3A3D4E</color>
+    <color name="cpEndColor">#475B80</color>
 
 </resources>

@@ -1,208 +1,85 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorControlNormal">@color/white</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <!--酷炫黑-->
-    <style name="AppTheme.Black" >
-        <item name="colorPrimary">@color/colorPrimaryBlack</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlack</item>
-        <item name="colorAccent">@color/colorAccentBlack</item>
-    </style>
-
-    <!--少女红-->
-    <style name="AppTheme.Green">
-        <item name="colorPrimary">@color/colorPrimaryGreen</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkGreen</item>
-        <item name="colorAccent">@color/colorAccentGreen</item>
-    </style>
-
-    <!--胖次蓝-->
-    <style name="AppTheme.Blue">
-        <item name="colorPrimary">@color/colorPrimaryBlue</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
-        <item name="colorAccent">@color/colorAccentBlue</item>
-    </style>
-
-    <!--基佬紫-->
-    <style name="AppTheme.Purple">
-        <item name="colorPrimary">@color/colorPrimaryPurple</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkPurple</item>
-        <item name="colorAccent">@color/colorAccentPurple</item>
-    </style>
-
-    <!--活力橙-->
-    <style name="AppTheme.Orange">
-        <item name="colorPrimary">@color/colorPrimaryOrange</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkOrange</item>
-        <item name="colorAccent">@color/colorAccentOrange</item>
-    </style>
-
-    <!--大地棕-->
-    <style name="AppTheme.Brown">
-        <item name="colorPrimary">@color/colorPrimaryBrown</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkBrown</item>
-        <item name="colorAccent">@color/colorAccentBrown</item>
-    </style>
-
-    <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@android:color/white</item>
-    </style>
-
-    <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Light">
-        <!--这个也正确,用这个吧-->
-        <item name="colorControlNormal">@android:color/white</item>
-    </style>
-
-    <!--水平装饰线-->
-    <style name="horizontal_decoration_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
-        <item name="android:background">#999999</item>
-    </style>
-    <!--竖直装饰线-->
-    <style name="vertical_decoration_style">
-        <item name="android:layout_width">1px</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#999999</item>
-    </style>
-
-    <!-- Splash 主题 -->
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:fontFamily">@fonts/Quicksand-Regular</item>
+        <!--设置menu中item的图标颜色-->
+        <!-- <item name="android:textColorSecondary">@color/white</item> -->
     </style>
 
-    <!--无NoActionBar主题-->
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <!-- 对话框 -->
+    <style name="Widget.Dialog" parent="Base.TextAppearance.AppCompat.Widget.Button">
+        <item name="android:colorBackground">@color/transparent</item>
+        <item name="android:windowBackground">@drawable/bg_dialog_common</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="Widget.Dialog.Process" parent="Widget.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
     </style>
 
-    <!-- Toolbar 长按弹出Popup主题 -->
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
-    <!--分割线样式-->
-    <style name="Divide">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/divide_height</item>
+    <style name="Widget.Dialog.BottomSheet" parent="Widget.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+        <item name="android:backgroundDimAmount">0.3</item>
     </style>
 
-    <style name="Divide.Default">
-        <item name="android:background">@color/colorDivide</item>
+
+    <!-- 键盘 -->
+<!--    <style name="Widget.Keyboard" parent="Base.Theme.AppCompa">-->
+<!--        <item name="android:colorBackground">@color/transparent</item>-->
+<!--        <item name="android:windowBackground">@drawable/bg_dialog_common</item>-->
+<!--    </style>-->
+    <style name="bg_press">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
-    <style name="Divide.Default.Margin">
-        <item name="android:layout_marginLeft">@dimen/view_margin</item>
-        <item name="android:layout_marginRight">@dimen/view_margin</item>
-    </style>
-
-    <!--按钮样式-->
-    <style name="Button">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/text14</item>
-    </style>
-
-    <style name="Button.Default">
-        <item name="android:textColor">@color/textWhite</item>
-        <item name="android:background">@drawable/bg_button_default</item>
-        <!--<item name="com.github.airsaid.accountbook:backgroundTint">?attr/colorAccent</item>-->
-    </style>
-
-    <style name="Button.Default.Margin">
-        <item name="android:layout_margin">@dimen/margin</item>
-    </style>
-
-    <style name="Button.Default.Small">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">35dp</item>
-        <item name="android:textSize">@dimen/text12</item>
-        <!--<item name="com.github.airsaid.accountbook:backgroundTint">?attr/colorAccent</item>-->
-    </style>
-
-    <!--文字样式-->
-    <style name="Text">
-        <item name="android:textSize">@dimen/text14</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="Text.Black">
-        <item name="android:textColor">@color/textBlack</item>
-    </style>
-    <style name="Text.White">
-        <item name="android:textColor">@color/textWhite</item>
-    </style>
-    <style name="Text.Brown">
-        <item name="android:textColor">@color/textBrown</item>
-    </style>
-    <style name="Text.Maple">
-        <item name="android:textColor">@color/textMaple</item>
-    </style>
-    <style name="Text.Red">
-        <item name="android:textColor">@color/textRed</item>
-    </style>
-    <style name="Text.Gray">
-        <item name="android:textColor">@color/textGray</item>
-    </style>
-    <style name="Text.Grayish">
-        <item name="android:textColor">@color/textGrayish</item>
-    </style>
-
-    <!--关于页面样式-->
-    <style name="AboutPage">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="AboutPage.Header"/>
-
-    <style name="AboutPage.Header.ToolbarTitleExpanded"
-        parent="@android:style/TextAppearance">
-        <item name="android:textColor">#00000000</item>
-    </style>
-
-    <style name="AboutPage.Header.Icon">
-        <item name="android:layout_width">66dp</item>
-        <item name="android:layout_height">66dp</item>
-    </style>
-
-    <style name="AboutPage.Header.Slogan">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <!-- 键盘 -->
+    <style name="text_view_input" parent="bg_press">
         <item name="android:gravity">center</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/md_grey_400</item>
     </style>
 
-    <style name="AboutPage.Header.Version">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@android:color/white</item>
+    <!-- 键盘数字 -->
+    <style name="text_view_input_num" parent="text_view_input">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
-    <!--ToolBar样式-->
-    <style name="Toolbar">
+    <!-- 键盘操作 -->
+    <style name="text_view_input_op" parent="text_view_input">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
-    <style name="Toolbar.TextAppearance"
-        parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/textWhite</item>
-        <item name="android:textSize">@dimen/text20</item>
+    <!-- 键盘确定 -->
+    <style name="text_view_input_confirm" parent="text_view_input">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/md_white_1000</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
 </resources>

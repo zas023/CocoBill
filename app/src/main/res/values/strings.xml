@@ -1,79 +1,47 @@
 <resources>
-    <string name="app_name">CocoBill</string>
+    <string name="app_name">BillKeeper</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
 
-    <!-- main activity -->
-    <string name="first_title">明细</string>
-    <string name="second_title">记一笔</string>
-    <string name="third_title">报表</string>
-    <string name="four_title">账户</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- Activity -->
+    <string name="activity_search">搜索</string>
+    <string name="activity_statistic">统计</string>
 
-    <!--login activity-->
-    <string name="login_user_name">Tell me your register name or email.</string>
-    <string name="login_password">Tell me your password (be quiet!).</string>
-    <string name="register_user_name">Show me a cool user name!</string>
-    <string name="register_user_email">You can regain your password by email.</string>
-    <string name="register_password">I can keep secret!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add">收支一笔</string>
+    <string name="action_statistic">统计报表</string>
 
-    <!--about activity-->
-    <string name="about">关于CocoBill记账本</string>
-    <string name="about_introduce">简洁、便捷、纯粹记账\n\n
-        ------CocoBill是啥------\n\n
-        嗯~没错我就是个记账APP，功能不花哨主打实用，算账本来就是头疼事还整那些花里胡哨的功能干啥呢？所以我们这款记账APP就是简洁！实用！！！\n\n
-        ------CocoBill主要功能------\n\n
-        - 支持多账户记账\n
-        - 时间轴记账单，账单一目了然\n
-        - 支持账单数据导出，方便各个场景使用\n
-        - 数据同步，换手机，刷系统，账单轻松恢复\n
-        - 账单统计功能，支持消费分析，消费情况清晰透明\n
-    </string>
-    <string name="about_introduce2">ps:请勿在软件中填写个人隐私信息</string>
-    <string name="app_name_with_introduce">CocoBill - 理财的好帮手</string>
-    <string name="developers">开发人员:zhouass666\n
-        -------------------\n
-        <a href='https://github.com/zas023/CocoBill'>https://github.com/zas023/CocoBill</a>
-        \n-------------------\n
-        欢迎大家star和fork
-    </string>
+    <!-- Button -->
+    <string name="btn_add_category">添加分类</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_modify">修改</string>
 
-    <!--other-->
-    <string name="rmb">¥</string>
-    <string name="login">登录</string>
-    <string name="forget_password">忘记密码？</string>
-    <string name="register">注册</string>
-    <string name="get_code">获取验证码</string>
-    <string name="reset_get">重新获取</string>
-    <string name="verify_phone">验证手机号</string>
-    <string name="verify">验证</string>
-    <string name="finish">完成</string>
-    <string name="income">收入</string>
-    <string name="cost">支出</string>
-    <string name="save">保存</string>
-    <string name="money_normal">0.00</string>
-    <string name="say_something">说点什么吧&#8230;</string>
-    <string name="cur_month_cost">当月支出</string>
-    <string name="cur_month_income">当月收入</string>
-    <string name="icon">头像</string>
-    <string name="username">用户名</string>
-    <string name="sex">性别</string>
-    <string name="age">年龄</string>
-    <string name="phone">电话</string>
-    <string name="email">邮箱</string>
-    <string name="man">男</string>
-    <string name="woman">女</string>
-    <string name="not_set">未设置</string>
-    <string name="year">岁</string>
-    <string name="setting">设置</string>
-    <!--Loading-->
-    <string name="load_msg">正在加载中&#8230;</string>
-    <string name="load_update">正在修改中&#8230;</string>
-    <string name="load_delete">正在删除中&#8230;</string>
-    <string name="load_send_code">正在发送验证码&#8230;</string>
-    <string name="load_verify">正在验证中&#8230;</string>
-    <string name="load_switch">正在切换中&#8230;</string>
-    <string name="load_login">正在登录中&#8230;</string>
-    <string name="load_sign">正在注册中&#8230;</string>
+    <!-- Edit -->
+    <string name="hint_edit_category_name">请输入分类名称</string>
 
+    <!-- Dialog -->
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+
+    <string name="message_delete">确认删除该记录？</string>
+
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="dialog_data_pick_title_format" formatted="false">%d年%d月</string>
+    <string name="dialog_data_pick_time_input_label">时间（24小时制）</string>
+
+    <!-- 时间 -->
+    <string name="date_format_y_m_d">yyyy年MM月dd日</string>
+    <string name="date_format_m_d">MM月dd日</string>
+    <string name="date_format_y_m">yyyy年MM月</string>
+    <string name="date_format_y">yyyy年</string>
+    <string name="date_format_today">今天</string>
+    <string name="date_format_today_time">今天 HH:mm</string>
+    <string name="date_format_yesterday">昨天</string>
+
+    <!-- Keyboard -->
+    <string name="keyboard_hint">输入金额</string>
+    <string name="keyboard_confirm">确定</string>
+
+    <!-- chart -->
+    <string name="tip_empty_chart">暂无数据&#8230;</string>
 </resources>
-
