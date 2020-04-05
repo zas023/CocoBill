@@ -6,6 +6,8 @@ package com.thmub.app.billkeeper.constant;
  */
 public class Constant {
 
+    public static final String SP_KEY_BUDGET = "sp_key_budget";
+
     // record type
     public static final int TYPE_OUTCOME = 0;
     public static final int TYPE_INCOME = 1;

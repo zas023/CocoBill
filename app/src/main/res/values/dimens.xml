@@ -21,6 +21,7 @@
     <dimen name="margin_large">16dp</dimen>
     <dimen name="margin_xlarge">24dp</dimen>
     <!--  text size  -->
+    <dimen name="text_micro">10sp</dimen>
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_medium">14sp</dimen>
     <dimen name="text_normal">16sp</dimen>

@@ -23,7 +23,7 @@ import com.thmub.app.billkeeper.R;
  */
 public class CirclePercentView extends View {
 
-    public static final int WIDTH_RADIUS_RATIO = 8;     // 弧线半径 : 弧线线宽 (比例)
+    public static final int WIDTH_RADIUS_RATIO = 6;     // 弧线半径 : 弧线线宽 (比例)
     public static final int MAX = 100;
     private Paint mPaint;
     private float progressPercent;

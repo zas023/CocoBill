@@ -25,6 +25,7 @@ import com.thmub.app.billkeeper.bean.sql.LocalDatabase;
 import com.thmub.app.billkeeper.constant.Constant;
 import com.thmub.app.billkeeper.ui.adapter.RecordHomeAdapter;
 import com.thmub.app.billkeeper.util.DateUtils;
+import com.thmub.app.billkeeper.util.SharePreUtils;
 import com.thmub.app.billkeeper.util.StatusBarUtil;
 import com.thmub.app.billkeeper.util.UIUtils;
 import com.thmub.app.billkeeper.util.ValidationUtils;
@@ -72,6 +73,12 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.cp_progress)
     CirclePercentView percentView;
+    @BindView(R.id.tv_average)
+    MTextView tvAverage;
+    @BindView(R.id.tv_budget_date)
+    MTextView tvBudgetDate;
+    @BindView(R.id.tv_remain)
+    MTextView tvRemain;
 
     // ClassicsHeader移动距离
     private int mOffset = 0;
@@ -81,6 +88,7 @@ public class MainActivity extends BaseActivity {
     private List<Record> records;
     private long startDate;
     private long endDate;
+    private int days = 1;
 
     private List<GroupType> summaryData;
 
@@ -97,6 +105,8 @@ public class MainActivity extends BaseActivity {
         long curDate = System.currentTimeMillis();
         startDate = DateUtils.getMonthStartTime(curDate);
         endDate = DateUtils.getMonthEndTime(curDate);
+        // 当月剩余天数
+        days = DateUtils.getDaysOfMonth(curDate) - DateUtils.getDayOfDate(curDate);
     }
 
     @Override
@@ -110,8 +120,6 @@ public class MainActivity extends BaseActivity {
 
         recycler.setLayoutManager(new LinearLayoutManager(mContext));
         recycler.setAdapter(adapter);
-
-        percentView.setPercentage(35f);
     }
 
     @Override
@@ -168,7 +176,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.fab, R.id.action_statistic, R.id.action_search})
+    @OnClick({R.id.fab, R.id.action_statistic, R.id.action_search, R.id.view_budget})
     protected void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:  // add
@@ -179,6 +187,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.action_statistic:  //statistic
                 startActivity(new Intent(mContext, StatisticActivity.class));
+                break;
+            case R.id.view_budget:  // budget
+                startActivity(new Intent(mContext, BudgetActivity.class));
                 break;
         }
     }
@@ -208,9 +219,20 @@ public class MainActivity extends BaseActivity {
         if (summaryData.size() == 1) {
             summaryData.add(new GroupType(0, Constant.TYPE_INCOME - summaryData.get(0).getType(), 0F, startDate));
         }
+        // 收支
         tvInfoOutcome.setText("¥" + summaryData.get(0).getAmount());
         tvInfoIncome.setText("¥" + summaryData.get(1).getAmount());
         tvInfoBalance.setText("¥" + (summaryData.get(1).getAmount() - summaryData.get(0).getAmount()));
+        // 预算
+        String strBudget = SharePreUtils.getString(mContext, Constant.SP_KEY_BUDGET);
+        if (ValidationUtils.isEmpty(strBudget)) {
+            strBudget = "0";
+        }
+        float budget = Float.parseFloat(strBudget);
+        percentView.setPercentage(summaryData.get(0).getAmount() / (1 + budget) * 100);
+        tvRemain.setText(String.valueOf(budget - summaryData.get(0).getAmount()));
+        tvAverage.setText("¥" + (Math.max(0, (budget - summaryData.get(0).getAmount())) / days));
+        tvBudgetDate.setText(String.valueOf(days));
     }
 
     /*************************LifeCycle***********************/

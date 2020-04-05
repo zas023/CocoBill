@@ -5,18 +5,21 @@
     <!-- Activity -->
     <string name="activity_search">搜索</string>
     <string name="activity_statistic">统计</string>
+    <string name="activity_budget">预算</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_add">收支一笔</string>
     <string name="action_statistic">统计报表</string>
 
     <!-- Button -->
+    <string name="btn_add_budget">添加预算</string>
     <string name="btn_add_category">添加分类</string>
     <string name="btn_save">保存</string>
     <string name="btn_modify">修改</string>
 
     <!-- Edit -->
     <string name="hint_edit_category_name">请输入分类名称</string>
+    <string name="hint_edit_total_budget">请输入总预算</string>
 
     <!-- Dialog -->
     <string name="cancel">取消</string>

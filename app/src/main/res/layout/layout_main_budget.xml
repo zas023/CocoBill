@@ -7,13 +7,16 @@
     android:layout_margin="@dimen/margin_normal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_budget"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_item_selector"
+        android:clickable="true">
 
         <com.thmub.app.billkeeper.widget.CirclePercentView
             android:id="@+id/cp_progress"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="@dimen/margin_normal"
             app:circleBgColor="@color/md_grey_200"
             app:circleIsGradient="false"
@@ -45,7 +48,7 @@
             android:layout_marginBottom="@dimen/margin_normal"
             android:text="剩余"
             android:textColor="@color/textColorLabel"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/text_micro"
             app:layout_constraintBottom_toBottomOf="@id/cp_progress"
             app:layout_constraintEnd_toEndOf="@id/cp_progress"
             app:layout_constraintStart_toStartOf="@id/cp_progress"
@@ -76,8 +79,8 @@
             android:textSize="@dimen/text_medium"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_budget_date"
-            app:layout_constraintStart_toEndOf="@id/cp_progress"
+            app:layout_constraintEnd_toEndOf="@id/tv_average_label"
+            app:layout_constraintStart_toStartOf="@id/tv_average_label"
             app:layout_constraintTop_toBottomOf="@id/tv_average_label"
             tools:text="500" />
 
@@ -105,8 +108,8 @@
             android:textSize="@dimen/text_medium"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_average"
+            app:layout_constraintEnd_toEndOf="@id/tv_budget_date_label"
+            app:layout_constraintStart_toStartOf="@id/tv_budget_date_label"
             app:layout_constraintTop_toBottomOf="@id/tv_budget_date_label"
             tools:text="3天" />
 
