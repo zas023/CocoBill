@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/app_toolbar"/>
 
 
     <LinearLayout
@@ -35,7 +35,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
-                android:src="@mipmap/ic_def_icon"/>
+                android:src="@mipmap/ic_def_icon"
+                android:layout_alignParentRight="true" />
         </RelativeLayout>
 
         <View style="@style/Divide.Default"/>

@@ -1,8 +1,6 @@
 package com.copasso.cocobill.utils;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +8,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * 日期时间工具类
@@ -31,6 +31,11 @@ public class DateUtils {
      * 英文简写如：09
      */
     public static String FORMAT_M = "MM";
+
+    /**
+     * 英文简写如：09
+     */
+    public static String FORMAT_D = "dd";
 
     /**
      * 英文简写如：12:01
@@ -535,6 +540,15 @@ public class DateUtils {
         return getDay(0, format);
     }
 
+    public static String getCurMonth(String format) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        return date2Str(calendar, format);
+    }
+
+    public static String getCurYear(String format) {
+        return getYear(0, format);
+    }
     /**
      * 获取前一天日期
      */
@@ -574,14 +588,6 @@ public class DateUtils {
         calendar.setTime(date);
         calendar.add(Calendar.DATE, -1);
         return date2Str(calendar, FORMAT_YMD);
-    }
-
-    public static String getCurYear(String format) {
-        return getYear(0, format);
-    }
-
-    public static String getCurMonth(String format) {
-        return date2Str(new Date(), format);
     }
 
     public static String getYear(int year, String format) {

@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">CocoBill</string>
 
-
     <!-- main activity -->
     <string name="first_title">明细</string>
     <string name="second_title">记一笔</string>
@@ -27,7 +26,7 @@
         - 时间轴记账单，账单一目了然\n
         - 支持账单数据导出，方便各个场景使用\n
         - 数据同步，换手机，刷系统，账单轻松恢复\n
-        - 账单统计功能，支持月度消费分析，消费情况清清楚楚\n
+        - 账单统计功能，支持消费分析，消费情况清晰透明\n
     </string>
     <string name="about_introduce2">ps:请勿在软件中填写个人隐私信息</string>
     <string name="app_name_with_introduce">CocoBill - 理财的好帮手</string>
@@ -77,3 +76,4 @@
     <string name="load_sign">正在注册中&#8230;</string>
 
 </resources>
+

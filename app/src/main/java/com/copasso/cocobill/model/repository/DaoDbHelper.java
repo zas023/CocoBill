@@ -1,6 +1,7 @@
 package com.copasso.cocobill.model.repository;
 
 import android.database.sqlite.SQLiteDatabase;
+
 import com.copasso.cocobill.MyApplication;
 import com.copasso.cocobill.model.gen.DaoMaster;
 import com.copasso.cocobill.model.gen.DaoSession;

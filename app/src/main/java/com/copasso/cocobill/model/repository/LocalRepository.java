@@ -3,17 +3,20 @@ package com.copasso.cocobill.model.repository;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.BPay;
 import com.copasso.cocobill.model.bean.local.BSort;
+import com.copasso.cocobill.model.bean.local.NoteBean;
 import com.copasso.cocobill.model.gen.BBillDao;
 import com.copasso.cocobill.model.gen.BSortDao;
 import com.copasso.cocobill.model.gen.DaoSession;
 import com.copasso.cocobill.utils.DateUtils;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 public class LocalRepository {
 
@@ -53,10 +56,11 @@ public class LocalRepository {
 
     /**
      * 批量添加账单
+     *
      * @param bBills
      */
-    public void saveBBills( List<BBill> bBills) {
-       mSession.getBBillDao().insertInTx(bBills);
+    public void saveBBills(List<BBill> bBills) {
+        mSession.getBBillDao().insertInTx(bBills);
     }
 
     public Long saveBPay(BPay pay) {
@@ -104,7 +108,7 @@ public class LocalRepository {
         return queryListToRx(queryBuilder);
     }
 
-    public Observable<List<BBill>> getBBillByUserIdWithYM(int id, String year, String month) {
+    public Observable<List<BBill>> getBBillByUserIdWithYM(String id, String year, String month) {
         String startStr = year + "-" + month + "-00 00:00:00";
         Date date = DateUtils.str2Date(startStr);
         Date endDate = DateUtils.addMonth(date, 1);
@@ -116,23 +120,33 @@ public class LocalRepository {
         return queryListToRx(queryBuilder);
     }
 
-    public Observable<List<BSort>> getBSort(boolean income){
+    public Observable<List<BSort>> getBSort(boolean income) {
         QueryBuilder<BSort> queryBuilder = mSession.getBSortDao()
                 .queryBuilder()
                 .where(BSortDao.Properties.Income.eq(income));
         return queryListToRx(queryBuilder);
     }
 
-    public Observable<List<BSort>> getBSort(){
+    public Observable<List<BSort>> getBSort() {
         QueryBuilder<BSort> queryBuilder = mSession.getBSortDao()
                 .queryBuilder();
         return queryListToRx(queryBuilder);
     }
 
-    public Observable<List<BPay>> getBPay(){
+    public Observable<List<BPay>> getBPay() {
         QueryBuilder<BPay> queryBuilder = mSession.getBPayDao()
                 .queryBuilder();
         return queryListToRx(queryBuilder);
+    }
+
+    public NoteBean getBillNote() {
+        NoteBean note = new NoteBean();
+        note.setPayinfo(mSession.getBPayDao().queryBuilder().list());
+        note.setInSortlis(mSession.getBSortDao().queryBuilder()
+                .where(BSortDao.Properties.Income.eq(true)).orderAsc(BSortDao.Properties.Priority).list());
+        note.setOutSortlis(mSession.getBSortDao().queryBuilder()
+                .where(BSortDao.Properties.Income.eq(false)).orderAsc(BSortDao.Properties.Priority).list());
+        return note;
     }
 
 
@@ -140,6 +154,7 @@ public class LocalRepository {
 
     /**
      * 更新账单（用于同步）
+     *
      * @param bill
      */
     public void updateBBillByBmob(BBill bill) {
@@ -148,11 +163,12 @@ public class LocalRepository {
 
     /**
      * 更新账单
+     *
      * @param bill
      * @return
      */
     public Observable<BBill> updateBBill(final BBill bill) {
-       
+
         return Observable.create(new ObservableOnSubscribe<BBill>() {
             @Override
             public void subscribe(ObservableEmitter<BBill> e) throws Exception {
@@ -163,35 +179,47 @@ public class LocalRepository {
         });
     }
 
+    /**
+     * 批量更新账单分类
+     *
+     * @param items
+     */
+    public void updateBSoers(List<BSort> items){
+        mSession.getBSortDao().updateInTx(items);
+    }
+
     /******************************delete**************************************/
     /**
      * 删除账单分类
+     *
      * @param id
      */
-    public void deleteBSortById(Long id){
+    public void deleteBSortById(Long id) {
         mSession.getBSortDao().deleteByKey(id);
     }
 
     /**
      * 删除账单支出方式
+     *
      * @param id
      */
-    public void deleteBPayById(Long id){
+    public void deleteBPayById(Long id) {
         mSession.getBPayDao().deleteByKey(id);
     }
 
     /**
      * 批量删除账单（便于账单同步）
+     *
      * @param bBills
      */
-    public void deleteBills(List<BBill> bBills){
+    public void deleteBills(List<BBill> bBills) {
         mSession.getBBillDao().deleteInTx(bBills);
     }
 
     /**
      * 删除本地所有账单
      */
-    public void deleteAllBills(){
+    public void deleteAllBills() {
         deleteBills(getBBills());
     }
 

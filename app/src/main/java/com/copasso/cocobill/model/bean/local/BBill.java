@@ -1,8 +1,8 @@
 package com.copasso.cocobill.model.bean.local;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * 账单bean
@@ -30,7 +30,7 @@ public class BBill{
     }
     @Generated(hash = 634586034)
     public BBill(Long id, String rid, float cost, String content, String userid, String payName, String payImg,
-            String sortName, String sortImg, long crdate, boolean income, int version) {
+                 String sortName, String sortImg, long crdate, boolean income, int version) {
         this.id = id;
         this.rid = rid;
         this.cost = cost;

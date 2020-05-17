@@ -1,10 +1,9 @@
 package com.copasso.cocobill.utils;
 
-import android.util.Log;
 import com.copasso.cocobill.model.bean.local.BBill;
 import com.copasso.cocobill.model.bean.local.MonthAccountBean;
 import com.copasso.cocobill.model.bean.local.MonthChartBean;
-import com.copasso.cocobill.model.bean.local.MonthDetailBean;
+import com.copasso.cocobill.model.bean.local.MonthListBean;
 import com.copasso.cocobill.model.bean.remote.CoBill;
 
 import java.util.ArrayList;
@@ -22,11 +21,11 @@ public class BillUtils {
      * @param list
      * @return
      */
-    public static MonthDetailBean packageDetailList(List<BBill> list) {
-        MonthDetailBean bean = new MonthDetailBean();
+    public static MonthListBean packageDetailList(List<BBill> list) {
+        MonthListBean bean = new MonthListBean();
         float t_income = 0;
         float t_outcome = 0;
-        List<MonthDetailBean.DaylistBean> daylist = new ArrayList<>();
+        List<MonthListBean.DaylistBean> daylist = new ArrayList<>();
         List<BBill> beanList = new ArrayList<>();
         float income = 0;
         float outcome = 0;
@@ -55,7 +54,7 @@ public class BillUtils {
                 //局部变量防止引用冲突
                 List<BBill> tmpList = new ArrayList<>();
                 tmpList.addAll(beanList);
-                MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
+                MonthListBean.DaylistBean tmpDay = new MonthListBean.DaylistBean();
                 tmpDay.setList(tmpList);
                 tmpDay.setMoney("支出：" + outcome + " 收入：" + income);
                 tmpDay.setTime(preDay);
@@ -80,7 +79,7 @@ public class BillUtils {
             //局部变量防止引用冲突
             List<BBill> tmpList = new ArrayList<>();
             tmpList.addAll(beanList);
-            MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
+            MonthListBean.DaylistBean tmpDay = new MonthListBean.DaylistBean();
             tmpDay.setList(tmpList);
             tmpDay.setMoney("支出：" + outcome + " 收入：" + income);
             tmpDay.setTime(DateUtils.getDay(beanList.get(0).getCrdate()));
@@ -89,6 +88,7 @@ public class BillUtils {
 
         bean.setT_income(String.valueOf(t_income));
         bean.setT_outcome(String.valueOf(t_outcome));
+        bean.setT_total(String.valueOf(t_income-t_outcome));
         bean.setDaylist(daylist);
         return bean;
     }

@@ -66,7 +66,7 @@ public class CommonItemLayout extends FrameLayout {
     }
 
     private void initView() {
-        LayoutInflater.from(mContext).inflate(R.layout.item_view_common_layout, this, true);
+        LayoutInflater.from(mContext).inflate(R.layout.view_common_layout, this, true);
         mTxtLeft = (TextView) findViewById(R.id.txt_left);
         mTxtRight = (TextView) findViewById(R.id.txt_right);
         mImgRight = (ImageView) findViewById(R.id.img_right);
